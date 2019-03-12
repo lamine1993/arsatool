@@ -8,6 +8,7 @@ import CultureItem from './Items/CultureItem'
 class ChoixCulture extends React.Component {
     constructor(props) {
         super(props)
+        
          
     }
     _displayLocalisationForCulture = (idCulture, nomCulture) => {
