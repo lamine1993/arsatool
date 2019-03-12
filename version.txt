@@ -1,0 +1,2 @@
+tentative de creation des store generale pour gerer les recherches.
+ce n'est pas..cela ne vas pas le faire
