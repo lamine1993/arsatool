@@ -10,7 +10,7 @@ export default class SideBar extends React.Component {
           <Image
             source={require('../assets/multi-user-icon.png')}
             style={{
-              height: 120,
+              height: 150,
               alignSelf: "stretch",
               justifyContent: "center",
               alignItems: "center"
