@@ -8,21 +8,20 @@ import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Le
 class InsecteItem extends React.Component {
   render() {
       const { insecte, displayLocalisationForCulture } = this.props
-      this.path="../../../assets/"+insecte.insecteImage
+      this.image='../../../assets/'+insecte.insecteImage
+      //this.path=require(this.path)
     //console.log(this.props)
     return (
             <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
               <Card style={{ width: Dimensions.get('window').width-70}}>
                 <CardItem cardBody>
-                  <Image source={require("../../../assets/Puceron.png")} style={{height:150, width: null, flex: 1}}/>
+                  <Image source={require('../../../assets/Puceron.png')} style={{height:150, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem bordered>
                     <Body style={{flex: 1, flexDirection: 'row'}}>
                      <Left>
                         <Text>
-                        {//insecte.nomInsecte
-                          this.path
-                        }
+                        {insecte.nomInsecte}
                         </Text>
                      </Left>
                       
