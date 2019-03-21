@@ -1,28 +1,45 @@
 // Components/FilmItem.js
 
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image } from 'react-native'
+import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 
 
-class CultureItem extends React.Component {
+class InsecteItem extends React.Component {
   render() {
       const { insecte, displayLocalisationForCulture } = this.props
+      this.path="../../../assets/"+insecte.insecteImage
     //console.log(this.props)
     return (
-       <TouchableOpacity onPress={() => displayLocalisationForCulture(insecte.id)}  style={styles.button}>
-         <View style={styles.content_container}>
-           <Image source={require(insecte.insecteImage)} style={{height:100, width: null, flex: 1}} />
-           <Text style={{flex:2}}>{insecte.nomInsecte}</Text>
-         </View>
-       </TouchableOpacity>
+            <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
+              <Card style={{ width: Dimensions.get('window').width-70}}>
+                <CardItem cardBody>
+                  <Image source={require("../../../assets/Puceron.png")} style={{height:150, width: null, flex: 1}}/>
+                </CardItem>
+                <CardItem bordered>
+                    <Body style={{flex: 1, flexDirection: 'row'}}>
+                     <Left>
+                        <Text>
+                        {//insecte.nomInsecte
+                          this.path
+                        }
+                        </Text>
+                     </Left>
+                      
+                      <Right>
+                          <Button style={styles.fiche}><Text style={{ color: 'white' }}>Fiche Technique</Text></Button>
+                      </Right>
+                    </Body>
+                  </CardItem>
+              </Card>
+        </Content>
     )
   }
 }
 
 const styles = StyleSheet.create({
     button:{
-        margin: 10,
-        
+        height:200,
         paddingHorizontal:10,
         width: Dimensions.get('window').width-50,
         fontSize: 20,
@@ -34,9 +51,15 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     content_container:{
-        flex:1,
+      
+    },
+    fiche:{
+        borderRadius: 4,
+        borderWidth: 1,
+        backgroundColor: '#2EA073',
+        borderColor: '#2EA073',
     }
   });
 
 
-export default CultureItem
+export default InsecteItem

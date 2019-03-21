@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  FlatList,
   Image
 } from "react-native";
 
@@ -30,9 +31,6 @@ class InsecteCausale extends Component {
     render() {
         return (
                 <View style={styles.container}>
-                    <Text style={styles.titre}>
-                        CULTURE
-                    </Text>
                     <FlatList
                         
                         data={attaques}
@@ -56,5 +54,8 @@ const styles = StyleSheet.create({
     icon: {
         height: 24,
         width: 24
+    },
+    container:{
+        backgroundColor: '#fff',
     }
 })
