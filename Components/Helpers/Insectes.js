@@ -8,9 +8,10 @@ export default dataCulture = [
         dateValidation:	"2019-03-21T01:37:00Z",
         dateAjout:	"2019-03-21T01:37:00Z",
         insecte: {
+            id: 1,
             nomInsecte:	"Puceron du coton",
             nomScienInsecte	:"Aphis Gossypii Glover",
-            insecteImage:"",
+            insecteImage:"../../../assets/Insectes/Puceron.png",
             description:	"Aphis gossypii communéme…orte de 4 à 8 cheveux. ",
             cycleBio:	"La plupart des espèces d…tères de multiplication",
             imageCycle:	" ",

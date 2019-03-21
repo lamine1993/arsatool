@@ -19,8 +19,8 @@ class DegatType extends Component {
   }
 
    _goToInsecteCausale=(type)=>{
-    idCulture=this.props.navigation.state.params.nomCulture
-     this.props.navigation.push('InsecteCausale',{id: this.idCulture, localisation: this.localisation, type: type} )
+    //idCulture=this.props.navigation.state.params.nomCulture
+     this.props.navigation.push('InsecteCausale',{id: this.idCulture,nomCulture:this.nomCulture, localisation: this.localisation, type: type} )
 }
  render() {
      return (
