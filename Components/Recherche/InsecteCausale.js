@@ -22,10 +22,10 @@ class InsecteCausale extends Component {
          
     }
 
-    _displayInsectes = (id) => {
+    _displayInsectes = (insecte) => {
         
        // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
-        this.props.navigation.push('FicheTechnique',{id:id})
+        this.props.navigation.push('FicheTechnique',{insecte:insecte})
 
     }
     render() {

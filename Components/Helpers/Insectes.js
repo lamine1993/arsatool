@@ -17,7 +17,7 @@ export default dataCulture = [
             imageCycle:	" ",
             dateValidation:	"2019-03-16T03:12:00Z",
             dateAjout:	"2019-03-16T03:12:00Z",
-            methode:	null,
+            methode:	"Les chenilles de la noctuelle de la tomate commencent leur vie sur les feuilles et les boutons floraux. C’est à ce stade qu’elles sont les plus vulnérables aux différents produits de traitement. Il est donc primordial de faire des observations pour savoir à quel moment on trouve des œufs et des chenilles sur les plants de tomate.  ",
             imageInsectes:	null,
         },
         chercheur:	null,

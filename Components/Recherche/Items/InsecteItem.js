@@ -7,7 +7,7 @@ import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Le
 
 class InsecteItem extends React.Component {
   render() {
-      const { insecte, displayLocalisationForCulture } = this.props
+      const { insecte, displayInsectes } = this.props
       this.image='../../../assets/'+insecte.insecteImage
       //this.path=require(this.path)
     //console.log(this.props)
@@ -26,7 +26,9 @@ class InsecteItem extends React.Component {
                      </Left>
                       
                       <Right>
-                          <Button style={styles.fiche}><Text style={{ color: 'white' }}>Fiche Technique</Text></Button>
+                          <Button 
+                          onPress={() => displayInsectes(insecte)}
+                           style={styles.fiche}><Text style={{ color: 'white' }}>Fiche Technique</Text></Button>
                       </Right>
                     </Body>
                   </CardItem>
