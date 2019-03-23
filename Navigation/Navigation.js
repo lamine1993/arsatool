@@ -18,25 +18,22 @@ const MyDrawerNavigator = createDrawerNavigator({
       screen: HomeScreen,
     },
     Notifications: {
-            screen: NotificationsScreen
+      screen: NotificationsScreen
     }
   }, {
         drawerWidth: 200,
         initialRouteName: 'Home',
         contentComponent: props => <SideBar {...props} />,
         navigationOptions: ({ navigation }) => ({
-          title: navigation.state.routeName,  // Title to appear in status bar
+          title: 'AR SA TOOL',  // Title to appear in status bar
           headerLeft: 
               <TouchableOpacity  onPress={() => {navigation.dispatch(DrawerActions.toggleDrawer())} }>
                   <Icon name='menu' style={{ paddingLeft: 10 }} onPress={() => {navigation.openDrawer()}}/>
               </TouchableOpacity>,
           headerStyle: {
-              backgroundColor: '#0275d8',
+              backgroundColor: '#2EA073',
           },
           headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
         contentOptions: {
             activeTintColor: '#e91e63',
             itemsContainerStyle: {
@@ -53,22 +50,6 @@ const MyDrawerNavigator = createDrawerNavigator({
 
     });
 
-    const CustomDrawerContentComponent = (props) => (
-        <Container>
-            <content></content>
-              <Header style={styles.drawerHeader}>
-                <Body>
-                    <Image
-                    style={styles.drawerImage}
-                    source={require('../assets/multi-user-icon.png')} />
-                </Body>
-            </Header>
-            <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
-              <DrawerItems {...props} />
-            </SafeAreaView>
-                   
-      </Container>
-      );
 
   const styles = StyleSheet.create({
     icon: {
@@ -95,7 +76,8 @@ const MyDrawerNavigator = createDrawerNavigator({
        navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
       }),
      },
@@ -104,7 +86,8 @@ const MyDrawerNavigator = createDrawerNavigator({
        navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
       }),
        },
@@ -112,7 +95,8 @@ const MyDrawerNavigator = createDrawerNavigator({
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
       }),
     },
@@ -120,7 +104,8 @@ const MyDrawerNavigator = createDrawerNavigator({
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
       }),
      },
@@ -128,7 +113,8 @@ const MyDrawerNavigator = createDrawerNavigator({
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
         
       }),
@@ -137,14 +123,15 @@ const MyDrawerNavigator = createDrawerNavigator({
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {
-          backgroundColor: '#2E40A0',
+          backgroundColor: '#2EA073',
+          color:'#fff',
       },
       }),
      },
     DrawerNavigator: MyDrawerNavigator  
   }, {
     initialRouteName: 'DrawerNavigator',
-    cardStyle: { backgroundColor: '#2E40A0' },
+    cardStyle: { backgroundColor: '#2EA073' },
   },
   )
   

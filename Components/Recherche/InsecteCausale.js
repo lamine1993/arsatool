@@ -3,26 +3,46 @@ import {
   View,
   Text,
   StyleSheet,
+  FlatList,
   Image
 } from "react-native";
 
 import { Container, Content, Icon, Button } from 'native-base'
 import CustomHeader from '../CustomHeader'
+import attaques from '../Helpers/Insectes'
+import InsecteItem from './Items/InsecteItem'
 
 class InsecteCausale extends Component {
+    constructor(props) {
+        super(props)
+        this.idCulture=this.props.navigation.state.params.id
+        this.nomCulture=this.props.navigation.state.params.nomCulture
+        this.localisation=this.props.navigation.state.params.localisation
+        this.type=this.props.navigation.state.params.type
+         
+    }
 
+    _displayInsectes = (insecte) => {
+        
+       // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
+        this.props.navigation.push('FicheTechnique',{insecte:insecte})
+
+    }
     render() {
         return (
-
-            <Container>
-                <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                    <Button
-                        full
-                        onPress={() => this.props.navigation.push('FicheTechnique')}>
-                        <Text style={{ color: 'white' }}>InsecteCausale</Text>
-                    </Button>
-                </Content>
-            </Container>
+                <View style={styles.container}>
+                    <FlatList
+                        
+                        data={attaques}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({item}) => <InsecteItem insecte={item.insecte} displayInsectes={this._displayInsectes}/>}
+                        onEndReachedThreshold={0.5}
+                        onEndReached={() => {
+                            console.log("onEndReached")
+                          }
+                        }
+                    />
+                </View>
         )
     }
 
@@ -34,5 +54,8 @@ const styles = StyleSheet.create({
     icon: {
         height: 24,
         width: 24
+    },
+    container:{
+        backgroundColor: '#fff',
     }
 })

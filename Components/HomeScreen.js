@@ -3,10 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Image
+  Image,
+  Dimensions,
+  ImageBackground,
+  Drawer 
 } from "react-native";
-import { Icon, Button, Container, Header, Content, Left } from 'native-base'
+import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 import CustomHeader from './CustomHeader'
+import SideBar from "../Navigation/SideBar.js";
+
 class HomeScreen extends React.Component {
 
     static navigationOptions=({navigation})=>({
@@ -22,18 +27,25 @@ class HomeScreen extends React.Component {
     render() {
       return (
         <Container>
-
-        <Content contentContainerStyle={{ flex: 1, alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
-            <Text style={{alignItems: 'center'}}>
-              Bienvenue dans l'application AAR SA TOOL
-            </Text>
-            <Text>
-              Connaitre et maitriser les insectes ravageurs des cultures maraichère
-            </Text>
+            <Content contentContainerStyle={{ flex: 1, alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
+              <Card style={{ width: Dimensions.get('window').width-70}}>
+                <CardItem cardBody>
+                  <Image source={require('../assets/logo.png')} style={{height:100, width: null, flex: 1}}/>
+                </CardItem>
+                <CardItem bordered>
+                    <Body>
+                      <Text style={{justifyContent:'center'}}>
+                        Connaitre et maitriser les insectes ravageurs des cultures maraichère
+                      </Text>
+                    </Body>
+                  </CardItem>
+              </Card>
+              
             <Button
                 full
+                style={styles.bouton}
                 onPress={() => this.props.navigation.navigate('Debut')}>
-                <Text style={{ color: 'white' }}>Go to Home Notifications</Text>
+                <Text style={{ color: 'white' }}>IDENTIFIER ATTAQUE</Text>
             </Button>
         </Content>
        
@@ -48,5 +60,13 @@ class HomeScreen extends React.Component {
       width: 24,
       height: 24,
     },
+    bouton: {
+      backgroundColor: '#2EA073',
+    },
+    bg_image: {
+      resizeMode: 'stretch',
+      justifyContent:'center', 
+      alignItems:'center',
+    }
   });
 export default HomeScreen;
