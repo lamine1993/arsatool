@@ -44,7 +44,7 @@ class HomeScreen extends React.Component {
             <Button
                 full
                 style={styles.bouton}
-                onPress={() => this.props.navigation.navigate('Debut')}>
+                onPress={() => this.props.navigation.navigate('Culture')}>
                 <Text style={{ color: 'white' }}>IDENTIFIER ATTAQUE</Text>
             </Button>
         </Content>

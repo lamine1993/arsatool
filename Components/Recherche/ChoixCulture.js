@@ -3,6 +3,7 @@ import React from 'react'
 import {View, TextInput, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator} from 'react-native'
 import lesCultutes from '../Helpers/Culture'
 import CultureItem from './Items/CultureItem'
+import { Container } from 'native-base';
 
 
 class ChoixCulture extends React.Component {
@@ -21,8 +22,9 @@ class ChoixCulture extends React.Component {
     render(){
         return (
             <View style={styles.container}>
+            <Container>
                 <Text style={styles.titre}>
-                    CULTURE
+                    CHOISIR LA CULTURE 
                 </Text>
                 <FlatList
                     
@@ -35,6 +37,7 @@ class ChoixCulture extends React.Component {
                       }
                     }
                 />
+            </Container>
             </View>
         )
     }
@@ -51,13 +54,16 @@ const styles = StyleSheet.create({
     },
     titre:{
         flex:1,
-        margin: 10,
+        margin:10,
         justifyContent: 'center',
         width: Dimensions.get('window').width-70,
         alignItems:'center',
         borderRadius: 4,
-        borderWidth: 1,
-        borderColor: '#B5E560',
+        borderWidth: 2,
+        borderColor: '#2EA073',
+        textAlign:'center',
+        textAlignVertical:'center',
+        fontSize:25
         
     }
   });
