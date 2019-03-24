@@ -15,7 +15,7 @@ class InsecteItem extends React.Component {
             <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
               <Card style={{ width: Dimensions.get('window').width-70}}>
                 <CardItem cardBody>
-                  <Image source={require('../../../assets/Puceron.png')} style={{height:150, width: null, flex: 1}}/>
+                  <Image source={insecte.insecteImage} style={{height:150, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem bordered>
                     <Body style={{flex: 1, flexDirection: 'row'}}>

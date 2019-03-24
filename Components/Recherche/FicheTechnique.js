@@ -27,7 +27,7 @@ class FicheTechnique extends Component {
                    </Text>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={require('../../assets/Puceron.png')} style={{height:200, width: null, flex: 1}}/>
+                  <Image source={this.insecte.insecteImage} style={{height:200, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem cardBody>
                     <Text style={{ color: '#F00' }}>

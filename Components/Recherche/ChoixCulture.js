@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
       backgroundColor:'#fff',
     },
     titre:{
-        flex:1,
         margin:10,
         justifyContent: 'center',
         width: Dimensions.get('window').width-70,
