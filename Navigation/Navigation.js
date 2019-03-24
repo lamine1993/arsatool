@@ -11,6 +11,7 @@ import Localisation from '../Components/Recherche/Localisation'
 import DegatType from '../Components/Recherche/DegatType'
 import InsecteCausale from '../Components/Recherche/InsecteCausale'
 import FicheTechnique from '../Components/Recherche/FicheTechnique' 
+import Attaques from '../Components/Recherche/Attaques';
 
 
 const MyDrawerNavigator = createDrawerNavigator({
@@ -92,6 +93,15 @@ const MyDrawerNavigator = createDrawerNavigator({
       }),
        },
     Localisation: {screen: Localisation,
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.state.routeName,
+        headerStyle: {
+          backgroundColor: '#2EA073',
+          color:'#fff',
+      },
+      }),
+    },
+    Attaques: {screen: Attaques,
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
         headerStyle: {

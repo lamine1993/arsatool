@@ -1,22 +1,16 @@
 // Components/Search.js
 import React from 'react'
 import {View, TextInput, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator} from 'react-native'
-import lesCultutes from '../Helpers/Culture'
-import CultureItem from './Items/CultureItem'
+import attaques from '../Helpers/Insectes'
+import AttaqueItem from './Items/AttaqueItem'
 import { Container } from 'native-base';
 
 
-class ChoixCulture extends React.Component {
+class Attaques extends React.Component {
     constructor(props) {
         super(props)
-        
-         
-    }
-    _displayLocalisationForCulture = (culture) => {
-        
-       // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
-        this.props.navigation.push('Attaques',{culture:culture})
-
+        this.culture=this.props.navigation.state.params.culture
+            
     }
 
     render(){
@@ -24,13 +18,13 @@ class ChoixCulture extends React.Component {
             <View style={styles.container}>
             <Container>
                 <Text style={styles.titre}>
-                    CHOISIR LA CULTURE 
+                    Identifier l'attaque
                 </Text>
                 <FlatList
                     
-                    data={lesCultutes}
+                    data={attaques}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => <CultureItem culture={item} displayLocalisationForCulture={this._displayLocalisationForCulture}/>}
+                    renderItem={({item}) => <AttaqueItem attaque={item}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
                         console.log("onEndReached")
@@ -67,6 +61,6 @@ const styles = StyleSheet.create({
     }
   });
 
-export default ChoixCulture
+export default Attaques
 
 //onPress={() => this.props.navigation.push('Localisation')}

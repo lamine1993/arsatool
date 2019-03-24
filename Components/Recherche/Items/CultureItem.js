@@ -25,7 +25,7 @@ class CultureItem extends React.Component {
                       </Left>
                       <Right>
                           <Button rounded danger
-                          onPress={() => displayLocalisationForCulture(culture.id, culture.nomCulture)}
+                          onPress={() => displayLocalisationForCulture(culture)}
                           style={styles.fiche}><Text style={{fontSize:15, color: 'white', alignContent:'center' }}>Ravageur</Text>
                           </Button>
                       </Right>
