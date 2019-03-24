@@ -13,6 +13,13 @@ class Attaques extends React.Component {
             
     }
 
+    _displayFiche = (insecte) => {
+        
+        // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
+         this.props.navigation.push('FicheTechnique',{insecte:insecte})
+ 
+     }
+
     render(){
         return (
             <View style={styles.container}>
@@ -24,7 +31,7 @@ class Attaques extends React.Component {
                     
                     data={attaques}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => <AttaqueItem attaque={item}/>}
+                    renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
                         console.log("onEndReached")

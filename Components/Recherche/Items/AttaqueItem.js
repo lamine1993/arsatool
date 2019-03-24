@@ -5,17 +5,19 @@ import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image, FlatList }
 import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 import { FlingGestureHandler } from 'react-native-gesture-handler';
 
-class CultureItem extends React.Component {
+class attaqueItem extends React.Component {
   render() {
-      const { attaque } = this.props
+      const { attaque, displayFiche } = this.props
     //console.log(this.props)
     //onPress={() => displayLocalisationForCulture(culture.id, culture.nomCulture)}
     return (
-        <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center',height: 200, padding: 10 }}>
+        <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', padding: 10 }}>
+            
             <FlatList
+                    style={{height: 200}}
                     horizontal={true}
                     data={attaque.imageAttaques}
-                    keyExtractor={(item) => item}
+                    keyExtractor={(item) => item.toString()}
                     renderItem={({item}) => <Image source={item} style={{margin:10,height:200}}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
@@ -23,6 +25,13 @@ class CultureItem extends React.Component {
                       }
                     }
                 />
+                <Button 
+                 onPress={() => displayFiche(attaque.insecte)}
+                 style={styles.fiche}><Text style={{ color: 'white' }}>Fiche Technique</Text>
+                 </Button>
+                      
+              
+              
       </Content>
     )
   }
@@ -31,9 +40,10 @@ class CultureItem extends React.Component {
 const styles = StyleSheet.create({
         fiche:{
           borderRadius: 4,
-          width:(Dimensions.get('window').width-70)/4 + 10
+          width: 100
+          
       }
   });
 
 
-export default CultureItem
+export default attaqueItem
