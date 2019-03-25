@@ -12,24 +12,23 @@ class CultureItem extends React.Component {
     //onPress={() => displayLocalisationForCulture(culture.id, culture.nomCulture)}
     return (
         <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', /*justifyContent: 'center',*/ padding: 10 }}>
-            <Card style={{ width: Dimensions.get('window').width-70, alignItems:'center', textAlignVertical:'center'}}>
+            <Card style={{ heigth:400, width: Dimensions.get('window').width-50, alignItems:'center', textAlignVertical:'center'}}>
               <CardItem cardBody>
-                <Text style={{fontSize:20, borderBottomWidth:2, borderBottomColor:'black'}}>{culture.nomCulture}</Text>
+                <Text style={{width: Dimensions.get('window').width-50,textAlign:'center',textAlignVertical:'center', alignItems:'center', fontSize:20, borderBottomWidth:1, borderBottomColor:'black'}}>{culture.nomCulture}</Text>
               </CardItem>
               <CardItem bordered>
                   <Body style={{flex: 1, flexDirection: 'row'}}>
                       <Left>
-                          <Button rounded success
-                            style={styles.fiche}><Text style={{fontSize:15, color: 'white', alignContent:'center', textAlignVertical:'center' }}>Utile</Text>
-                          </Button>
+                          <TouchableOpacity
+                            style={styles.fiche}><Text style={{color:'green'}}>Insecte Utile</Text>
+                          </TouchableOpacity>
                       </Left>
                       <Right>
-                          <Button rounded danger
+                          <TouchableOpacity
                           onPress={() => displayLocalisationForCulture(culture)}
-                          style={styles.fiche}><Text style={{fontSize:15, color: 'white', alignContent:'center' }}>Ravageur</Text>
-                          </Button>
-                      </Right>
-                    
+                          style={styles.fiche}><Text style={{color:'red'}}>Attaques</Text>
+                          </TouchableOpacity>
+                      </Right>    
                   </Body>
                 </CardItem>
             </Card>
@@ -41,7 +40,10 @@ class CultureItem extends React.Component {
 const styles = StyleSheet.create({
         fiche:{
           borderRadius: 4,
-          width:(Dimensions.get('window').width-70)/4 + 10
+         // width:(Dimensions.get('window').width-70)/4 + 10,
+          alignItems:'center',
+          textAlign:'center',
+         alignContent:'center'
       }
   });
 

@@ -29,7 +29,7 @@ class ChoixCulture extends React.Component {
                 <FlatList
                     
                     data={lesCultutes}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item.nomCulture.toString()}
                     renderItem={({item}) => <CultureItem culture={item} displayLocalisationForCulture={this._displayLocalisationForCulture}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     titre:{
         margin:10,
         justifyContent: 'center',
-        width: Dimensions.get('window').width-70,
+        width: Dimensions.get('window').width-50,
         alignItems:'center',
         borderRadius: 4,
         borderWidth: 2,
