@@ -28,7 +28,11 @@ export default dataCulture = [
             require('../../assets/images/banane_3.jpg'),
             require('../../assets/images/banane_4.jpg')
         ],
-        culture: null,
+        culture: {
+            id:181809,
+            nomCulture: 'Banane',
+            imageCulture: require('../../assets/images/banane.jpg')
+        },
         chercheur:	null,
         administrateur:	null,
     },
@@ -61,7 +65,11 @@ export default dataCulture = [
             require('../../assets/images/mais_3.jpg'),
             require('../../assets/images/mais_4.jpg')
         ],
-        culture: null,
+        culture:{
+            id:181808,
+            nomCulture:'Mais',
+            imageCulture: require('../../assets/images/mais.jpg')
+        },
         chercheur:	null,
         administrateur:	null,
     },
@@ -94,7 +102,11 @@ export default dataCulture = [
             require('../../assets/images/tomate_3.jpg'),
             require('../../assets/images/tomate_4.jpg')
         ],
-        culture: null,
+        culture: {
+            id:181810,
+            nomCulture: 'Tomate',
+            imageCulture: require('../../assets/images/tomate.jpg')
+        },
         chercheur:	null,
         administrateur:	null,
     },
@@ -127,7 +139,11 @@ export default dataCulture = [
             require('../../assets/images/ble_3.jpg'),
             require('../../assets/images/ble_4.jpg'),
         ],
-        culture: null,
+        culture: {
+            id:181811,
+            nomCulture: 'ble',
+            imageCulture: require('../../assets/images/ble.jpg')
+        },
         chercheur:	null,
         administrateur:	null,
     }
