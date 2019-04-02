@@ -82,7 +82,7 @@ class Attaques extends React.Component {
                 <FlatList
                     
                     data={attaques}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => "attaques"+item.id.toString()}
                     renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {

@@ -34,7 +34,7 @@ class InsecteCausale extends Component {
                     <FlatList
                         
                         data={attaques}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => "insectes"+item.id}
                         renderItem={({item}) => <InsecteItem insecte={item.insecte} displayInsectes={this._displayInsectes}/>}
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {

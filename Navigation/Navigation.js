@@ -5,10 +5,6 @@ import NotificationsScreen from '../Components/NotificationsScreen'
 import {StyleSheet, Image, TouchableOpacity} from 'react-native'
 import { Header, Body, Container, Icon } from 'native-base'
 import SideBar from "./SideBar.js";
-import DebutSearch from '../Components/Recherche/DebutSearch' 
-import ChoixCulture from '../Components/Recherche/ChoixCulture'
-import Localisation from '../Components/Recherche/Localisation'
-import DegatType from '../Components/Recherche/DegatType'
 import InsecteCausale from '../Components/Recherche/InsecteCausale'
 import FicheTechnique from '../Components/Recherche/FicheTechnique' 
 import Attaques from '../Components/Recherche/Attaques';
@@ -72,35 +68,6 @@ const MyDrawerNavigator = createDrawerNavigator({
   });
 
   export const Stack = createStackNavigator({
-    Debut: {
-       screen: DebutSearch,
-       navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName,
-        headerStyle: {
-          backgroundColor: '#2EA073',
-          color:'#fff',
-      },
-      }),
-     },
-    Culture: {
-       screen: ChoixCulture,
-       navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName,
-        headerStyle: {
-          backgroundColor: '#2EA073',
-          color:'#fff',
-      },
-      }),
-       },
-    Localisation: {screen: Localisation,
-      navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName,
-        headerStyle: {
-          backgroundColor: '#2EA073',
-          color:'#fff',
-      },
-      }),
-    },
     Attaques: {screen: Attaques,
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
@@ -110,15 +77,6 @@ const MyDrawerNavigator = createDrawerNavigator({
       },
       }),
     },
-    DegatType: { screen: DegatType,
-      navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName,
-        headerStyle: {
-          backgroundColor: '#2EA073',
-          color:'#fff',
-      },
-      }),
-     },
     InsecteCausale: { screen: InsecteCausale,
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
