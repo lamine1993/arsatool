@@ -19,7 +19,7 @@ import Dialog, {
   SlideAnimation,
   ScaleAnimation,
 } from 'react-native-popup-dialog';
-import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base';
+import {Spinner,Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base';
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import CustomHeader from './CustomHeader'
 import SideBar from "../Navigation/SideBar.js";
@@ -81,7 +81,7 @@ class HomeScreen extends React.Component {
           visible={this.state.isLoading}
         >
           <View>
-            <ActivityIndicator size='large'/>
+            <Spinner color='green' />
           </View>
         </Dialog>
         )
@@ -147,9 +147,7 @@ class HomeScreen extends React.Component {
                           </TouchableHighlight> 
                         </View> 
                     </View>
-                    <View style={styles.bouton_partie_ligne}>
-                    </View>
-                    <View style={styles.bouton_partie_ligne}>
+                    <View style={styles.bouton_partie_ligne_pub}>
                     </View>
                   </View>
 
@@ -245,6 +243,7 @@ class HomeScreen extends React.Component {
       flex: 2,
       flexDirection: 'column',
       justifyContent: 'space-around',
+     
     },
     priview_culture:{
       flex: 1,
@@ -254,9 +253,13 @@ class HomeScreen extends React.Component {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-around',
+      marginTop:5
     },
     bouton_partie_ligne_bouton:{
 
+    },
+    bouton_partie_ligne_pub:{
+      flex: 2,
     },
     bouton_partie_ligne_bouton_title:{
       position: 'absolute',

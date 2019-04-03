@@ -11,15 +11,9 @@ class Attaques extends React.Component {
         super(props)
         this.culture=this.props.navigation.state.params.culture
         this.state = {
-            localisation: undefined,
             type: undefined
         };
     }
-    onValueChangeLocalisation(value) {
-        this.setState({
-            localisation: value
-        });
-      }
 
     onValueChangeType(value) {
       this.setState({
@@ -37,33 +31,13 @@ class Attaques extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-            <Container>
-                    <Form style={{flexDirection:'row', justifyContent:'center'}}>
-                      <Right>
-                        <Item picker style={{ width:(Dimensions.get('window').width-50)/2-10 }}>
+            
+                    <Form style={{ justifyContent:'flex-start'}}>
+                        <Item picker style={{ width:(Dimensions.get('window').width-50)/3 }}>
                             <Picker
                                 mode="dropdown"
                                 iosIcon={<Icon name="arrow-down" />}
-                                style={{ width:undefined,  fontSize:12 }}
-                                placeholder="Select Lacalisation"
-                                placeholderStyle={{ color: "#bfc6ea"}}
-                                placeholderIconColor="#007aff"
-                                selectedValue={this.state.localisation}
-                                onValueChange={this.onValueChangeLocalisation.bind(this)}
-                            >
-                            <Picker.Item label="FRUITS" value="key0" />
-                            <Picker.Item label="FLEURS" value="key1" />
-                            <Picker.Item label="FEUILLES" value="key2" />
-                            <Picker.Item label="TIGES" value="key3" />
-                        </Picker>
-                        </Item>
-                     </Right>
-                     <Left>
-                        <Item picker style={{ width:(Dimensions.get('window').width-50)/2-10 }}>
-                            <Picker
-                                mode="dropdown"
-                                iosIcon={<Icon name="arrow-down" />}
-                                style={{ width:undefined,  fontSize:12 }}
+                                style={{  fontSize:7 }}
                                 placeholder="Select Type Degat"
                                 placeholderStyle={{ color: "#bfc6ea"}}
                                 placeholderIconColor="#007aff"
@@ -76,11 +50,10 @@ class Attaques extends React.Component {
                             <Picker.Item label="NECROSES" value="key3" />
                         </Picker>
                         </Item>
-                        </Left>
                     </Form>
-                
+                <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}></View>
                 <FlatList
-                    
+                    //style={styles.attaques}
                     data={attaques}
                     keyExtractor={(item) => "attaques"+item.id.toString()}
                     renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
@@ -90,7 +63,6 @@ class Attaques extends React.Component {
                       }
                     }
                 />
-            </Container>
             </View>
         )
     }
@@ -102,8 +74,8 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent: 'center',
       alignItems:'center',
-      paddingHorizontal: 10,
       backgroundColor:'#fff',
+      width: Dimensions.get('window').width,
     },
     titre:{
         margin:10,
@@ -117,6 +89,11 @@ const styles = StyleSheet.create({
         textAlignVertical:'center',
         fontSize:25
         
+    },
+    attaques:{
+      borderTopWidth:1,
+      marginBottom:1,
+      borderTopColor:'rgba(0,0,0,0.5)'
     }
   });
 

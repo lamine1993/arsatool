@@ -14,79 +14,96 @@ class attaqueItem extends React.Component {
       { title: "Description", content: ""+attaque.description },
     ];
     return (
-        <Content contentContainerStyle={{backgroundColor:'with', alignItems: 'center', padding: 10 }}>
-            <Card>
-                <CardItem header bordered>
-                  <Right> 
-                     <Text>Localisation: {attaque.localisation}</Text>
-                  </Right>
-                  <Left>
-                     <Text>Type de Degat: {attaque.typeDegat}</Text>
-                   </Left> 
-                </CardItem>
-                <CardItem cardBody>
-                  <Content padder>
-                    <Accordion
-                      dataArray={dataArray}
-                      icon="add"
-                      expandedIcon="remove"
-                      iconStyle={{ color: "green" }}
-                      expandedIconStyle={{ color: "red" }}
-                      animation={true}
-                       expanded={true}
-                    />
-                  </Content>
-                </CardItem>
-                <CardItem>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                  <View style={styles.image_insecte}> 
+                     <Thumbnail large source={attaque.insecte.insecteImage}/>
+                     <Text style={{justifyContent:'center', }}>{attaque.insecte.nomInsecte} </Text>
+                  </View>
+                  <View style={styles.type_style}>
+                     <Text>Type de Degat: </Text>
+                     <Text>{attaque.typeDegat}</Text>
+                   </View>
+              </View> 
+                
+              <View style={styles.content}>
                   <FlatList
                         style={styles.header_attaque}
                         horizontal={true}
                         data={attaque.imageAttaques}
                         keyExtractor={(item) => item.toString()}
-                        renderItem={({item}) => <Image source={item} style={styles.image}/>}
+                        renderItem={({item}) => <Image source={item} style={styles.image_attaque}/>}
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {
                             console.log("onEndReached")
                           }
                         }
                     />
-                </CardItem>
-                <CardItem footer bordered>
-                  <Right><Text>Date Creation: {attaque.dateValidation}</Text></Right>
-                  <Left>
-                      <TouchableOpacity 
-                        onPress={() => displayFiche(attaque.insecte)}
-                        style={styles.fiche}><Text style={{ color: 'blue' }}>Fiche Technique</Text>
-                      </TouchableOpacity>
-                  </Left> 
-                </CardItem>
-            </Card>      
-      </Content>
+                </View>
+                <View style={styles.footer}>
+                    <View style={{alignItems: 'flex-start'}}>
+                       <Text>Date Creation: </Text>
+                       <Text>{attaque.dateValidation}</Text>
+                    </View>
+                    <View>
+                        <TouchableOpacity 
+                          onPress={() => displayFiche(attaque.insecte)}
+                          style={styles.fiche}><Text style={{ color: 'blue', }}>Fiche Technique</Text>
+                        </TouchableOpacity>
+                    </View> 
+                </View>
+        </View>      
     )
   }
 }
 
 const styles = StyleSheet.create({
-        fiche:{
-          borderRadius: 4,
-      },
-      image:{
-        borderColor: '#2EA073',
-        borderRadius: 3,
-        borderWidth: 1,
-        margin:2,
-        height:200
-      },
-      header_attaque:{
-        height:210,
-        borderWidth:1,
-        borderColor: '#2EA073',
+     container:{
+       flex:1,
+       flexDirection: 'column',
+       marginBottom: 20,
+       //marginStart:3,
+       borderBottomWidth:0.5,
+       borderBottomColor:'rgba(0, 0, 0, 0.5)',
+       padding:5
 
-      },
-      header:{
+     },
+     image_insecte:{
+       flexDirection:'row',
+       alignItems:'center'
+     },
+     type_style:{
+      alignItems:'flex-start'
+     },
+     header:{
         flex:1,
-        flexDirection: 'row'
-      }
+        flexDirection:'row',
+        justifyContent:'space-between'
+     },
+     image_insecte:{
+        flexDirection:'row'
+      },
+      type_style:{
+          justifyContent:'center'
+      },
+     content:{
+        flex:2,
+     },
+     header_attaque:{
+        marginTop: 4,
+        marginBottom: 4
+     },
+     footer:{
+        flex:1,
+        flexDirection:'row',
+        justifyContent:'space-between',
+     },
+     image_attaque:{
+       width:150,
+       height: 150,
+       borderRadius: 10,
+       margin: 5,
+     }
 
   });
 
