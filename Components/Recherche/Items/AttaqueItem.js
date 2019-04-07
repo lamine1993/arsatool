@@ -47,7 +47,7 @@ class attaqueItem extends React.Component {
                     </View>
                     <View>
                         <TouchableOpacity 
-                          onPress={() => displayFiche(attaque.insecte)}
+                          onPress={() => displayFiche(attaque)}
                           style={styles.fiche}><Text style={{ color: 'blue', }}>Fiche Technique</Text>
                         </TouchableOpacity>
                     </View> 
@@ -65,11 +65,9 @@ const styles = StyleSheet.create({
        //marginStart:3,
        borderBottomWidth:0.5,
        borderBottomColor:'rgba(0, 0, 0, 0.5)',
-       padding:5
 
      },
      image_insecte:{
-       flexDirection:'row',
        alignItems:'center'
      },
      type_style:{

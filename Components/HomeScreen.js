@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Drawer 
 } from "react-native";
+import { connect } from 'react-redux'
 import Dialog, {
   DialogTitle,
   DialogContent,
@@ -19,22 +20,17 @@ import Dialog, {
   SlideAnimation,
   ScaleAnimation,
 } from 'react-native-popup-dialog';
+import {
+  selectCulture,  
+  selectLocalisation, 
+  unselectLocalisation
+} from '../Store/actions/actionRechercheIndex';
 import {Spinner,Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base';
-import { Row, Grid, Col } from 'react-native-easy-grid'
-import CustomHeader from './CustomHeader'
-import SideBar from "../Navigation/SideBar.js";
-import attaques from './Helpers/Insectes'
+
 
 class HomeScreen extends React.Component {
   constructor(props){
     super(props)
-    this.state={
-      cultures: [],
-      cultureChoisie:"",
-      isLoading: false,
-      customBackgroundDialog: false 
-    }
-    this.largeur=Dimensions.get('window').width
   }
    
 
@@ -49,25 +45,28 @@ class HomeScreen extends React.Component {
     })
      
     _cultureSelected(culture){
-      this.setState({customBackgroundDialog:false})
-      this.props.navigation.navigate('Attaques',{culture:attaques});
+      this.props.onSelectCulture(culture);
+      this.props.navigation.navigate('Attaques');
     } 
-    _displayCultures=(localisation)=>{
-      //requete culture.....
-       this.setState({isLoading:true})
-       this.setState({
-         customBackgroundDialog: true,
-         isLoading:false
-        })
-      //this.props.navigation.navigate('Culture');
+
+    _selectLocalisation= localisation =>{
+      console.log("dialog: "+this.props.customBackgroundDialog);
+      this.props.onSelectLocalisation(localisation);
+      console.log("dialog: "+this.props.customBackgroundDialog);
+    }
+
+    _unselectLocalisation=()=>{
+      console.log("dialog localisation: "+this.props.customBackgroundDialog);
+      this.props.onUnselectLocalisation();
+      console.log("dialog localisation: "+this.props.customBackgroundDialog);
     }
 
     _displayLoading() {
-      if (this.state.isLoading) {
+      if (this.props.isLoading) {
         return (
           <Dialog
           onTouchOutside={() => {
-            this.setState({ isLoading: false });
+            this.props.isLoading=true
           }}
          // zIndex={1000}
           width={1}
@@ -78,7 +77,7 @@ class HomeScreen extends React.Component {
             justifyContent:'center',
             alignItems: 'center'
           }}
-          visible={this.state.isLoading}
+          visible={this.props.isLoading}
         >
           <View>
             <Spinner color='green' />
@@ -96,7 +95,7 @@ class HomeScreen extends React.Component {
                   <View style={styles.bouton_partie_ligne}>
                    <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                            onPress={()=>this._displayCultures("FEUILLE")}
+                            onPress={()=>{this._selectLocalisation("FEUILLE")}}
                             
                             >
                               <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer}/>
@@ -105,7 +104,7 @@ class HomeScreen extends React.Component {
                     </View>
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight
-                              onPress={()=>this._displayCultures("FRUIT")}
+                              onPress={()=>this._selectLocalisation("FRUIT")}
                           >   
                             <Image source={require('../assets/menu-image/legumes.jpg')} style={styles.imageContainer}/>
                           </TouchableHighlight>
@@ -114,7 +113,7 @@ class HomeScreen extends React.Component {
                     <View style={styles.bouton_partie_ligne}>
                       <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                            onPress={()=>this._displayCultures("RACINE")}
+                            onPress={()=>this._selectLocalisation("RACINE")}
                           >        
                           <Image source={require('../assets/menu-image/racine.jpg')} style={styles.imageContainer}/>
                                 
@@ -122,7 +121,7 @@ class HomeScreen extends React.Component {
                         </View>   
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                             onPress={()=>this._displayCultures("TIGE")}
+                             onPress={()=>this._selectLocalisation("TIGE")}
                           >        
                               <Image source={require('../assets/menu-image/tige.jpg')} style={styles.imageContainer}/>
                                   
@@ -132,7 +131,7 @@ class HomeScreen extends React.Component {
                     <View style={styles.bouton_partie_ligne}>
                       <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                            onPress={()=>this._displayCultures("FRUIT")}
+                            onPress={()=>this._selectLocalisation("FRUIT")}
                           >        
                           <Image source={require('../assets/menu-image/fruit.png')} style={styles.imageContainer}/>
                                 
@@ -140,7 +139,7 @@ class HomeScreen extends React.Component {
                         </View>   
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                             onPress={()=>this._displayCultures("FLEUR")}
+                             onPress={()=>this._selectLocalisation("FLEUR")}
                           >        
                               <Image source={require('../assets/menu-image/fleur.jpg')} style={styles.imageContainer}/>
                                   
@@ -152,12 +151,8 @@ class HomeScreen extends React.Component {
                   </View>
 
         <Dialog
-          onDismiss={() => {
-            this.setState({ customBackgroundDialog: false });
-          }}
-          onTouchOutside={() => {
-            this.setState({ customBackgroundDialog: false });
-          }}
+          onDismiss={()=>{this._unselectLocalisation()}}
+          onTouchOutside={()=>{this._unselectLocalisation()}}
           //zIndex={1000}
           width={ Dimensions.get('window').width}
           height={0.9}
@@ -181,30 +176,21 @@ class HomeScreen extends React.Component {
                 text="CANCEL"
                 bordered
                 onPress={() => {
-                  this.setState({ customBackgroundDialog: false });
+                  this._unselectLocalisation()
                 }}
-                key="button-1"
-              />
-              <DialogButton
-                text="OK"
-                bordered
-                onPress={() => {
-                  this.setState({ customBackgroundDialog: false });
-                }}
-                key="button-2"
               />
             </DialogFooter>
           }
-          visible={this.state.customBackgroundDialog}
+          visible={this.props.customBackgroundDialog}
         >
         <DialogContent
            style={styles.dialogContentView}
         >
             <FlatList
               style={styles.header_attaque}
-              data={attaques}
+              data={this.props.attaques}
               numColumns={2}
-              keyExtractor={(item) => item.id.toString()+""}
+              keyExtractor={(item, index) => index+"homme"+item.id.toString()+""}
               renderItem={({item}) => 
                <TouchableHighlight
                   onPress={()=>this._cultureSelected(item.culture)
@@ -221,7 +207,6 @@ class HomeScreen extends React.Component {
             />
          </DialogContent>
         </Dialog>
-        {this._displayLoading()}
         
               
       </View>
@@ -282,8 +267,8 @@ class HomeScreen extends React.Component {
       //borderColor: '#2EA073',
       borderRadius: 10,
       borderWidth: 1,
-      width:Dimensions.get('window').width/2-15,
-      height:120,
+      width:125,
+      height:125,
       margin: 4
     },
     text:{
@@ -331,4 +316,23 @@ class HomeScreen extends React.Component {
     }
     
   });
-export default HomeScreen;
+
+  const mapStateToProps = state => {
+    //console.log(state);
+    return {
+      customBackgroundDialog: state.recherche.customBackgroundDialog,
+      isLoading: state.recherche.isLoading,
+      attaques: state.recherche.attaques
+    };
+  };
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      onSelectLocalisation: localisation =>  dispatch(selectLocalisation(localisation)),
+      onUnselectLocalisation: ()=>dispatch(unselectLocalisation()),
+      onSelectCulture : culture =>dispatch(selectCulture(culture))
+    }
+  }
+
+//export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

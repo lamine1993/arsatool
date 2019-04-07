@@ -8,12 +8,11 @@ import {
 } from "react-native";
 
 import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
-import CustomHeader from '../CustomHeader'
+import { connect } from 'react-redux'
 
 class FicheTechnique extends Component {
     constructor(props) {
-        super(props)
-        this.insecte=this.props.navigation.state.params.insecte         
+        super(props)      
     }
     render() {
         return (
@@ -23,11 +22,11 @@ class FicheTechnique extends Component {
                 <Card>
                 <CardItem cardBody>
                    <Text style={{ color: '#00F', alignItems: 'center' }}>
-                   {this.insecte.nomInsecte}
+                   {this.props.attaque.insecte.nomInsecte}
                    </Text>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={this.insecte.insecteImage} style={{height:200, width: null, flex: 1}}/>
+                  <Image source={this.props.attaque.insecte.insecteImage} style={{height:200, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem cardBody>
                     <Text style={{ color: '#F00' }}>
@@ -36,7 +35,7 @@ class FicheTechnique extends Component {
                 </CardItem>
                 <CardItem cardBody>
                     <Text>
-                      {this.insecte.description}
+                      {this.props.attaque.insecte.description}
                     </Text>
                 </CardItem>
                      
@@ -47,7 +46,7 @@ class FicheTechnique extends Component {
                 </CardItem>
                 <CardItem cardBody>
                     <Text>
-                      {this.insecte.methode}
+                      {this.props.attaque.insecte.methode}
                     </Text>
                 </CardItem>
               </Card>
@@ -58,7 +57,6 @@ class FicheTechnique extends Component {
 
 }
 
-export default FicheTechnique
 
 const styles = StyleSheet.create({
     icon: {
@@ -66,3 +64,18 @@ const styles = StyleSheet.create({
         width: 24
     }
 })
+
+const mapStateToProps = state => {
+  return {
+    attaque: state.recherche.attaque
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch: (action) => { dispatch(action) }
+  }
+}
+
+//export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(FicheTechnique);

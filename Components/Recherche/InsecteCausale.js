@@ -15,17 +15,13 @@ import InsecteItem from './Items/InsecteItem'
 class InsecteCausale extends Component {
     constructor(props) {
         super(props)
-        this.idCulture=this.props.navigation.state.params.id
-        this.nomCulture=this.props.navigation.state.params.nomCulture
-        this.localisation=this.props.navigation.state.params.localisation
-        this.type=this.props.navigation.state.params.type
          
     }
 
     _displayInsectes = (insecte) => {
         
        // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
-        this.props.navigation.push('FicheTechnique',{insecte:insecte})
+        this.props.navigation.push('FicheTechnique')
 
     }
     render() {
