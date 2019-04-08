@@ -1,15 +1,11 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TouchableHighlight,
   Dimensions,
   FlatList,
-  ImageBackground,
-  ActivityIndicator,
-  Drawer 
 } from "react-native";
 import { connect } from 'react-redux'
 import Dialog, {
@@ -25,40 +21,30 @@ import {
   selectLocalisation, 
   unselectLocalisation
 } from '../Store/actions/actionRechercheIndex';
-import {Spinner,Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base';
+import {Spinner } from 'native-base';
+
+
 
 
 class HomeScreen extends React.Component {
   constructor(props){
     super(props)
   }
-   
 
-    static navigationOptions=({navigation})=>({
-        drawerLabel: 'Home',
-        title: "Home",
-        headerLeft: <Icon name='home' style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('DrawerOpen')} />,
-        drawerIcon: ({ tintColor }) => (
-          <Icon name='home' style={[styles.icon, {tintColor: tintColor}]}/>
-        ),
-        
-    })
-     
+  
+
     _cultureSelected(culture){
       this.props.onSelectCulture(culture);
       this.props.navigation.navigate('Attaques');
     } 
 
     _selectLocalisation= localisation =>{
-      console.log("dialog: "+this.props.customBackgroundDialog);
       this.props.onSelectLocalisation(localisation);
-      console.log("dialog: "+this.props.customBackgroundDialog);
+      
     }
 
     _unselectLocalisation=()=>{
-      console.log("dialog localisation: "+this.props.customBackgroundDialog);
       this.props.onUnselectLocalisation();
-      console.log("dialog localisation: "+this.props.customBackgroundDialog);
     }
 
     _displayLoading() {
