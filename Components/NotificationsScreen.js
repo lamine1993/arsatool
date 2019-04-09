@@ -27,8 +27,9 @@ class NotificationsScreen extends Component {
                 <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
                     <Button
                         full
+                        style={{backgroundColor: '#2EA073',}}
                         onPress={() => this.props.navigation.navigate('Home')}>
-                        <Text style={{ color: 'white' }}>Go to Home screen</Text>
+                        <Text style={{ color: 'white' }}>Page d'inscription</Text>
                     </Button>
                 </Content>
             </Container>

@@ -20,7 +20,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   }, {
         //drawerWidth: 300,
         initialRouteName: 'Home',
-        contentComponent: props => <SideBar />,
+        contentComponent: props => <SideBar {...props} />,
         navigationOptions: ({ navigation }) => ({
                 
                 title: 'AR SA TOOL',  // Title to appear in status bar
@@ -86,6 +86,7 @@ const MyDrawerNavigator = createDrawerNavigator({
           backgroundColor: '#2EA073',
           color:'#fff',
       },
+      headerTintColor: '#fff',
       }),
     },
     InsecteCausale: { screen: InsecteCausale,
@@ -95,6 +96,7 @@ const MyDrawerNavigator = createDrawerNavigator({
           backgroundColor: '#2EA073',
           color:'#fff',
       },
+
         
       }),
      },
@@ -105,6 +107,7 @@ const MyDrawerNavigator = createDrawerNavigator({
           backgroundColor: '#2EA073',
           color:'#fff',
       },
+      headerTintColor: '#fff',
       }),
      },
     DrawerNavigator: MyDrawerNavigator  

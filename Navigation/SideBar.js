@@ -1,6 +1,6 @@
 import React from "react";
-import {View , Image, FlatList, StyleSheet, TouchableHighlight, Dimensions } from "react-native";
-import { Container, Content, Text, List, ListItem, Icon } from "native-base";
+import {View , Image, StyleSheet, TouchableHighlight } from "react-native";
+import { Text, Icon} from "native-base";
 const routes = ["Home", "Notifications"];
 export default class SideBar extends React.Component {
   constructor(props){
@@ -11,7 +11,7 @@ export default class SideBar extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.header}>
           <Image source={require('../assets/eclosio.png')}
               style={{ 
                 height:180,
@@ -20,16 +20,20 @@ export default class SideBar extends React.Component {
                 alignItems:'center'
               }}/>
         </View>
-        <View style={styles.liste_item}>          
-          <TouchableHighlight
-              style={styles.item}
+        <View style={styles.content}>          
+          <TouchableHighlight             
               onPress={() => this.props.navigation.navigate('Home')}>
-              <Text style={styles.texte_item}>Home</Text>
+              <View style={styles.menu} >
+                  <Icon name='home' style={styles.icon}></Icon>
+                  <Text style={styles.text_menu}>HOME</Text>
+              </View>
           </TouchableHighlight>
           <TouchableHighlight
-              style={styles.item}
-              onPress={() => this.props.navigation.navigate('Home')}>
-              <Text style={styles.texte_item}>Home</Text>
+              onPress={() => this.props.navigation.navigate('Notifications')}>
+              <View style={styles.menu} >
+                  <Icon name='person' style={styles.icon}></Icon>
+                  <Text style={styles.text_menu}>INSCRIPTION</Text>
+              </View>
           </TouchableHighlight>
         </View> 
                 
@@ -38,21 +42,38 @@ export default class SideBar extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-    liste_item:{
-      marginTop:10
-    },
-    item:{
-        height:50,
-        padding:10,
-        margin:10,
-        flex:1,
-        flexDirection: 'row'
-    },
-    texte_item:{
-      alignItems:'center'
-    },
     container:{
+      flex:1,
+      flexDirection:'column'
+    },
+    header:{
+       flex: 1,
+       borderBottomWidth: 1,
+       borderBottomColor:'#2EA073'
+    },
+    content:{
+       flex:2,
+       flexDirection:'column'
+    },
+    menu:{
+       flexDirection:'row',
+       height:60,
+       padding:20,
+       alignItems:'center',
+       justifyContent:'flex-start',
+       borderBottomWidth: 0.5,
+       borderBottomColor:'#2EA073'
+    },
+    icon:{
+      fontSize: 30, 
+      color:'#2EA073',
+      
+    },
+    text_menu:{
+      color:'#2EA073',
+      marginStart:10,
       
     }
+
   
 });
