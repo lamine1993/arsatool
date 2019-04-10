@@ -7,6 +7,26 @@ export default class SideBar extends React.Component {
     super(props)
     console.log("navigation prop "+props)
   }
+
+  _setLoginComponent(){
+    return <TouchableHighlight
+                  onPress={() => this.props.navigation.navigate('Notifications')}>
+                  <View style={styles.menu} >
+                      <Icon name='person-add' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>INSCRIPTION</Text>
+                  </View>
+              </TouchableHighlight>
+  }
+
+  _setConnexionComponent(){
+    return <TouchableHighlight
+                  onPress={() => this.props.navigation.navigate('Notifications')}>
+                  <View style={styles.menu} >
+                      <Icon name='key' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>LOGIN</Text>
+                  </View>
+              </TouchableHighlight>
+  }
    
   render() {
     return (
@@ -20,21 +40,28 @@ export default class SideBar extends React.Component {
                 alignItems:'center'
               }}/>
         </View>
-        <View style={styles.content}>          
-          <TouchableHighlight             
-              onPress={() => this.props.navigation.navigate('Home')}>
-              <View style={styles.menu} >
-                  <Icon name='home' style={styles.icon}></Icon>
-                  <Text style={styles.text_menu}>HOME</Text>
-              </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('Notifications')}>
-              <View style={styles.menu} >
-                  <Icon name='person' style={styles.icon}></Icon>
-                  <Text style={styles.text_menu}>INSCRIPTION</Text>
-              </View>
-          </TouchableHighlight>
+        <View style={styles.content}> 
+          <View style={styles.user}>
+              {this._setLoginComponent()}
+              {this._setConnexionComponent()}
+          </View> 
+          <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}></View>
+          <View style={styles.application}>
+              <TouchableHighlight             
+                  onPress={() => this.props.navigation.navigate('Home')}>
+                  <View style={styles.menu} >
+                      <Icon name='home' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>HOME</Text>
+                  </View>
+              </TouchableHighlight>
+              <TouchableHighlight             
+                  onPress={() => this.props.navigation.navigate('Home')}>
+                  <View style={styles.menu} >
+                      <Icon name='search' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>RECHERCHE INSECTE</Text>
+                  </View>
+              </TouchableHighlight>
+          </View>        
         </View> 
                 
       </View>
@@ -57,12 +84,9 @@ const styles = StyleSheet.create({
     },
     menu:{
        flexDirection:'row',
-       height:60,
+       height:50,
        padding:20,
        alignItems:'center',
-       justifyContent:'flex-start',
-       borderBottomWidth: 0.5,
-       borderBottomColor:'#2EA073'
     },
     icon:{
       fontSize: 30, 
@@ -73,6 +97,12 @@ const styles = StyleSheet.create({
       color:'#2EA073',
       marginStart:10,
       
+    },
+    user:{
+      marginBottom:10     
+    },
+    application:{
+      marginTop:10
     }
 
   
