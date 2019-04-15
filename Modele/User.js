@@ -1,25 +1,24 @@
 export default class User {
     
-    constructor(nom, prenom) {
-        this.prenom=prenom;
-        this.nom=nom
-    }
-  }
-
-
-
-  export default class Agriculteur extends User {
-    
-    constructor(nom, prenom, type='Agriculteur') {
-        super(nom, prenom)
+    constructor(firstname, lastName, login, email, password, type) {
+        this.firstname=firstname
+        this.lastName=lastName
+        this.login=login
+        this.email=email
+        this.password=password
         this.type=type
     }
-  }
 
-  export default class Cheucheur extends User {
+    getPrenom=()=>this.firstname
+    getNom=()=>this.lastName
+    getUsername=()=>this.login
+    getEmail=()=>this.email
+    getPrenom=()=>this.password
+    getType=()=>this.type
     
-    constructor(nom, prenom, type='Chercheur') {
-        super(nom, prenom)
-        this.type=type
-    }
+
+
+
+
+
   }

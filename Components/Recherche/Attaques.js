@@ -2,7 +2,7 @@
 import React from 'react'
 import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator} from 'react-native'
 import AttaqueItem from './Items/AttaqueItem'
-import { selectAttaque } from '../../Store/actions/recherche';
+import { selectAttaque } from '../../Store/actions/actionIndex';
 import { connect } from 'react-redux'
 
 
@@ -11,6 +11,13 @@ class Attaques extends React.Component {
         super(props)
     }
 
+    componentDidUpdate() {
+   
+      
+      console.log(this.props.all_attaques);
+      
+  
+  }
     onValueChangeType(value) {
  
     }
@@ -78,7 +85,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     culture: state.recherche.culture,
-    attaques: state.recherche.attaques
+    attaques: state.recherche.attaques,
+    all_attaques: state.recherche.all_attaques,
+
   };
 };
 

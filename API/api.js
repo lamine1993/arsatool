@@ -1,18 +1,72 @@
-import Unsplash, { toJson }  from 'unsplash-js/native';
+const BASE_URL="http://10.150.229.139:9000/api"
 
-// require syntax
-//const Unsplash = require('unsplash-js').default;
+export  function getculture(){
+  return fetch('http://10.150.229.139:9000/api/cultures')
+  .then((response) => console.log(response))
+  
+  .catch((error) => {
+    console.log(error);
+  });
+}
 
-const unsplash = new Unsplash({
-  applicationId: "01b4ecd99eb13753d3d813d14ec3b4f07b986b58a3fb0481b93c269a336ea2a5",
-  secret: "f7341ac53748884334bd1f6a043317059e27bb963a3382a805fa88aa29c8580e"
-});
+export function registration() {
 
-export function getAttaquesCulture(culture){
- 
-    unsplash.search.collections(culture, 1)
-     .then(toJson)
-     .then(json => {
-        
-     });
+  /*return fetch('http://10.150.229.139:9000/api/register',{
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body:{
+      "activated": true,
+      "authorities":"ROLE_AGRI",
+      "createdBy":null,
+      "createdDate":null,
+      "email":"sarrlmng@gmail.com", //form
+      "firstname":null, //form
+      "langKey":null,
+      "lastModifiedBy":null,
+      "lastModifiedDate":null,
+      "lastName":"sarrl", //form
+      "login":"sarrl", //form
+      "password":"sarr" //form
+
+    }
+  })
+  .then((response) => console.log("envoi reussi"+response))
+  
+  .catch((error) => {
+    console.log("envoi non "+error);
+  });
+  */
+}
+
+export function login() {
+  return fetch('http://10.150.229.139:9000/api/register',{
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body:{
+      "activated": true,
+      "authorities":"ROLE_AGRI",
+      "createdBy":null,
+      "createdDate":null,
+      "email":"sarr@gmail.com", //form
+      "firstname":null, //form
+      "langKey":null,
+      "lastModifiedBy":null,
+      "lastModifiedDate":null,
+      "lastName":"sarr", //form
+      "login":"sarr", //form
+      "password":"sarr", //form
+
+    }
+  })
+  .then((response) => console.log(response))
+  
+  .catch((error) => {
+    console.log(error);
+  });
 }

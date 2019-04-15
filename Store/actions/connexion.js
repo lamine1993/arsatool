@@ -1,4 +1,4 @@
-import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION_AGRICULTURE, CONNEXION_CHERCHEUR} from './actionTypes'
+import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
 
 export const addAgriculture=(user)=>{
     return {
@@ -11,21 +11,18 @@ export const addChercheur=(user)=>{
    return {
        type: ADD_CHERCHEUR,
        chercheur: user
-   }
+   } 
 }
 
-export const agriculteurLogin= (login, mdp)=>{
+export const login= (user)=>{
    return {
-       type: CONNEXION_AGRICULTURE,
-       login: login,
-       password:mdp
+       type: CONNEXION,
+       user:user
    }
 }
-
-export const chercheurLogin=(login, mdp)=>{
-  return {
-      type: CONNEXION_CHERCHEUR,
-      login: login,
-      password:mdp
-  }
-}
+ 
+ export const logout=()=>{
+   return {
+       type: DECONNEXION,
+   }
+ }

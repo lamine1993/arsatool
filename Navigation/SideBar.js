@@ -1,31 +1,63 @@
 import React from "react";
 import {View , Image, StyleSheet, TouchableHighlight } from "react-native";
 import { Text, Icon} from "native-base";
+import {
+  logout
+} from '../Store/actions/actionIndex';
+import { connect } from 'react-redux'
 const routes = ["Home", "Notifications"];
-export default class SideBar extends React.Component {
+class SideBar extends React.Component {
   constructor(props){
     super(props)
     console.log("navigation prop "+props)
   }
 
-  _setLoginComponent(){
-    return <TouchableHighlight
+  _displayLoginSection(){
+    if (!this.props.session) {
+      
+      return this._setLoginComponent()
+    } else {
+      return this._setLoginUserComponent()
+    }
+  }
+
+  _setLoginUserComponent(){
+    return <View style={styles.user}>
+             <TouchableHighlight
                   onPress={() => this.props.navigation.navigate('Notifications')}>
+                  <View style={styles.menu} >
+                      <Icon name='person-add' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>UN UTILISATEUR CONNECTER</Text>
+                  </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                  onPress={() => this.props.onLogout()}>
+                  <View style={styles.menu} >
+                      <Icon name='key' style={styles.icon}></Icon>
+                      <Text style={styles.text_menu}>LOGOUT</Text>
+                  </View>
+              </TouchableHighlight>
+        </View>
+  }
+
+
+  _setLoginComponent(){
+    return <View style={styles.user}>
+             <TouchableHighlight
+                  onPress={() => this.props.navigation.navigate('Signin')}>
                   <View style={styles.menu} >
                       <Icon name='person-add' style={styles.icon}></Icon>
                       <Text style={styles.text_menu}>INSCRIPTION</Text>
                   </View>
               </TouchableHighlight>
-  }
-
-  _setConnexionComponent(){
-    return <TouchableHighlight
-                  onPress={() => this.props.navigation.navigate('Notifications')}>
+              <TouchableHighlight
+                  onPress={() => this.props.navigation.navigate('Login')}>
                   <View style={styles.menu} >
                       <Icon name='key' style={styles.icon}></Icon>
                       <Text style={styles.text_menu}>LOGIN</Text>
                   </View>
               </TouchableHighlight>
+        </View>
   }
    
   render() {
@@ -41,10 +73,7 @@ export default class SideBar extends React.Component {
               }}/>
         </View>
         <View style={styles.content}> 
-          <View style={styles.user}>
-              {this._setLoginComponent()}
-              {this._setConnexionComponent()}
-          </View> 
+           {this._displayLoginSection()}
           <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}></View>
           <View style={styles.application}>
               <TouchableHighlight             
@@ -107,3 +136,19 @@ const styles = StyleSheet.create({
 
   
 });
+const mapStateToProps = state => {
+  //console.log(state);
+  return {
+    session: state.connexion.session,
+    user: state.connexion.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout : () =>dispatch(logout())
+  }
+}
+
+//export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)

@@ -7,6 +7,8 @@ import { Icon } from 'native-base'
 import SideBar from "./SideBar.js";
 import InsecteCausale from '../Components/Recherche/InsecteCausale'
 import FicheTechnique from '../Components/Recherche/FicheTechnique' 
+import LoginScreen from '../Components/Authentification/LoginScreen' 
+import SigninScreen from '../Components/Authentification/SigninScreen' 
 import Attaques from '../Components/Recherche/Attaques';
 
 
@@ -16,7 +18,14 @@ const MyDrawerNavigator = createDrawerNavigator({
     },
     Notifications: {
       screen: NotificationsScreen
+    },
+    Login:{
+       screen: LoginScreen
+    },
+    Signin:{
+       screen:SigninScreen
     }
+
   }, {
         //drawerWidth: 300,
         initialRouteName: 'Home',
@@ -37,6 +46,7 @@ const MyDrawerNavigator = createDrawerNavigator({
                             
                         }}
                         />,
+                
               
                 headerStyle: {
                     backgroundColor: '#2EA073',

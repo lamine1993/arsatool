@@ -20,7 +20,7 @@ import {
   selectCulture,  
   selectLocalisation, 
   unselectLocalisation
-} from '../Store/actions/actionRechercheIndex';
+} from '../Store/actions/actionIndex';
 import {Spinner } from 'native-base';
 
 
@@ -31,10 +31,18 @@ class HomeScreen extends React.Component {
     super(props)
   }
 
+  componentDidUpdate() {
+   
+    console.log(this.props.cultures);
+    //console.log(this.props.all_attaques);
+    
+
+}
+
   
 
     _cultureSelected(culture){
-      this.props.onSelectCulture(culture);
+      this.props.onSelectCulture(culture, this.props.localisation);
       this.props.navigation.navigate('Attaques');
     } 
 
@@ -47,28 +55,13 @@ class HomeScreen extends React.Component {
       this.props.onUnselectLocalisation();
     }
 
-    _displayLoading() {
+    _displayLoading=()=> {
       if (this.props.isLoading) {
         return (
-          <Dialog
-          onTouchOutside={() => {
-            this.props.isLoading=true
-          }}
-         // zIndex={1000}
-          width={1}
-          height={1}
-          backgroundStyle={styles.customBackgroundDialog}
-          dialogStyle={{
-            backgroundColor: 'transparent',
-            justifyContent:'center',
-            alignItems: 'center'
-          }}
-          visible={this.props.isLoading}
-        >
+          
           <View>
             <Spinner color='green' />
           </View>
-        </Dialog>
         )
       }
     }
@@ -76,12 +69,12 @@ class HomeScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>
-                
+            {this._displayLoading()}    
                 <View style={styles.bouton_partie}>
                   <View style={styles.bouton_partie_ligne}>
                    <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                            onPress={()=>{this._selectLocalisation("FEUILLE")}}
+                            onPress={()=>{this._selectLocalisation("FEUILLES")}}
                             
                             >
                               <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer}/>
@@ -135,7 +128,7 @@ class HomeScreen extends React.Component {
                     <View style={styles.bouton_partie_ligne_pub}>
                     </View>
                   </View>
-
+        
         <Dialog
           onDismiss={()=>{this._unselectLocalisation()}}
           onTouchOutside={()=>{this._unselectLocalisation()}}
@@ -307,8 +300,11 @@ class HomeScreen extends React.Component {
     //console.log(state);
     return {
       customBackgroundDialog: state.recherche.customBackgroundDialog,
-      isLoading: state.recherche.isLoading,
-      attaques: state.recherche.attaques
+      isLoading: state.ui.isLoading,
+      attaques: state.recherche.attaques,
+      localisation: state.recherche.localisation,
+      all_attaques: state.recherche.all_attaques,
+      cultures:state.recherche.cultures
     };
   };
 
@@ -316,9 +312,8 @@ class HomeScreen extends React.Component {
     return {
       onSelectLocalisation: localisation =>  dispatch(selectLocalisation(localisation)),
       onUnselectLocalisation: ()=>dispatch(unselectLocalisation()),
-      onSelectCulture : culture =>dispatch(selectCulture(culture))
+      onSelectCulture : (culture, localisation) =>dispatch(selectCulture(culture, localisation))
     }
   }
 
-//export default HomeScreen;
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

@@ -1,0 +1,73 @@
+
+[
+        {
+        "id":	1,
+        "localisation":	"FEUILLES",
+        "description":	"Le puceron du coton, Aphis gossypiise nourrit de la sève élaborée par les plantes et provoque des dégâts directs qui se manifestent par des déformations foliaires (Photo3). Les feuilles apparaissent enroulées, bosselées avec des ponctuations chlorotiques; on note également un retard de croissance des jeunes plants. Aphis gossypiiproduit du miellat qui entraine le développement de la fumagine qui recouvre les feuilles (Photo 4) et diminue ainsi la photosynthèse. Il est aussi responsable des dégâts indirects en transmettant certains virus.",
+        "flag":	true,
+        "typeDegat":	"DEFORMATION",
+        "dateValidation":	"2019-03-21T01:37:00Z",
+        "dateAjout":	"2019-03-21T01:37:00Z",
+        "insecte": {
+            "id": 1,
+            "nomInsecte":	"Puceron du coton",
+            "nomScienInsecte"	:"Aphis Gossypii Glover",
+            "insecteImage": "../assets/Puceron.png",
+            "description":	"Aphis gossypii communéme…orte de 4 à 8 cheveux. ",
+            "cycleBio":	"La plupart des espèces d…tères de multiplication",
+            "imageCycle":	" ",
+            "dateValidation":	"2019-03-16T03:12:00Z",
+            "dateAjout":	"2019-03-16T03:12:00Z",
+            "methode":	"Les chenilles de la noctuelle de la tomate commencent leur vie sur les feuilles et les boutons floraux. C’est à ce stade qu’elles sont les plus vulnérables aux différents produits de traitement. Il est donc primordial de faire des observations pour savoir à quel moment on trouve des œufs et des chenilles sur les plants de tomate.  ",
+            "imageInsectes":	null
+        },
+        "imageAttaques":	[
+            "../assets/images/banane_1.jpg",
+            "../assets/images/banane_2.jpg",
+            "../assets/images/banane_3.jpg",
+            "../assets/images/banane_4.jpg"
+        ],
+        "culture": {
+            "id":181809,
+            "nomCulture": "Banane",
+            "imageCulture": "../assets/images/banane.jpg"
+        },
+        "chercheur":	null,
+        "administrateur":	null
+       },
+    {
+        "id":	2,
+        "localisation":	"FEUILLES",
+        "description":	"Le puceron du coton, Aphis gossypiise nourrit de la sève élaborée par les plantes et provoque des dégâts directs qui se manifestent par des déformations foliaires (Photo3). Les feuilles apparaissent enroulées, bosselées avec des ponctuations chlorotiques; on note également un retard de croissance des jeunes plants. Aphis gossypiiproduit du miellat qui entraine le développement de la fumagine qui recouvre les feuilles (Photo 4) et diminue ainsi la photosynthèse. Il est aussi responsable des dégâts indirects en transmettant certains virus.",
+        "flag":	true,
+        "typeDegat":	"DEFORMATION",
+        "dateValidation":	"2019-03-21T01:37:00Z",
+        "dateAjout":	"2019-03-21T01:37:00Z",
+        "insecte": {
+            "id": 1,
+            "nomInsecte":	"Puceron de la mangue",
+            "nomScienInsecte"	:"Aphis Gossypii Glover",
+            "insecteImage":"../assets/Cicle.png",
+            "description":	"Aphis gossypii communéme…orte de 4 à 8 cheveux. ",
+            "cycleBio":	"La plupart des espèces d…tères de multiplication",
+            "imageCycle":	" ",
+            "dateValidation":	"2019-03-16T03:12:00Z",
+            "dateAjout":	"2019-03-16T03:12:00Z",
+            "methode":	null,
+            "imageInsectes":	null
+        },
+        "imageAttaques": [
+            "../assets/images/mais_1.jpg",
+            "../assets/images/mais_2.jpg",
+            "../assets/images/mais_3.jpg",
+            ".../assets/images/mais_4.jpg"
+        ],
+        "culture":{
+            "id":181808,
+            "nomCulture":"Mais",
+            "imageCulture": "../assets/images/mais.jpg"
+        },
+        "chercheur":	null,
+        "administrateur":	null
+    }
+]

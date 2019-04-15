@@ -1,28 +1,46 @@
-import {ADD_AGRICULTEUR, ADD_CHERCHEUR, CONNEXION_AGRICULTURE, CONNEXION_CHERCHEUR} from './actionTypes'
+import {ADD_AGRICULTEUR, ADD_CHERCHEUR, CONNEXION, DECONNEXION} from '../actions/actionTypes'
+import User from '../../Modele/User';
 const initialState = {
-   
-  };
+     session:false,
+     user:null,
+};
 
   const connexionReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_AGRICULTEUR:
             return {
             ...state,
+            user:action.user,
+            session:true
             };
         case ADD_CHERCHEUR:
             return {
             ...state,
+            user:action.user,
+            session:true
             };
-        case CONNEXION_AGRICULTURE:
+        case CONNEXION:
             return {
             ...state,
+            user:action.user,
+            session:true
             };
-        case CONNEXION_CHERCHEUR:
+        case DECONNEXION:
             return {
             ...state,
+            user:null,
+            session:false
             };
+        /*case SUCCESS:
+            return{
+              
+            };
+        case FAIL:
+            return{
+              
+            };*/
         default:
-        return  state;
+          return  state;
     }
   }
 
