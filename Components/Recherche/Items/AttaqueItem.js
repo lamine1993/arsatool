@@ -4,8 +4,14 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image, FlatList } from 'react-native'
 import {Container,  Header, Content, Card, CardItem, Accordion, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 import { FlingGestureHandler } from 'react-native-gesture-handler';
+import {getImageFromApi} from '../../../API/api'
 
 class attaqueItem extends React.Component {
+  
+
+  componentDidMount(){
+    //console.log(this.props.attaque.imagesAttaques)
+  }
   render() {
       const { attaque, displayFiche } = this.props
     //console.log(this.props)
@@ -13,16 +19,14 @@ class attaqueItem extends React.Component {
     const dataArray = [
       { title: "Description", content: ""+attaque.description },
     ];
+
+    
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                  <View style={styles.image_insecte}> 
-                     <Thumbnail large source={attaque.insecte.insecteImage}/>
-                     <Text style={{justifyContent:'center', }}>{attaque.insecte.nomInsecte} </Text>
-                  </View>
                   <View style={styles.type_style}>
                      <Text>Type de Degat: </Text>
-                     <Text>{attaque.typeDegat}</Text>
+                     <Text>{attaque.typeDegat.typeDeg}</Text>
                    </View>
               </View> 
                 
@@ -30,9 +34,9 @@ class attaqueItem extends React.Component {
                   <FlatList
                         style={styles.header_attaque}
                         horizontal={true}
-                        data={attaque.imageAttaques}
-                        keyExtractor={(item) => item.toString()}
-                        renderItem={({item}) => <Image source={item} style={styles.image_attaque}/>}
+                        data={attaque.imagesAttaques}
+                        keyExtractor={(item) => item.imageUrl.toString()}
+                        renderItem={({item}) => <Image source={{uri: getImageFromApi(item.imageUrl)}} style={styles.image_attaque}/>}
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {
                             console.log("onEndReached")
@@ -41,10 +45,6 @@ class attaqueItem extends React.Component {
                     />
                 </View>
                 <View style={styles.footer}>
-                    <View style={{alignItems: 'flex-start'}}>
-                       <Text>Date Creation: </Text>
-                       <Text>{attaque.dateValidation}</Text>
-                    </View>
                     <View>
                         <TouchableOpacity 
                           onPress={() => displayFiche(attaque)}
@@ -52,6 +52,7 @@ class attaqueItem extends React.Component {
                         </TouchableOpacity>
                     </View> 
                 </View>
+                
         </View>      
     )
   }

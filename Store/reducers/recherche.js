@@ -4,7 +4,7 @@ import {
       SELECT_CULTURE,
       SELECT_ATTAQUE,
       SET_CULTURES,
-      SET_ATTAQUES
+      SET_ATTAQUES,
 } from "../actions/actionTypes"
 import attaques from '../../Components/Helpers/Insectes'
 
@@ -14,8 +14,11 @@ const initialState = {
     attaque:null,
     all_attaques:null,
     localisation:"",
-    customBackgroundDialog: false 
+    customBackgroundDialog: false ,
+    imagesAttaques:[]
   };
+
+
 
   const rechercheReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -30,11 +33,10 @@ const initialState = {
       case SET_ATTAQUES:
         return {
            ...state,
+           customBackgroundDialog: false,
            attaques: attaques,
            all_attaques:action.attaques,
-           localisation:action.localisation,
-           culture:action.culture,
-           customBackgroundDialog: false,
+           
         };
       case SELECT_CULTURE:
         return {
@@ -52,6 +54,12 @@ const initialState = {
         return {
           ...state, 
           customBackgroundDialog: false,
+        };
+      default:
+      case ADD_IMAGE_ATTAQUE:
+        return {
+          ...state, 
+          imagesAttaques: state.imagesAttaques.concat(action.images),
         };
       default:
         return  state;

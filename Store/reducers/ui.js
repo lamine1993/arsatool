@@ -1,7 +1,8 @@
-import { UI_START_LOADING, UI_STOP_LOADING } from "../actions/actionTypes";
+import { UI_START_LOADING, UI_STOP_LOADING, UI_ERROR, UI_ERROR_DEL } from "../actions/actionTypes";
 
 const initialState = {
-  isLoading: false
+  isLoading: false,
+  error: false
 };
 
 const uiReducer = (state = initialState, action) => {
@@ -16,6 +17,16 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         isLoading: false
       };
+    case UI_ERROR:
+       return{
+         ...state,
+         error: true
+       };
+    case UI_ERROR_DEL:
+       return{
+         ...state,
+         error: false
+       }
     default:
       return state;
   }

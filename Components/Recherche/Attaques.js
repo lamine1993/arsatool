@@ -2,23 +2,26 @@
 import React from 'react'
 import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator} from 'react-native'
 import AttaqueItem from './Items/AttaqueItem'
-import { selectAttaque } from '../../Store/actions/actionIndex';
+import { selectAttaque, setImagesAttaque } from '../../Store/actions/actionIndex';
 import { connect } from 'react-redux'
+import {getImageAttaques, getAttaques} from '../../API/api'
 
 
 class Attaques extends React.Component {
     constructor(props) {
         super(props)
+        this.datas=[]
     }
+    componentDidMount(){
+      console.log(this.props.all_attaques)
+    }
+    
 
     componentDidUpdate() {
-   
-      
-      console.log(this.props.all_attaques);
-      
-  
+      console.log("in component"+this.props.all_attaques)
   }
-    onValueChangeType(value) {
+
+  onValueChangeType(value) {
  
     }
 
@@ -29,6 +32,7 @@ class Attaques extends React.Component {
  
      }
 
+
     render(){
         return (
             <View style={styles.container}>
@@ -37,7 +41,7 @@ class Attaques extends React.Component {
                 </View>
                 <FlatList
                     //style={styles.attaques}
-                    data={this.props.attaques}
+                    data={this.props.all_attaques}
                     keyExtractor={(item,index) => index+"attaques"+item.id.toString()}
                     renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
                     onEndReachedThreshold={0.5}
@@ -87,13 +91,14 @@ const mapStateToProps = state => {
     culture: state.recherche.culture,
     attaques: state.recherche.attaques,
     all_attaques: state.recherche.all_attaques,
-
+    cultures:state.recherche.cultures    
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSelectAttaque : attaque =>dispatch(selectAttaque(attaque))
+    onSelectAttaque : attaque =>dispatch(selectAttaque(attaque)),
+    onsetImagesAttaque: attaques=>dispatch(setImagesAttaque(attaques))
   }
 }
 

@@ -22,7 +22,8 @@ import {
   unselectLocalisation
 } from '../Store/actions/actionIndex';
 import {Spinner } from 'native-base';
-
+import AuthError from './Authentification/AuthError';
+import {getImageFromApi} from '../API/api'
 
 
 
@@ -33,7 +34,9 @@ class HomeScreen extends React.Component {
 
   componentDidUpdate() {
    
-    console.log(this.props.cultures);
+    //console.log(this.props.cultures);
+   // console.log('http://10.42.0.1:8080/api/imagesRessource/ImageInsecte'+imagePath);
+
     //console.log(this.props.all_attaques);
     
 
@@ -55,6 +58,11 @@ class HomeScreen extends React.Component {
       this.props.onUnselectLocalisation();
     }
 
+    
+    _showError=()=>{
+      <AuthError />
+    }
+
     _displayLoading=()=> {
       if (this.props.isLoading) {
         return (
@@ -69,7 +77,8 @@ class HomeScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>
-            {this._displayLoading()}    
+            {this._displayLoading()} 
+            {this._showError()}    
                 <View style={styles.bouton_partie}>
                   <View style={styles.bouton_partie_ligne}>
                    <View style={styles.bouton_partie_ligne_bouton}>
@@ -83,7 +92,7 @@ class HomeScreen extends React.Component {
                     </View>
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight
-                              onPress={()=>this._selectLocalisation("FRUIT")}
+                              onPress={()=>this._selectLocalisation("FRUITS")}
                           >   
                             <Image source={require('../assets/menu-image/legumes.jpg')} style={styles.imageContainer}/>
                           </TouchableHighlight>
@@ -110,7 +119,7 @@ class HomeScreen extends React.Component {
                     <View style={styles.bouton_partie_ligne}>
                       <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                            onPress={()=>this._selectLocalisation("FRUIT")}
+                            onPress={()=>this._selectLocalisation("FRUITS")}
                           >        
                           <Image source={require('../assets/menu-image/fruit.png')} style={styles.imageContainer}/>
                                 
@@ -167,15 +176,15 @@ class HomeScreen extends React.Component {
         >
             <FlatList
               style={styles.header_attaque}
-              data={this.props.attaques}
+              data={this.props.cultures}
               numColumns={2}
               keyExtractor={(item, index) => index+"homme"+item.id.toString()+""}
               renderItem={({item}) => 
                <TouchableHighlight
-                  onPress={()=>this._cultureSelected(item.culture)
+                  onPress={()=>this._cultureSelected(item)
                   }
                >
-                   <Image source={item.culture.imageCulture} style={styles.image_culture}/>
+                   <Image source={{uri: getImageFromApi(item.image)}} style={styles.image_culture}/>
                </TouchableHighlight>
                }
               onEndReachedThreshold={0.5}
@@ -300,7 +309,9 @@ class HomeScreen extends React.Component {
     //console.log(state);
     return {
       customBackgroundDialog: state.recherche.customBackgroundDialog,
+
       isLoading: state.ui.isLoading,
+      error: state.ui.error,
       attaques: state.recherche.attaques,
       localisation: state.recherche.localisation,
       all_attaques: state.recherche.all_attaques,
