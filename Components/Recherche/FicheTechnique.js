@@ -9,11 +9,17 @@ import {
 
 import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 import { connect } from 'react-redux'
+import {getImageFromApi} from '../../API/api'
 
 class FicheTechnique extends Component {
     constructor(props) {
-        super(props)      
+        super(props)
+        //this.attaque=this.props.attaque
     }
+    componentDidMount(){
+        //console.log(this.props.attaque)
+    }
+
     render() {
         return (
 
@@ -26,7 +32,7 @@ class FicheTechnique extends Component {
                    </Text>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={this.props.attaque.insecte.insecteImage} style={{height:200, width: null, flex: 1}}/>
+                  <Image source={{uri: getImageFromApi(this.props.attaque.insecte.insecteImage[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem cardBody>
                     <Text style={{ color: '#F00' }}>
