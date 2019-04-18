@@ -18,11 +18,13 @@ import Dialog, {
 } from 'react-native-popup-dialog';
 import {
   selectCulture,  
-  selectLocalisation, 
-  unselectLocalisation
+  selectLocalisation,
+    resetCultureAndAttaques,
+  unselectLocalisation,
+    uiUnshowError
 } from '../Store/actions/actionIndex';
 import {Spinner } from 'native-base';
-import AuthError from './Authentification/AuthError';
+import {_displayError} from './Authentification/AuthError';
 import {getImageFromApi} from '../API/api'
 
 
@@ -32,13 +34,9 @@ class HomeScreen extends React.Component {
     super(props)
   }
 
-  componentDidUpdate() {
-   
-    //console.log(this.props.cultures);
-   // console.log('http://10.42.0.1:8080/api/imagesRessource/ImageInsecte'+imagePath);
+  componentDidMount() {
 
-    //console.log(this.props.all_attaques);
-    
+    //this.props.reset()
 
 }
 
@@ -46,7 +44,11 @@ class HomeScreen extends React.Component {
 
     _cultureSelected(culture){
       this.props.onSelectCulture(culture, this.props.localisation);
-      this.props.navigation.navigate('Attaques');
+
+      if(this.props.cultures!=null){
+          this.props.navigation.navigate('Attaques');
+      }
+
     } 
 
     _selectLocalisation= localisation =>{
@@ -58,10 +60,6 @@ class HomeScreen extends React.Component {
       this.props.onUnselectLocalisation();
     }
 
-    
-    _showError=()=>{
-      <AuthError />
-    }
 
     _displayLoading=()=> {
       if (this.props.isLoading) {
@@ -78,7 +76,7 @@ class HomeScreen extends React.Component {
       return (
         <View style={styles.container}>
             {this._displayLoading()} 
-            {this._showError()}    
+            {_displayError("quelque chose ne vas pas", this.props.error, this.props.resetError)}
                 <View style={styles.bouton_partie}>
                   <View style={styles.bouton_partie_ligne}>
                    <View style={styles.bouton_partie_ligne_bouton}>
@@ -161,12 +159,18 @@ class HomeScreen extends React.Component {
           footer={
             <DialogFooter>
               <DialogButton
-                text="CANCEL"
                 bordered
                 onPress={() => {
                   this._unselectLocalisation()
                 }}
               />
+                <DialogButton
+                    text="CANCEL"
+                    bordered
+                    onPress={() => {
+                        this._unselectLocalisation()
+                    }}
+                />
             </DialogFooter>
           }
           visible={this.props.customBackgroundDialog}
@@ -178,7 +182,7 @@ class HomeScreen extends React.Component {
               style={styles.header_attaque}
               data={this.props.cultures}
               numColumns={2}
-              keyExtractor={(item, index) => index+"homme"+item.id.toString()+""}
+              keyExtractor={(item) => item.image}
               renderItem={({item}) => 
                <TouchableHighlight
                   onPress={()=>this._cultureSelected(item)
@@ -323,7 +327,9 @@ class HomeScreen extends React.Component {
     return {
       onSelectLocalisation: localisation =>  dispatch(selectLocalisation(localisation)),
       onUnselectLocalisation: ()=>dispatch(unselectLocalisation()),
-      onSelectCulture : (culture, localisation) =>dispatch(selectCulture(culture, localisation))
+      onSelectCulture : (culture, localisation) =>dispatch(selectCulture(culture, localisation)),
+        reset: ()=>dispatch(resetCultureAndAttaques()),
+        resetError: ()=>dispatch(uiUnshowError())
     }
   }
 

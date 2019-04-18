@@ -5,6 +5,8 @@ import {
       SELECT_ATTAQUE,
       SET_CULTURES,
       SET_ATTAQUES,
+    ADD_IMAGE_ATTAQUE,
+    RESET_CULTURE_ATTAQUES
 } from "../actions/actionTypes"
 import attaques from '../../Components/Helpers/Insectes'
 
@@ -12,7 +14,7 @@ const initialState = {
     attaques: attaques,
     cultures:null,
     attaque:null,
-    all_attaques:null,
+    all_attaques:[],
     localisation:"",
     customBackgroundDialog: false ,
     imagesAttaques:[]
@@ -25,7 +27,6 @@ const initialState = {
       case SET_CULTURES:
         return {
            ...state,
-           attaques: attaques,
            localisation:action.localisation,
            cultures:action.cultures,
            customBackgroundDialog: true,
@@ -42,7 +43,7 @@ const initialState = {
         return {
           ...state,
           culture:action.culture,
-          customBackgroundDialog: false,
+          //customBackgroundDialog: false,
           
         };
       case SELECT_ATTAQUE:
@@ -55,12 +56,18 @@ const initialState = {
           ...state, 
           customBackgroundDialog: false,
         };
-      default:
       case ADD_IMAGE_ATTAQUE:
         return {
-          ...state, 
-          imagesAttaques: state.imagesAttaques.concat(action.images),
+            ...state,
+
+            all_attaques: state.all_attaques.concat(action.attaque),
+            customBackgroundDialog: false,
         };
+        case RESET_CULTURE_ATTAQUES:
+         return {
+             ...state,
+             all_attaques:[],
+         }
       default:
         return  state;
     }

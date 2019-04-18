@@ -2,28 +2,26 @@
 
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image, FlatList } from 'react-native'
-import {Container,  Header, Content, Card, CardItem, Accordion, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
-import { FlingGestureHandler } from 'react-native-gesture-handler';
+import {Thumbnail } from 'native-base'
 import {getImageFromApi} from '../../../API/api'
 
 class attaqueItem extends React.Component {
   
 
   componentDidMount(){
-    //console.log(this.props.attaque.imagesAttaques)
+
   }
   render() {
       const { attaque, displayFiche } = this.props
-    //console.log(this.props)
-    //onPress={() => displayLocalisationForCulture(culture.id, culture.nomCulture)}
-    const dataArray = [
-      { title: "Description", content: ""+attaque.description },
-    ];
 
     
     return (
         <View style={styles.container}>
             <View style={styles.header}>
+                <View style={styles.image_insecte}>
+                    <Thumbnail large source={{uri: getImageFromApi(attaque.insecte.insecteImage['0'].imageUrl)}}/>
+                    <Text style={{justifyContent:'center', }}>{attaque.insecte.nomInsecte} </Text>
+                </View>
                   <View style={styles.type_style}>
                      <Text>Type de Degat: </Text>
                      <Text>{attaque.typeDegat.typeDeg}</Text>

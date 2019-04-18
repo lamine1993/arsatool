@@ -10,15 +10,14 @@ import {getImageAttaques, getAttaques} from '../../API/api'
 class Attaques extends React.Component {
     constructor(props) {
         super(props)
-        this.datas=[]
     }
     componentDidMount(){
-      console.log(this.props.all_attaques)
+
     }
     
 
     componentDidUpdate() {
-      console.log("in component"+this.props.all_attaques)
+
   }
 
   onValueChangeType(value) {
@@ -84,14 +83,15 @@ const styles = StyleSheet.create({
     }
   });
 
-//export default Attaques
-
 const mapStateToProps = state => {
   return {
-    culture: state.recherche.culture,
-    attaques: state.recherche.attaques,
-    all_attaques: state.recherche.all_attaques,
-    cultures:state.recherche.cultures    
+      culture: state.recherche.culture,
+      attaques: state.recherche.attaques,
+      all_attaques: state.recherche.all_attaques,
+      cultures:state.recherche.cultures,
+      imagesAttaques: state.recherche.imagesAttaques,
+      customBackgroundDialog: state.recherche.customBackgroundDialog,
+
   };
 };
 
@@ -101,8 +101,4 @@ const mapDispatchToProps = dispatch => {
     onsetImagesAttaque: attaques=>dispatch(setImagesAttaque(attaques))
   }
 }
-
-//export default HomeScreen;
 export default connect(mapStateToProps, mapDispatchToProps)(Attaques);
-
-//onPress={() => this.props.navigation.push('Localisation')}

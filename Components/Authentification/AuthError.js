@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   Dimensions,
   FlatList,
+    Text
 } from "react-native";
 import { connect } from 'react-redux'
 import Dialog, {
@@ -16,33 +17,20 @@ import Dialog, {
   SlideAnimation,
   ScaleAnimation,
 } from 'react-native-popup-dialog';
-import {
-  selectCulture,  
-  selectLocalisation, 
-  unselectLocalisation
-} from '../../Store/actions/actionIndex';
-import {Spinner } from 'native-base';
 
 
 
 
-class AuthError extends React.Component {
-  constructor(props){
-    super(props)
-    
-  }
-
-    _displayLoading=()=> {
+export const _displayError=(error, isError, dissmissError)=> {
         return (
           
             
             <Dialog
-              visible={this.props.error}
               footer={
                 <DialogFooter>
                   <DialogButton
                     text="CANCEL"
-                    onPress={() => {}}
+                    onPress={() => dissmissError()}
                   />
                   <DialogButton
                     text="OK"
@@ -50,23 +38,15 @@ class AuthError extends React.Component {
                   />
                 </DialogFooter>
               }
+              visible={isError}
             >
               <DialogContent>
-                 <Text>{this.prop.error}</Text>
+                 <Text>{error}</Text>
               </DialogContent>
             </Dialog>
          
       );
   }
-
-  render() {
-    return (
-        <View style={styles.container}>
-          {this._displayLoading}
-        </View>
-    );
-  }
-}
 
   const styles = StyleSheet.create({
     container:{
@@ -167,25 +147,4 @@ class AuthError extends React.Component {
     
   });
 
-  const mapStateToProps = state => {
-    //console.log(state);
-    return {
-      customBackgroundDialog: state.recherche.customBackgroundDialog,
-      isLoading: state.ui.isLoading,
-      error: state.ui.error,
-      attaques: state.recherche.attaques,
-      localisation: state.recherche.localisation,
-      all_attaques: state.recherche.all_attaques,
-      cultures:state.recherche.cultures
-    };
-  };
 
-  const mapDispatchToProps = dispatch => {
-    return {
-      onSelectLocalisation: localisation =>  dispatch(selectLocalisation(localisation)),
-      onUnselectLocalisation: ()=>dispatch(unselectLocalisation()),
-      onSelectCulture : (culture, localisation) =>dispatch(selectCulture(culture, localisation))
-    }
-  }
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthError);
