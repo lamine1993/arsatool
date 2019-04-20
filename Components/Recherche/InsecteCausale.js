@@ -7,8 +7,6 @@ import {
   Image
 } from "react-native";
 
-import { Container, Content, Icon, Button } from 'native-base'
-import CustomHeader from '../CustomHeader'
 import attaques from '../Helpers/Insectes'
 import InsecteItem from './Items/InsecteItem'
 

@@ -8,7 +8,7 @@ import SideBar from "./SideBar.js";
 import InsecteCausale from '../Components/Recherche/InsecteCausale'
 import FicheTechnique from '../Components/Recherche/FicheTechnique' 
 import LoginScreen from '../Components/Authentification/LoginScreen' 
-import SigninScreen from '../Components/Authentification/SigninScreen' 
+import FormRegister from '../Components/Authentification/FormRegister'
 import Attaques from '../Components/Recherche/Attaques';
 
 
@@ -23,7 +23,7 @@ const MyDrawerNavigator = createDrawerNavigator({
        screen: LoginScreen
     },
     Signin:{
-       screen:SigninScreen
+       screen:FormRegister
     }
 
   }, {

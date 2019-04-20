@@ -4,7 +4,6 @@ import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, A
 import AttaqueItem from './Items/AttaqueItem'
 import { selectAttaque, setImagesAttaque } from '../../Store/actions/actionIndex';
 import { connect } from 'react-redux'
-import {getImageAttaques, getAttaques} from '../../API/api'
 
 
 class Attaques extends React.Component {

@@ -10,7 +10,7 @@ const initialState = {
         case ADD_AGRICULTEUR:
             return {
             ...state,
-            user:action.user,
+            user:action.agriculteur,
             session:true
             };
         case ADD_CHERCHEUR:

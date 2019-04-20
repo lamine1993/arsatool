@@ -12,9 +12,7 @@ import Dialog, {
   DialogTitle,
   DialogContent,
   DialogFooter,
-  DialogButton,
-  SlideAnimation,
-  ScaleAnimation,
+  DialogButton
 } from 'react-native-popup-dialog';
 import {
   selectCulture,  
@@ -38,22 +36,19 @@ class HomeScreen extends React.Component {
 
     //this.props.reset()
 
-}
-
-  
+} 
+   componentDidUpdate(){
+        if(this.props.all_attaques.length!==0){this.props.navigation.navigate('Attaques')}
+        else _displayError("Attaques innexistantes pour les parametre entreé", true , this.props.resetError)
+   }
 
     _cultureSelected(culture){
-      this.props.onSelectCulture(culture, this.props.localisation);
-
-      if(this.props.cultures!=null){
-          this.props.navigation.navigate('Attaques');
-      }
+          this.props.onSelectCulture(culture, this.props.localisation);
 
     } 
 
     _selectLocalisation= localisation =>{
-      this.props.onSelectLocalisation(localisation);
-      
+      this.props.onSelectLocalisation(localisation);  
     }
 
     _unselectLocalisation=()=>{
@@ -79,19 +74,17 @@ class HomeScreen extends React.Component {
             {_displayError("quelque chose ne vas pas", this.props.error, this.props.resetError)}
                 <View style={styles.bouton_partie}>
                   <View style={styles.bouton_partie_ligne}>
-                   <View style={styles.bouton_partie_ligne_bouton}>
-                          <TouchableHighlight 
-                            onPress={()=>{this._selectLocalisation("FEUILLES")}}
-                            
-                            >
-                              <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer}/>
-                                     
-                          </TouchableHighlight> 
-                    </View>
+                       <View style={styles.bouton_partie_ligne_bouton}>
+                              <TouchableHighlight
+                                onPress={()=>{this._selectLocalisation("FEUILLES")}}
+                                >
+                                  <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer}/>
+                              </TouchableHighlight>
+                        </View>
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight
-                              onPress={()=>this._selectLocalisation("FRUITS")}
-                          >   
+                              onPress={()=>this._selectLocalisation("LEGUMES")}
+                          >
                             <Image source={require('../assets/menu-image/legumes.jpg')} style={styles.imageContainer}/>
                           </TouchableHighlight>
                         </View>
@@ -125,10 +118,9 @@ class HomeScreen extends React.Component {
                         </View>   
                         <View style={styles.bouton_partie_ligne_bouton}>
                           <TouchableHighlight 
-                             onPress={()=>this._selectLocalisation("FLEUR")}
+                             onPress={()=>this._selectLocalisation("FLEURS")}
                           >        
                               <Image source={require('../assets/menu-image/fleur.jpg')} style={styles.imageContainer}/>
-                                  
                           </TouchableHighlight> 
                         </View> 
                     </View>
@@ -156,22 +148,18 @@ class HomeScreen extends React.Component {
               textStyle={{ color: '#fff'}}
             />
           }
-          footer={
-            <DialogFooter>
-              <DialogButton
-                bordered
-                onPress={() => {
-                  this._unselectLocalisation()
-                }}
-              />
-                <DialogButton
-                    text="CANCEL"
-                    bordered
-                    onPress={() => {
-                        this._unselectLocalisation()
-                    }}
-                />
-            </DialogFooter>
+          footer={[
+                <DialogFooter key="button-1">
+                    <DialogButton
+                        text="CANCEL"
+                        bordered
+                        onPress={() => {
+                            this._unselectLocalisation()
+                        }}
+
+                    />
+                </DialogFooter>,
+              ]
           }
           visible={this.props.customBackgroundDialog}
         >

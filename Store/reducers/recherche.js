@@ -26,7 +26,7 @@ const initialState = {
     switch (action.type) {
       case SET_CULTURES:
         return {
-           ...state,
+           ...state,//OK
            localisation:action.localisation,
            cultures:action.cultures,
            customBackgroundDialog: true,
@@ -35,8 +35,6 @@ const initialState = {
         return {
            ...state,
            customBackgroundDialog: false,
-           attaques: attaques,
-           all_attaques:action.attaques,
            
         };
       case SELECT_CULTURE:
@@ -61,7 +59,6 @@ const initialState = {
             ...state,
 
             all_attaques: state.all_attaques.concat(action.attaque),
-            customBackgroundDialog: false,
         };
         case RESET_CULTURE_ATTAQUES:
          return {
