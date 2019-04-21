@@ -3,6 +3,7 @@ import { Input, Card, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import validate from './validation'
+import InputDefault from '../UI/InputDefault'
 
 import {
     View,
@@ -19,6 +20,7 @@ import User from '../../Modele/User';
   class FormRegister extends React.Component{
     constructor(props) {
         super(props);
+       // Dimensions.addEventListener("change", this.updateStyles);
 
       }
       state = {
@@ -75,6 +77,25 @@ import User from '../../Modele/User';
               }
           }
       };
+
+     /* componentWillUnmount() {
+          Dimensions.removeEventListener("change", this.updateStyles);
+      }
+
+      switchAuthModeHandler = () => {
+          this.setState(prevState => {
+              return {
+                  authMode: prevState.authMode === "login" ? "signup" : "login"
+              };
+          });
+      };
+
+      updateStyles = dims => {
+          this.setState({
+              viewMode: dims.window.height > 500 ? "portrait" : "landscape"
+          });
+      };
+      */
 
       componentDidUpdate(){
           if(this.props.session){
@@ -160,12 +181,15 @@ import User from '../../Modele/User';
                  containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073'}}
                  title="S'INSCRIRE">
                      <View style={styles.input}>
-                        <Input  
-                            ref="prenom"
+                        <InputDefault
                             placeholder='PRENOM'
                             value={this.state.controls.prenom.value}
                             onChangeText={val => this.updateInputState("prenom", val)}
                             valid={this.state.controls.prenom.valid}
+
+                            touched={this.state.controls.prenom.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             leftIcon={
                                 <Icon
                                 name='user'
@@ -176,12 +200,15 @@ import User from '../../Modele/User';
                         />
                      </View>
                      <View style={styles.input}>
-                        <Input 
-                            ref="nom"
+                        <InputDefault
                             placeholder='NOM'
                             value={this.state.controls.nom.value}
                             onChangeText={val => this.updateInputState("nom", val)}
                             valid={this.state.controls.nom.valid}
+
+                            touched={this.state.controls.nom.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             leftIcon={
                                 <Icon
                                 name='user'
@@ -192,12 +219,15 @@ import User from '../../Modele/User';
                         />
                       </View>
                       <View style={styles.input}>
-                        <Input  
-                            ref="username"
+                        <InputDefault
                             placeholder='TELEPHONE'
                             value={this.state.controls.username.value}
                             onChangeText={val => this.updateInputState("username", val)}
                             valid={this.state.controls.username.valid}
+
+                            touched={this.state.controls.username.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             leftIcon={
                                 <Icon
                                 name='phone'
@@ -208,11 +238,15 @@ import User from '../../Modele/User';
                         />
                       </View>
                      <View style={styles.input}>
-                        <Input  
-                            ref="email"
+                        <InputDefault
                             value={this.state.controls.email.value}
                             onChangeText={val => this.updateInputState("email", val)}
                             valid={this.state.controls.email.valid}
+
+                            touched={this.state.controls.email.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            keyboardType="email-address"
                             placeholder='EMAIL'
                             leftIcon={
                                 <Icon
@@ -224,12 +258,15 @@ import User from '../../Modele/User';
                         />
                       </View>
                       <View style={styles.input}>
-                            <Input
-                                ref="password"
+                            <InputDefault
                                 placeholder='PASSWORD'
                                 value={this.state.controls.password.value}
                                 onChangeText={val => this.updateInputState("password", val)}
                                 valid={this.state.controls.password.valid}
+
+                                touched={this.state.controls.password.touched}
+                                autoCapitalize="none"
+                                autoCorrect={false}
                                 secureTextEntry={true}
                                 leftIcon={
                                     <Icon
@@ -241,12 +278,15 @@ import User from '../../Modele/User';
                             />
                         </View>
                     <View style={styles.input}>
-                        <Input
-                            ref="password"
+                        <InputDefault
                             placeholder='CONFIRM PASSWORD'
                             value={this.state.controls.confirmPassword.value}
                             onChangeText={val => this.updateInputState("confirmPassword", val)}
                             valid={this.state.controls.confirmPassword.valid}
+
+                            touched={this.state.controls.confirmPassword.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             secureTextEntry={true}
                             leftIcon={
                                 <Icon
@@ -272,11 +312,16 @@ import User from '../../Modele/User';
                 
               </View>
         )
+
     }
  }
 
  const styles = StyleSheet.create({
-    login:{      
+     container:{
+         backgroundColor:'#fff',
+         width:"100%"
+     },
+    login:{
         borderColor:'rgb(0, 0, 0)',
         flex:1,
     },

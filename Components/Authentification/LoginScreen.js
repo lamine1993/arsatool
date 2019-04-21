@@ -2,92 +2,177 @@ import React from 'react'
 import { Input, Card, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
+import validate from './validation'
+import InputDefault from '../UI/InputDefault'
+
 import {
     View,
     StyleSheet,
     Text,
     Dimensions
-  } from "react-native";
-  import {
-    login
-  } from '../../Store/actions/actionIndex';
- 
-import User from '../../Modele/User';
-
+} from "react-native";
+import {
+    loginAgriculture
+} from '../../Store/actions/actionIndex';
 
 
 class LoginScreen extends React.Component{
-    user= new User("lamine sarr", "sarrlmn@gmail.com","agriculteur");
-    
+    constructor(props) {
+        super(props);
+
+    }
+    state = {
+        viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
+        authMode: "signin",
+        controls: {
+            username:{
+                value: "",
+                valid: false,
+                validationRules: {
+                    minLength: 4
+                },
+                touched: false
+            },
+            password: {
+                value: "",
+                valid: false,
+                validationRules: {
+                    minLength: 6
+                },
+                touched: false
+            },
+        }
+    };
 
     componentDidUpdate(){
         if(this.props.session){
             this.props.navigation.navigate('Home');
-          }
+        }
     }
-    _onLogin(){
-      this.props.onLogin(this.user);
-      
+
+    updateInputState = (key, value) => {
+        let connectedValue = {};
+        if (this.state.controls[key].validationRules.equalTo) {
+            const equalControl = this.state.controls[key].validationRules.equalTo;
+            const equalValue = this.state.controls[equalControl].value;
+            connectedValue = {
+                ...connectedValue,
+                equalTo: equalValue
+            };
+        }
+        if (key === "password") {
+            connectedValue = {
+                ...connectedValue,
+                equalTo: value
+            };
+        }
+        this.setState(prevState => {
+            return {
+                controls: {
+                    ...prevState.controls,
+                    [key]: {
+                        ...prevState.controls[key],
+                        value: value,
+                        valid: validate(
+                            value,
+                            prevState.controls[key].validationRules,
+                            connectedValue
+                        ),
+                        touched: true
+                    }
+                }
+            };
+        });
+    };
+
+
+    componentDidMount(){
     }
+
+    loginHandler = () => {
+        const user = {
+            telephone: this.state.controls.username.value,
+            password: this.state.controls.password.value,
+        };
+
+        this.props.onLogin(user);
+    };
+
+
+    _onPressButton() {
+        this.loginHandler()
+
+    }
+
     render(){
         return(
-            <View style={styles.container}>
-              <View style={styles.login}>
+            <View style={styles.login}>
                 <Card
-                 containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073'}}
-                 title='LOGIN'>
-                     <View style={styles.input}>
-                        <Input  
-                            placeholder='EMAIL'
+                    containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073'}}
+                    title="S'INSCRIRE">
+                    <View style={styles.input}>
+                        <InputDefault
+                            placeholder='TELEPHONE'
+                            value={this.state.controls.username.value}
+                            onChangeText={val => this.updateInputState("username", val)}
+                            valid={this.state.controls.username.valid}
+
+                            touched={this.state.controls.username.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             leftIcon={
                                 <Icon
-                                name='envelope'
-                                size={30}
-                                color='black'
+                                    name='phone'
+                                    size={30}
+                                    color='#2EA073'
                                 />
                             }
                         />
-                      </View>
-                      <View style={styles.input}>
-                            <Input
-                                placeholder='PASSWORD'
-                                secureTextEntry={true}
-                                leftIcon={
-                                    <Icon
+                    </View>
+                    <View style={styles.input}>
+                        <InputDefault
+                            placeholder='PASSWORD'
+                            value={this.state.controls.password.value}
+                            onChangeText={val => this.updateInputState("password", val)}
+                            valid={this.state.controls.password.valid}
+
+                            touched={this.state.controls.password.touched}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            secureTextEntry={true}
+                            leftIcon={
+                                <Icon
                                     name='lock'
                                     size={30}
-                                    color='black'
-                                    />
-                                }
-                            />
-                        </View>
-                            <Button
-                              title='Sign in'
-                              onPress={()=>this._onLogin()}
-                              buttonStyle={{backgroundColor:'#2EA073', borderRadius:50}}
-                            />
-                        
+                                    color='#2EA073'
+                                />
+                            }
+                        />
+                    </View>
+                    <Button
+                        title='Sign in'
+                        onPress={this.loginHandler}
+                        buttonStyle={{ backgroundColor:'#2EA073', borderRadius:50}}
+                        disabled={
+                            !this.state.controls.username.valid ||
+                            !this.state.controls.password.valid
+                        }
+                    />
+
                 </Card>
-                
-              </View>
+
             </View>
         )
     }
-
 }
+
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor:'#fff',
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent:'center'
-    },
-    login:{      
+    login:{
         borderColor:'rgb(0, 0, 0)',
         flex:1,
     },
     input:{
-        borderWidth:1, 
+        borderWidth:1,
         borderRadius:50,
         borderColor:'#2EA073',
         margin:10
@@ -98,17 +183,18 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
+    //console.log(state);
     return {
-      session: state.connexion.session,
-      user: state.connexion.user
+        user:state.connexion.user,
+        session: state.connexion.session,
+
     };
-  };
-  
-  const mapDispatchToProps = dispatch => {
+};
+
+const mapDispatchToProps = dispatch => {
     return {
-      onLogin : (user) =>dispatch(login(user))
+        onLogin: user =>  dispatch(loginAgriculture(user)),
     }
-  }
-  
-  //export default HomeScreen;
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

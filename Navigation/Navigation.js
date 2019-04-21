@@ -46,8 +46,14 @@ const MyDrawerNavigator = createDrawerNavigator({
                             
                         }}
                         />,
-                
-              
+
+                headerRight: (
+                    <Icon
+                        name='camera'
+                        onPress={() => alert('This is a button!')}
+                        style={{ paddingRight: 10, color:'#fff' }}
+                    />
+                ),
                 headerStyle: {
                     backgroundColor: '#2EA073',
                 },
@@ -105,6 +111,7 @@ const MyDrawerNavigator = createDrawerNavigator({
         headerStyle: {
           backgroundColor: '#2EA073',
           color:'#fff',
+          alignItems:'center'
       },
 
         
@@ -123,7 +130,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     DrawerNavigator: MyDrawerNavigator  
   }, {
     initialRouteName: 'DrawerNavigator',
-    cardStyle: { backgroundColor: '#2EA073' },
+    cardStyle: { backgroundColor: '#fff' },
   },
   )
   
