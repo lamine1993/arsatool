@@ -10,6 +10,8 @@ import FicheTechnique from '../Components/Recherche/FicheTechnique'
 import LoginScreen from '../Components/Authentification/LoginScreen' 
 import FormRegister from '../Components/Authentification/FormRegister'
 import Attaques from '../Components/Recherche/Attaques';
+import CaptureAttaque from "../Components/Sending/CaptureAttaque";
+import CameraScreen from "../Components/Sending/CameraScreen";
 
 
 const MyDrawerNavigator = createDrawerNavigator({
@@ -50,12 +52,13 @@ const MyDrawerNavigator = createDrawerNavigator({
                 headerRight: (
                     <Icon
                         name='camera'
-                        onPress={() => alert('This is a button!')}
+                        onPress={() => {navigation.navigate('CameraScreen')}}
                         style={{ paddingRight: 10, color:'#fff' }}
                     />
                 ),
                 headerStyle: {
                     backgroundColor: '#2EA073',
+                    //backgroundColor: '#FFF',
                 },
                 headerTintColor: '#fff',
                 contentOptions: {
@@ -127,6 +130,28 @@ const MyDrawerNavigator = createDrawerNavigator({
       headerTintColor: '#fff',
       }),
      },
+      CaptureAttaque:{
+          screen: CaptureAttaque,
+          navigationOptions: ({ navigation }) => ({
+              title:"PRENDRE UNE ATTAQUE",
+              headerStyle: {
+                  backgroundColor: '#2EA073',
+                  color:'#fff',
+              },
+              headerTintColor: '#fff',
+          }),
+      },
+          CameraScreen:{
+              screen: CameraScreen,
+              navigationOptions: ({ navigation }) => ({
+                  title: "CAMERA TEST",
+                  headerStyle: {
+                      backgroundColor: '#2EA073',
+                      color:'#fff',
+                  },
+                  headerTintColor: '#fff',
+              }),
+          },
     DrawerNavigator: MyDrawerNavigator  
   }, {
     initialRouteName: 'DrawerNavigator',

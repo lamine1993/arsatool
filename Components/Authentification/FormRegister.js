@@ -323,7 +323,7 @@ import User from '../../Modele/User';
      },
     login:{
         borderColor:'rgb(0, 0, 0)',
-        flex:1,
+        //flex:1,
     },
     input:{
         borderWidth:1, 

@@ -1,6 +1,6 @@
 import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
 
-const BASE_URL="http://10.150.220.196:8080/api/register-bis"
+const BASE_URL="http://10.150.216.13:8080/api/"
 
 export const addAgriculture=(user)=>{
 return dispatch=> {
@@ -14,7 +14,7 @@ return dispatch=> {
         "phone": user.telephone,
         "password": user.password,
     };
-    fetch(BASE_URL, {
+    fetch(BASE_URL+'register-bis', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -54,26 +54,21 @@ export const loginAgriculture=(user)=>{
 
         //console.log(user)
         const userData = {
-            "login": user.login,
+            "login": user.telephone,
             "password": user.password,
         };
-        fetch(BASE_URL, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData)
-        }).then((res) => {
+        console.log(BASE_URL+'users/'+user.telephone)
+        fetch(BASE_URL+'users/'+user.telephone)
+            .then((res) => {
             if (res.status === 404 || res.status === 200) {
                 return res.json()
             }
         }).then((resPar)=>{
             //resPar l'utilisateur retourner
-
-            dispatch(login(resPar))
+            console.log(resPar)
+           // dispatch(login(resPar))
         }).catch((error)=>{
-
+            console.log(error)
         })
     }
 
