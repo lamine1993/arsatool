@@ -3,6 +3,9 @@ import Navigation from './Navigation/Navigation'
 import { Provider  } from 'react-redux'
 import configureStore from './Store/configurationStore'
 import SplashScreen from 'react-native-splash-screen'
+import {
+    ImageBackground
+} from "react-native";
 //import {getculture, registration} from './API/api'
 
 
@@ -17,7 +20,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-         <Navigation/>
+            <Navigation/>
       </Provider>
     );
   }

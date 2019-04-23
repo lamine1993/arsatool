@@ -4,12 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import validate from './validation'
 import InputDefault from '../UI/InputDefault'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 import {
     View,
     StyleSheet,
     Text,
-    Dimensions
+    Dimensions, ImageBackground
 } from "react-native";
 import {
     loginAgriculture
@@ -106,10 +108,13 @@ class LoginScreen extends React.Component{
 
     render(){
         return(
+            <KeyboardAwareScrollView>
+            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
             <View style={styles.login}>
                 <Card
-                    containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073'}}
-                    title="S'INSCRIRE">
+                    containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073', backgroundColor:'transparent'}}
+                    title="S'INSCRIRE"
+                    transparent >
                     <View style={styles.input}>
                         <InputDefault
                             placeholder='TELEPHONE'
@@ -162,6 +167,8 @@ class LoginScreen extends React.Component{
                 </Card>
 
             </View>
+            </ImageBackground>
+            </KeyboardAwareScrollView>
         )
     }
 }
@@ -170,6 +177,7 @@ const styles = StyleSheet.create({
     login:{
         borderColor:'rgb(0, 0, 0)',
         flex:1,
+        height:Dimensions.get('window').height
     },
     input:{
         borderWidth:1,

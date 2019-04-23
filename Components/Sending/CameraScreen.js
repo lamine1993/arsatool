@@ -19,14 +19,15 @@ import Dialog, {
     DialogButton
 } from 'react-native-popup-dialog';
 import moment from "moment";
-import RNFS from  'react-native-fs'
+import {Platform} from "react-native";
+//import RNFS from  'react-native-fs'
+const RNFS = require('react-native-fs');
 const flashModeOrder = {
     off: 'on',
     on: 'auto',
     auto: 'torch',
     torch: 'off',
 };
-
 const wbOrder = {
     auto: 'sunny',
     sunny: 'cloudy',
@@ -38,15 +39,10 @@ const wbOrder = {
 
 const landmarkSize = 2;
 
-//move the attachment to app folder
 const moveAttachment = async (filePath, newFilepath) => {
     return new Promise((resolve, reject) => {
-        console.log('dirPicutures '+dirPicutures)
-        console.log('filePath '+filePath)
-        filePath.slice('file://', '');
-        console.log('filePath '+filePath)
-        console.log('newFilepath '+newFilepath)
-        RNFS.mkdir(dirPicutures)
+        filePath=filePath.replace('file://', '');
+        RNFS.mkdir(dirPicutures, { intermediates: true })
             .then(() => {
                 RNFS.moveFile(filePath, newFilepath)
                     .then(() => {
@@ -65,10 +61,13 @@ const moveAttachment = async (filePath, newFilepath) => {
     });
 };
 
+//move the attachment to app folder
+
 export default class CameraScreen extends React.Component {
     state = {
         showImage: false,
         path: '',
+        base64Img:null,
         flash: 'off',
         zoom: 0,
         autoFocus: 'on',
@@ -93,6 +92,9 @@ export default class CameraScreen extends React.Component {
         faces: [],
     };
 
+    componentDidUpdate(){
+        console.log('base64Img ', this.state.base64Img);
+    }
 
     toggleFocus() {
         this.setState({
@@ -143,10 +145,16 @@ export default class CameraScreen extends React.Component {
     takePicture = async function() {
         if (this.camera) {
             const data = await this.camera.takePictureAsync();
+            let base64Img = data.uri;
+            RNFS.readFile(Platform.OS === 'android'? base64Img.replace('file://', ''): base64Img, "base64")  //substring(7) -> to remove the file://
+                .then(res =>{
+                    this.setState({base64Img: res})
+                })
+                .catch(err => console.error(err))
+
             this.setState({ path: data.uri, showImage:true })
-            //console.warn('takePicture ', data.uri);
         }
-    };
+    }
 
 
     saveImage = async filePath => {
@@ -156,8 +164,8 @@ export default class CameraScreen extends React.Component {
 
             const newFilepath = dirPicutures+'/'+newImageName;
 
-            const imageMoved = await moveAttachment(filePath, newFilepath);
-            console.log('image moved', imageMoved);
+           // const imageMoved = await moveAttachment(filePath, newFilepath);
+            //console.log('image moved', imageMoved);
         } catch (error) {
             console.log(error);
         }
@@ -165,6 +173,33 @@ export default class CameraScreen extends React.Component {
     toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
     facesDetected = ({ faces }) => this.setState({ faces });
+
+    storePicture(){
+        if (this.state.path) {
+            var url = '<mon_url>'
+            fetch(url,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        //'Authorization': '<your auth>'
+                    },
+                    body: JSON.stringify({
+                        'equipment_image':{
+                            'image_encoded': 'data:image/jpeg;base64,'+this.state.base64Img
+                        }
+                    })
+                })
+                .then((responseData) => {
+                    console.log(responseData);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
+
 
     renderFace = ({ bounds, faceID, rollAngle, yawAngle }) => (
         <View

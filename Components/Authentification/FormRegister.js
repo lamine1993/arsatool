@@ -4,13 +4,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import validate from './validation'
 import InputDefault from '../UI/InputDefault'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
     View,
     StyleSheet,
     Text,
-    Dimensions
-  } from "react-native";
+    Dimensions,
+    ImageBackground
+} from "react-native";
   import {
     addAgriculture
   } from '../../Store/actions/actionIndex';
@@ -176,10 +178,13 @@ import User from '../../Modele/User';
 
     render(){
         return(
-            <View style={styles.login}>
+            <KeyboardAwareScrollView>
+            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
+               <View style={styles.login}>
                 <Card
-                 containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073'}}
-                 title="S'INSCRIRE">
+                 containerStyle={{borderRadius:10, borderWidth:2, borderColor:'#2EA073', backgroundColor:'transparent'}}
+                 title="S'INSCRIRE"
+                 transparent>
                      <View style={styles.input}>
                         <InputDefault
                             placeholder='PRENOM'
@@ -260,6 +265,7 @@ import User from '../../Modele/User';
                       <View style={styles.input}>
                             <InputDefault
                                 placeholder='PASSWORD'
+                                placeholderTextColor='#fff'
                                 value={this.state.controls.password.value}
                                 onChangeText={val => this.updateInputState("password", val)}
                                 valid={this.state.controls.password.valid}
@@ -280,6 +286,7 @@ import User from '../../Modele/User';
                     <View style={styles.input}>
                         <InputDefault
                             placeholder='CONFIRM PASSWORD'
+                            placeholderTextColor='#fff'
                             value={this.state.controls.confirmPassword.value}
                             onChangeText={val => this.updateInputState("confirmPassword", val)}
                             valid={this.state.controls.confirmPassword.valid}
@@ -311,6 +318,9 @@ import User from '../../Modele/User';
                 </Card>
                 
               </View>
+            </ImageBackground>
+            </KeyboardAwareScrollView>
+
         )
 
     }
@@ -318,7 +328,7 @@ import User from '../../Modele/User';
 
  const styles = StyleSheet.create({
      container:{
-         backgroundColor:'#fff',
+         //backgroundColor:'transparent',
          width:"100%"
      },
     login:{

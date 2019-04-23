@@ -155,17 +155,10 @@ const MyDrawerNavigator = createDrawerNavigator({
     DrawerNavigator: MyDrawerNavigator  
   }, {
     initialRouteName: 'DrawerNavigator',
-    cardStyle: { backgroundColor: '#fff' },
+    //cardStyle: { backgroundColor: '#fff' },
   },
   )
-  
-  const CustomDrawerContentComponent = props => (
-    <ScrollView>
-      <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
-        <DrawerItems {...props} />
-      </SafeAreaView>
-    </ScrollView>
-  );
+
   //const AppContainer = createAppContainer(MyDrawerNavigator);
   const AppContainer = createAppContainer(Stack);
   export default AppContainer;

@@ -1,11 +1,11 @@
 import React from 'react'
 import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  Dimensions,
-  FlatList,
+    View,
+    StyleSheet,
+    Image,
+    TouchableHighlight,
+    Dimensions,
+    FlatList, ImageBackground,
 } from "react-native";
 import { connect } from 'react-redux'
 import Dialog, {
@@ -69,6 +69,7 @@ class HomeScreen extends React.Component {
 
     render() {
       return (
+          <ImageBackground source={require('../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={styles.container}>
             {this._displayLoading()} 
             {_displayError("quelque chose ne vas pas", this.props.error, this.props.resetError)}
@@ -187,10 +188,10 @@ class HomeScreen extends React.Component {
             />
          </DialogContent>
         </Dialog>
-        
-              
-      </View>
 
+
+      </View>
+          </ImageBackground>
       
         
       );
@@ -202,7 +203,7 @@ class HomeScreen extends React.Component {
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'space-evenly',
-      backgroundColor:'#fff'
+      //backgroundColor:'#fff'
     },
     bouton_partie:{
       flex: 2,

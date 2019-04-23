@@ -1,4 +1,5 @@
 import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
+//import {fetch} from "react-native";
 
 const BASE_URL="http://10.150.216.13:8080/api/"
 
