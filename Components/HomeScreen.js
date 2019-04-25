@@ -24,6 +24,7 @@ import {
 import {Spinner } from 'native-base';
 import {_displayError} from './Authentification/AuthError';
 import {getImageFromApi} from '../API/api'
+import {Button} from "react-native-elements";
 
 
 
@@ -34,10 +35,12 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
 
+
     //this.props.reset()
 
 } 
    componentDidUpdate(){
+       console.log(this.props.user)
         if(this.props.all_attaques.length!==0){this.props.navigation.navigate('Attaques')}
         else _displayError("Attaques innexistantes pour les parametre entreé", true , this.props.resetError)
    }
@@ -126,6 +129,17 @@ class HomeScreen extends React.Component {
                         </View> 
                     </View>
                     <View style={styles.bouton_partie_ligne_pub}>
+                        <View style={{flex:1, flexDirection:'row',  justifyContent: 'space-evenly',}}>
+                            <Button
+                                success
+                                title="S Inscrire"
+                                type="outline"
+                            />
+                            <Button
+                                title="Se connecter"
+                                type="outline"
+                            />
+                        </View>
                     </View>
                   </View>
         
@@ -308,7 +322,8 @@ class HomeScreen extends React.Component {
       attaques: state.recherche.attaques,
       localisation: state.recherche.localisation,
       all_attaques: state.recherche.all_attaques,
-      cultures:state.recherche.cultures
+      cultures:state.recherche.cultures,
+      user:state.connexion.user
     };
   };
 

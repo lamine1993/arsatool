@@ -45,7 +45,6 @@ const MyDrawerNavigator = createDrawerNavigator({
                           else{
                             navigation.openDrawer()
                           }
-                            
                         }}
                         />,
 
@@ -144,7 +143,7 @@ const MyDrawerNavigator = createDrawerNavigator({
           CameraScreen:{
               screen: CameraScreen,
               navigationOptions: ({ navigation }) => ({
-                  title: "CAMERA TEST",
+                  title: "CAPTURE ATTAQUE",
                   headerStyle: {
                       backgroundColor: '#2EA073',
                       color:'#fff',

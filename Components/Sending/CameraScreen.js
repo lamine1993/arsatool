@@ -18,8 +18,14 @@ import Dialog, {
     DialogFooter,
     DialogButton
 } from 'react-native-popup-dialog';
+import RNFetchBlob from 'react-native-fetch-blob'
 import moment from "moment";
+import {
+    uiShowError,
+    uiUnshowError
+} from '../../Store/actions/actionIndex';
 import {Platform} from "react-native";
+import { connect } from 'react-redux'
 //import RNFS from  'react-native-fs'
 const RNFS = require('react-native-fs');
 const flashModeOrder = {
@@ -38,6 +44,15 @@ const wbOrder = {
 };
 
 const landmarkSize = 2;
+
+const createFormData = (photo, body) => {
+    const data = new FormData();
+
+    data.append("file", photo);
+    data.append("agriculteur", JSON.stringify(body))
+
+    return data;
+};
 
 const moveAttachment = async (filePath, newFilepath) => {
     return new Promise((resolve, reject) => {
@@ -63,10 +78,12 @@ const moveAttachment = async (filePath, newFilepath) => {
 
 //move the attachment to app folder
 
-export default class CameraScreen extends React.Component {
+class CameraScreen extends React.Component {
     state = {
+        showPop:false,
         showImage: false,
         path: '',
+        photo:null,
         base64Img:null,
         flash: 'off',
         zoom: 0,
@@ -91,9 +108,37 @@ export default class CameraScreen extends React.Component {
         canDetectFaces: false,
         faces: [],
     };
+    _displayMGS=(msg)=> {
+        return (
+            <Dialog
+                dialogTitle={
+                    <DialogTitle
+                        title="MESSAGE"
+                        hasTitleBar={false}
+                        style={{alignItems:'center', justifyContent:'center', height:60}}
+                        textStyle={{ color: '#fff'}}
+                    />
+                }
+                backgroundStyle={styles.customBackgroundDialog}
+                footer={[
+                    <DialogFooter key="button-1">
+                        <DialogButton
+                            text="CANCEL"
+                            onPress={() => this.setState({showPop:false})}
+                        />
+                    </DialogFooter>,
+                ]}
+                visible={this.state.showPop}
+            >
+                <DialogContent>
+                    <Text>{msg}</Text>
+                </DialogContent>
+            </Dialog>
 
+        );
+    }
     componentDidUpdate(){
-        console.log('base64Img ', this.state.base64Img);
+        //console.log('base64Img ', this.state.base64Img);
     }
 
     toggleFocus() {
@@ -145,6 +190,7 @@ export default class CameraScreen extends React.Component {
     takePicture = async function() {
         if (this.camera) {
             const data = await this.camera.takePictureAsync();
+
             let base64Img = data.uri;
             RNFS.readFile(Platform.OS === 'android'? base64Img.replace('file://', ''): base64Img, "base64")  //substring(7) -> to remove the file://
                 .then(res =>{
@@ -152,44 +198,46 @@ export default class CameraScreen extends React.Component {
                 })
                 .catch(err => console.error(err))
 
-            this.setState({ path: data.uri, showImage:true })
+            this.setState({ path: data.uri, photo: data, showImage:true })
         }
     }
 
 
-    saveImage = async filePath => {
-        try {
-            // set new image name and filepath
-            const newImageName = moment().format('DDMMYY_HHmmSSS')+'.jpg';
-
-            const newFilepath = dirPicutures+'/'+newImageName;
-
-           // const imageMoved = await moveAttachment(filePath, newFilepath);
-            //console.log('image moved', imageMoved);
-        } catch (error) {
-            console.log(error);
-        }
+    saveImage =  () => {
+       // if(this.props.session)
+            this.storePicture(this.props.user)
     };
     toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
     facesDetected = ({ faces }) => this.setState({ faces });
 
-    storePicture(){
-        if (this.state.path) {
-            var url = '<mon_url>'
+    storePicture(user){
+      /*  if (this.state.path) {
+            var url = 'http://10.42.0.1:8080/api/imageEnvoye'
+
+            const userData={
+                    "id": null, //form
+                    "agriculteurId": 1,
+                    "urlImage": null,
+                    "dateValidation": null,
+                    "dateDAjout": null,
+                    "flag": true
+            };
+            const data = new FormData();
+
+            data.append("file", this.state.photo);
+            data.append("agriculteur", JSON.stringify(userData))
+            console.log(JSON.stringify(data._parts))
             fetch(url,
                 {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                         //'Authorization': '<your auth>'
                     },
-                    body: JSON.stringify({
-                        'equipment_image':{
-                            'image_encoded': 'data:image/jpeg;base64,'+this.state.base64Img
-                        }
-                    })
+                    body: JSON.stringify(data)
+
                 })
                 .then((responseData) => {
                     console.log(responseData);
@@ -197,7 +245,50 @@ export default class CameraScreen extends React.Component {
                 .catch(err => {
                     console.log(err);
                 })
-        }
+        }*/
+        const userData={
+                "id": null, //form
+                "agriculteurId": 1,
+                "urlImage": null,
+                "dateValidation": null,
+                "dateDAjout": null,
+                "flag": true
+        };
+        RNFetchBlob.fetch('POST', 'http://10.42.0.1:8080/api/imageEnvoye', {
+            // this is required, otherwise it won't be process as a multipart/form-data request
+            'Content-Type' : 'multipart/form-data',
+        }, [
+            // append field data from file path
+            {
+                name : 'file',
+                filename :'avatar.jpg',
+                // Change BASE64 encoded data to a file path with prefix `RNFetchBlob-file://`.
+                // Or simply wrap the file path with RNFetchBlob.wrap().
+                data: RNFetchBlob.wrap(this.state.path)
+            },
+            {name:'agriculteur', data : JSON.stringify({
+                    "id": null, //form
+                    "agriculteurId": 1,
+                    "urlImage": null,
+                    "dateValidation": null,
+                    "dateDAjout": null,
+                    "flag": true
+                })
+            }
+        ]).then((resp) => {
+            //console.log("response")
+            if(resp.respInfo.status===201){
+                this.setState({showPop:true})
+
+                console.log(this.state.showPop)
+
+                this._displayMGS("Photo envoyee")
+            }
+
+            //console.log(resp.respInfo.status)
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
 
@@ -527,3 +618,21 @@ const styles = StyleSheet.create({
         width:300
     },
 });
+
+const mapStateToProps = state => {
+    //console.log(state);
+    return {
+        user:state.connexion.user,
+        session:state.connexion.session,
+        error: state.ui.error,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        resetError: ()=>dispatch(uiUnshowError()),
+        setError: ()=>dispatch(uiShowError())
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CameraScreen)

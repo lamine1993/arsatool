@@ -47,7 +47,37 @@ export const _displayError=(error, isError, dissmissError)=> {
          
       );
   }
+export const _displayMSG=(msg, dississError)=> {
+    return (
 
+
+        <Dialog
+            dialogTitle={
+                <DialogTitle
+                    title="eurreur"
+                    hasTitleBar={false}
+                    style={{alignItems:'center', justifyContent:'center', height:60}}
+                    textStyle={{ color: '#fff'}}
+                />
+            }
+            backgroundStyle={styles.customBackgroundDialog}
+            footer={[
+                <DialogFooter key="button-1">
+                    <DialogButton
+                        text="CANCEL"
+                        onPress={() => dissmissError()}
+                    />
+                </DialogFooter>,
+            ]}
+            visible={true}
+        >
+            <DialogContent>
+                <Text>{msg}</Text>
+            </DialogContent>
+        </Dialog>
+
+    );
+}
   const styles = StyleSheet.create({
     text:{
       fontSize: 15,

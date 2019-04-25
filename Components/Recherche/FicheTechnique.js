@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  Dimensions
+  Dimensions,
+    ImageBackground
 } from "react-native";
 
 import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
@@ -22,6 +23,7 @@ class FicheTechnique extends Component {
 
     render() {
         return (
+            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
 
             <Container>
                 <Content contentContainerStyle={{ flex: 1, padding: 10 }}>
@@ -58,6 +60,7 @@ class FicheTechnique extends Component {
               </Card>
                 </Content>
             </Container>
+            </ImageBackground>
         )
     }
 

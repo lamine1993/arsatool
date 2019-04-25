@@ -1,7 +1,7 @@
 import {SET_CULTURES, UNSELECT_LOCALISATION, SELECT_CULTURE, SELECT_ATTAQUE, SET_ATTAQUES, ADD_IMAGE_ATTAQUE, RESET_CULTURE_ATTAQUES} from './actionTypes'
 import { uiStartLoading, uiStopLoading, uiShowError, uiUnshowError } from './actionIndex';
 
-const BASE_URL="http://10.150.216.126:8080/api/"
+const BASE_URL="http://10.42.0.1:8080/api/"
 
 export const selectLocalisation=(localisation)=>{
     

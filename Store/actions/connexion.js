@@ -1,7 +1,7 @@
 import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
 //import {fetch} from "react-native";
 
-const BASE_URL="http://10.150.216.13:8080/api/"
+const BASE_URL="http://10.42.0.1:8080/api/"
 
 export const addAgriculture=(user)=>{
 return dispatch=> {
@@ -50,16 +50,42 @@ export const addChercheur=(user)=>{
    } 
 }
 
+export const setUser=(username)=>{
+
+    return dispatch=> {
+        //console.log(username)
+        fetch(BASE_URL +'users/' +username)
+          .then((res) => {
+                if (res.status === 404 || res.status === 200) {
+                    return res.json()
+                }
+            }).then((resPar) => {
+            //resPar l'utilisateur retourner
+            //console.log(resPar)
+             dispatch(login(resPar))
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
 export const loginAgriculture=(user)=>{
     return dispatch=> {
 
         //console.log(user)
         const userData = {
-            "login": user.telephone,
+            "username": user.telephone,
             "password": user.password,
         };
-        console.log(BASE_URL+'users/'+user.telephone)
-        fetch(BASE_URL+'users/'+user.telephone)
+        //console.log(BASE_URL+'users/'+user.telephone)
+        fetch(BASE_URL+'authenticate',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData)
+        })
             .then((res) => {
             if (res.status === 404 || res.status === 200) {
                 return res.json()
@@ -67,12 +93,12 @@ export const loginAgriculture=(user)=>{
         }).then((resPar)=>{
             //resPar l'utilisateur retourner
             console.log(resPar)
-           // dispatch(login(resPar))
+            if(resPar.id_token) dispatch(setUser(userData.username))
+
         }).catch((error)=>{
             console.log(error)
         })
     }
-
 }
 
 export const login= (user)=>{

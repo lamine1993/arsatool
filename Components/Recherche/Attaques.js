@@ -1,6 +1,6 @@
 // Components/Search.js
 import React from 'react'
-import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator} from 'react-native'
+import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, ActivityIndicator, ImageBackground} from 'react-native'
 import AttaqueItem from './Items/AttaqueItem'
 import { selectAttaque, setImagesAttaque } from '../../Store/actions/actionIndex';
 import { connect } from 'react-redux'
@@ -33,6 +33,7 @@ class Attaques extends React.Component {
 
     render(){
         return (
+            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
             <View style={styles.container}>
                 <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
                 
@@ -49,6 +50,7 @@ class Attaques extends React.Component {
                     }
                 />
             </View>
+            </ImageBackground>
         )
     }
 }
