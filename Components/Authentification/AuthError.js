@@ -23,13 +23,13 @@ export const _displayError=(error, isError, dissmissError)=> {
             <Dialog
                 dialogTitle={
                   <DialogTitle
-                      title="eurreur"
-                      hasTitleBar={false}
-                      style={{alignItems:'center', justifyContent:'center', height:60}}
+                      title="Erreur Connexion"
+                      hasTitleBar={true}
+                      style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#f00'}}
                       textStyle={{ color: '#fff'}}
                   />
                 }
-                backgroundStyle={styles.customBackgroundDialog}
+                backgroundStyle={{backgroundColor: '#f00'}}
                 footer={[
                   <DialogFooter key="button-1">
                     <DialogButton
@@ -47,20 +47,20 @@ export const _displayError=(error, isError, dissmissError)=> {
          
       );
   }
-export const _displayMSG=(msg, dississError)=> {
+export const _displayMSG=(msg,isError, dississError)=> {
     return (
 
 
         <Dialog
             dialogTitle={
                 <DialogTitle
-                    title="eurreur"
+                    title="Erreur Connexion"
                     hasTitleBar={false}
-                    style={{alignItems:'center', justifyContent:'center', height:60}}
+                    style={{alignItems:'center', justifyContent:'center', height:50}}
                     textStyle={{ color: '#fff'}}
                 />
             }
-            backgroundStyle={styles.customBackgroundDialog}
+            backgroundStyle={{backgroundColor: '#f00'}}
             footer={[
                 <DialogFooter key="button-1">
                     <DialogButton
@@ -69,7 +69,7 @@ export const _displayMSG=(msg, dississError)=> {
                     />
                 </DialogFooter>,
             ]}
-            visible={true}
+            visible={isError}
         >
             <DialogContent>
                 <Text>{msg}</Text>

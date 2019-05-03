@@ -1,17 +1,19 @@
 import {SET_CULTURES, UNSELECT_LOCALISATION, SELECT_CULTURE, SELECT_ATTAQUE, SET_ATTAQUES, ADD_IMAGE_ATTAQUE, RESET_CULTURE_ATTAQUES} from './actionTypes'
 import { uiStartLoading, uiStopLoading, uiShowError, uiUnshowError } from './actionIndex';
-
-const BASE_URL="http://10.42.0.1:8080/api/"
+import  {SERVER} from '../../Components/Constants/servers'
+//import {fetch} from "react-native";
 
 export const selectLocalisation=(localisation)=>{
     
     return dispatch =>{
         dispatch(resetCultureAndAttaques())
         dispatch(uiStartLoading());
-        fetch(BASE_URL+'culturesImage')
+        console.log(SERVER)
+        fetch(SERVER+'culturesImage')
         .then((res) => res.json())
         .then(parsedRes=>{
             const cultures=[];
+            //console.log(parsedRes)
             for(let key in parsedRes){
                 cultures.push({
                     ...parsedRes[key][0],
@@ -22,9 +24,9 @@ export const selectLocalisation=(localisation)=>{
             dispatch(setCultures(cultures, localisation));
             dispatch(uiStopLoading());
         }).catch((error) => {
-
+                console.log(error)
                 dispatch(uiStopLoading());
-                dispatch(uiShowError());
+                dispatch(uiShowError("Lecture Des cultures echouer. Veiller verifier votre cconnection"));
             })
     }
 }
@@ -37,14 +39,15 @@ export const setCultures = (cultures, localisation) => {
     };
 };
 
-export  const  selectCulture =(culture, localisation)=>{
+export   const  selectCulture =(culture, localisation)=>{
     return dispatch =>{
 
         var  all_attaques=[]
         dispatch(resetCultureAndAttaques())
-       fetch(BASE_URL+'listattaquecomplet/'+culture.id+'/'+localisation)
+       fetch(SERVER+'listattaquecomplet/'+culture.id+'/'+localisation)
         .catch((error) => {
-            alert("Something went wrong, sorry :/");
+            //alert("Something went wrong, sorry :/");
+            dispatch(uiShowError("connexion echouer"))
             console.log(error);
             //dispatch(uiStopLoading());
         })
@@ -61,17 +64,18 @@ export  const  selectCulture =(culture, localisation)=>{
                 all_attaques.push({
                     ...parsedRes[key],
                     key: key,
-                    imagesAttaques:[]
+                    imagesAttaques:[],
+                    insecteImage:[]
                 })
             }
-            for(let key in parsedRes) fetch(BASE_URL+'imageAttaques/' + all_attaques[key].id)
+            for(let key in parsedRes) fetch(SERVER+'imageAttaques/' + all_attaques[key].id)
                 .then((res) => res.json())
                 .then(res => {
                     all_attaques[key].imagesAttaques = res
-                    fetch(BASE_URL+'imageInsectes/'+all_attaques[key].insecte.id)
+                    fetch(SERVER+'imageInsectes/'+all_attaques[key].insecte.id)
                         .then((res)=>res.json())
                         .then(res=>{
-                            all_attaques[key].insecte.insecteImage=res
+                            all_attaques[key].insecteImage=res
                             dispatch(setImagesAttaque(all_attaques[key]))
                         })   
                 })

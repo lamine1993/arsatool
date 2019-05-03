@@ -39,7 +39,7 @@ class LoginScreen extends React.Component{
                 value: "",
                 valid: false,
                 validationRules: {
-                    minLength: 6
+                    minLength: 4
                 },
                 touched: false
             },

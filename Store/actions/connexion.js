@@ -1,7 +1,7 @@
 import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
 //import {fetch} from "react-native";
-
-const BASE_URL="http://10.42.0.1:8080/api/"
+import  {SERVER} from '../../Components/Constants/servers'
+//const BASE_URL="http://10.42.0.1:8080/api/"
 
 export const addAgriculture=(user)=>{
 return dispatch=> {
@@ -15,7 +15,7 @@ return dispatch=> {
         "phone": user.telephone,
         "password": user.password,
     };
-    fetch(BASE_URL+'register-bis', {
+    fetch(SERVER+'register-bis', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -54,7 +54,7 @@ export const setUser=(username)=>{
 
     return dispatch=> {
         //console.log(username)
-        fetch(BASE_URL +'users/' +username)
+        fetch(SERVER +'users/' +username)
           .then((res) => {
                 if (res.status === 404 || res.status === 200) {
                     return res.json()
@@ -78,7 +78,7 @@ export const loginAgriculture=(user)=>{
             "password": user.password,
         };
         //console.log(BASE_URL+'users/'+user.telephone)
-        fetch(BASE_URL+'authenticate',{
+        fetch(SERVER+'authenticate',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

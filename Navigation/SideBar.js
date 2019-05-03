@@ -27,14 +27,15 @@ class SideBar extends React.Component {
                   onPress={() => this.props.navigation.navigate('Notifications')}>
                   <View style={styles.menu} >
                       <Icon name='person-add' style={styles.icon}></Icon>
-                      <Text style={styles.text_menu}>UN UTILISATEUR CONNECTER</Text>
+                      <Text style={styles.text_menu}>{this.props.user.firstName}</Text>
+                      <Text style={styles.text_menu}>{this.props.user.lastName}</Text>
                   </View>
               </TouchableHighlight>
               <TouchableHighlight
                   onPress={() => this.props.onLogout()}>
                   <View style={styles.menu} >
                       <Icon name='key' style={styles.icon}></Icon>
-                      <Text style={styles.text_menu}>LOGOUT</Text>
+                      <Text style={styles.text_menu}>DECONNEXION</Text>
                   </View>
               </TouchableHighlight>
         </View>
@@ -54,7 +55,7 @@ class SideBar extends React.Component {
                   onPress={() => this.props.navigation.navigate('Login')}>
                   <View style={styles.menu} >
                       <Icon name='key' style={styles.icon}></Icon>
-                      <Text style={styles.text_menu}>LOGIN</Text>
+                      <Text style={styles.text_menu}>CONNEXION</Text>
                   </View>
               </TouchableHighlight>
         </View>

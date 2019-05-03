@@ -34,7 +34,7 @@ class FicheTechnique extends Component {
                    </Text>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={{uri: getImageFromApi(this.props.attaque.insecte.insecteImage[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
+                  <Image source={{uri: getImageFromApi(this.props.attaque.insecteImage[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem cardBody>
                     <Text style={{ color: '#F00' }}>

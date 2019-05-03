@@ -12,9 +12,10 @@ export const uiStopLoading = () => {
     };
 };
 
-export const uiShowError = () => {
+export const uiShowError = (msg) => {
         return {
-            type: UI_ERROR
+            type: UI_ERROR,
+            message:msg
         };
     };
     

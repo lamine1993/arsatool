@@ -12,6 +12,7 @@ import FormRegister from '../Components/Authentification/FormRegister'
 import Attaques from '../Components/Recherche/Attaques';
 import CaptureAttaque from "../Components/Sending/CaptureAttaque";
 import CameraScreen from "../Components/Sending/CameraScreen";
+import {connect} from "react-redux";
 
 
 const MyDrawerNavigator = createDrawerNavigator({
@@ -157,7 +158,5 @@ const MyDrawerNavigator = createDrawerNavigator({
     //cardStyle: { backgroundColor: '#fff' },
   },
   )
-
-  //const AppContainer = createAppContainer(MyDrawerNavigator);
   const AppContainer = createAppContainer(Stack);
   export default AppContainer;

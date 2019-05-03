@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
+  android:background="#fff"
 >
-  <ImageView 
-    android:src="@drawable/launch_screen"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="center"
+  <TextView
+          android:id="@+id/image"
+          android:src="@drawable/logo1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:text="ARSATOOL"
+          android:textSize="50px"
+          android:textStyle="bold"
+          android:textColor="#2EA073"
+          android:gravity="center"
+  />
+  <ImageView
+          android:id="@+id/image"
+          android:src="@drawable/logo1"
+          android:layout_width="300dp"
+          android:layout_height="400dp"
+          android:layout_centerInParent="true"
+
   >
+
   </ImageView>
-</FrameLayout>
+
+
+
+  <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+  >
+
+    <ImageView
+            android:id="@+id/image1"
+            android:src="@drawable/ugb"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+    >
+    </ImageView>
+    <ImageView
+            android:id="@+id/image2"
+            android:src="@drawable/logo2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+    >
+    </ImageView>
+    <ImageView
+            android:id="@+id/image3"
+            android:src="@drawable/logo3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+    >
+    </ImageView>
+    <ImageView
+            android:id="@+id/image"
+            android:src="@drawable/launch_screen"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+    >
+    </ImageView>
+  </LinearLayout>
+
+</RelativeLayout>

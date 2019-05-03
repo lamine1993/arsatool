@@ -65,7 +65,7 @@ import User from '../../Modele/User';
                   value: "",
                   valid: false,
                   validationRules: {
-                      minLength: 6
+                      minLength: 4
                   },
                   touched: false
               },

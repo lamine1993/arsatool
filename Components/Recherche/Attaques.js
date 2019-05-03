@@ -11,7 +11,7 @@ class Attaques extends React.Component {
         super(props)
     }
     componentDidMount(){
-
+       console.log(this.props.all_attaques)
     }
     
 
@@ -33,7 +33,7 @@ class Attaques extends React.Component {
 
     render(){
         return (
-            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
+
             <View style={styles.container}>
                 <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
                 
@@ -45,12 +45,12 @@ class Attaques extends React.Component {
                     renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
-                        console.log("onEndReached")
+                        //console.log("onEndReached")
                       }
                     }
                 />
             </View>
-            </ImageBackground>
+
         )
     }
 }

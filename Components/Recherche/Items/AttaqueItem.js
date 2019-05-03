@@ -19,7 +19,7 @@ class attaqueItem extends React.Component {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.image_insecte}>
-                    <Thumbnail large source={{uri: getImageFromApi(attaque.insecte.insecteImage['0'].imageUrl)}}/>
+                    <Thumbnail large source={{uri: getImageFromApi(attaque.insecteImage['0'].imageUrl)}}/>
                     <Text style={{justifyContent:'center', }}>{attaque.insecte.nomInsecte} </Text>
                 </View>
                   <View style={styles.type_style}>

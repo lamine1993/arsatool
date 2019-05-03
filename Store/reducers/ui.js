@@ -1,8 +1,9 @@
 import { UI_START_LOADING, UI_STOP_LOADING, UI_ERROR, UI_ERROR_DEL } from "../actions/actionTypes";
 
 const initialState = {
-  isLoading: false,
-  error: false
+    isLoading: false,
+    error: false,
+    message:''
 };
 
 const uiReducer = (state = initialState, action) => {
@@ -20,7 +21,8 @@ const uiReducer = (state = initialState, action) => {
     case UI_ERROR:
        return{
          ...state,
-         error: true
+         error: true,
+         message: action.message
        };
     case UI_ERROR_DEL:
        return{

@@ -35,19 +35,22 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
 
-
     //this.props.reset()
 
-} 
+  }
    componentDidUpdate(){
-       console.log(this.props.user)
+      // console.log(this.props.user)
+
+       _displayError("Attaques innexistantes pour les parametre entreé", this.props.error , this.props.resetError)
         if(this.props.all_attaques.length!==0){this.props.navigation.navigate('Attaques')}
         else _displayError("Attaques innexistantes pour les parametre entreé", true , this.props.resetError)
    }
 
-    _cultureSelected(culture){
+   _cultureSelected(culture){
           this.props.onSelectCulture(culture, this.props.localisation);
 
+          //if(this.props.all_attaques.length!==0){this.props.navigation.navigate('Attaques')}
+          //else _displayError("Attaques innexistantes pour les parametre entreé", true , this.props.resetError)
     } 
 
     _selectLocalisation= localisation =>{
@@ -75,7 +78,7 @@ class HomeScreen extends React.Component {
           <ImageBackground source={require('../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={styles.container}>
             {this._displayLoading()} 
-            {_displayError("quelque chose ne vas pas", this.props.error, this.props.resetError)}
+            {_displayError(this.props.msg_error, this.props.error, this.props.resetError)}
                 <View style={styles.bouton_partie}>
                   <View style={styles.bouton_partie_ligne}>
                        <View style={styles.bouton_partie_ligne_bouton}>
@@ -319,6 +322,8 @@ class HomeScreen extends React.Component {
 
       isLoading: state.ui.isLoading,
       error: state.ui.error,
+      msg_error:state.ui.message,
+
       attaques: state.recherche.attaques,
       localisation: state.recherche.localisation,
       all_attaques: state.recherche.all_attaques,

@@ -45,37 +45,6 @@ const wbOrder = {
 
 const landmarkSize = 2;
 
-const createFormData = (photo, body) => {
-    const data = new FormData();
-
-    data.append("file", photo);
-    data.append("agriculteur", JSON.stringify(body))
-
-    return data;
-};
-
-const moveAttachment = async (filePath, newFilepath) => {
-    return new Promise((resolve, reject) => {
-        filePath=filePath.replace('file://', '');
-        RNFS.mkdir(dirPicutures, { intermediates: true })
-            .then(() => {
-                RNFS.moveFile(filePath, newFilepath)
-                    .then(() => {
-                        console.log('FILE MOVED', filePath, newFilepath);
-                        resolve(true);
-                    })
-                    .catch(error => {
-                        console.log('moveFile error', error);
-                        reject(error);
-                    });
-            })
-            .catch(err => {
-                console.log('mkdir error', err);
-                reject(err);
-            });
-    });
-};
-
 //move the attachment to app folder
 
 class CameraScreen extends React.Component {
@@ -108,6 +77,7 @@ class CameraScreen extends React.Component {
         canDetectFaces: false,
         faces: [],
     };
+
     _displayMGS=(msg)=> {
         return (
             <Dialog
@@ -212,41 +182,7 @@ class CameraScreen extends React.Component {
     facesDetected = ({ faces }) => this.setState({ faces });
 
     storePicture(user){
-      /*  if (this.state.path) {
-            var url = 'http://10.42.0.1:8080/api/imageEnvoye'
-
-            const userData={
-                    "id": null, //form
-                    "agriculteurId": 1,
-                    "urlImage": null,
-                    "dateValidation": null,
-                    "dateDAjout": null,
-                    "flag": true
-            };
-            const data = new FormData();
-
-            data.append("file", this.state.photo);
-            data.append("agriculteur", JSON.stringify(userData))
-            console.log(JSON.stringify(data._parts))
-            fetch(url,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'multipart/form-data',
-                        //'Authorization': '<your auth>'
-                    },
-                    body: JSON.stringify(data)
-
-                })
-                .then((responseData) => {
-                    console.log(responseData);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }*/
-        const userData={
+      const userData={
                 "id": null, //form
                 "agriculteurId": 1,
                 "urlImage": null,

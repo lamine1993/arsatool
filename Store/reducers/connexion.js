@@ -1,5 +1,5 @@
 import {ADD_AGRICULTEUR, ADD_CHERCHEUR, CONNEXION, DECONNEXION} from '../actions/actionTypes'
-import User from '../../Modele/User';
+
 const initialState = {
      session:false,
      user:null,
@@ -31,14 +31,6 @@ const initialState = {
             user:null,
             session:false
             };
-        /*case SUCCESS:
-            return{
-              
-            };
-        case FAIL:
-            return{
-              
-            };*/
         default:
           return  state;
     }
