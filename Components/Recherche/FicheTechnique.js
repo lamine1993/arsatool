@@ -15,6 +15,9 @@ import {getImageFromApi} from '../../API/api'
 class FicheTechnique extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+          attaque: this.props.navigation.state.params.attaque
+         }
         //this.attaque=this.props.attaque
     }
     componentDidMount(){
@@ -30,11 +33,11 @@ class FicheTechnique extends Component {
                 <Card>
                 <CardItem cardBody>
                    <Text style={{ color: '#00F', alignItems: 'center' }}>
-                   {this.props.attaque.insecte.nomInsecte}
+                   {this.state.attaque.insecte.nomInsecte}
                    </Text>
                 </CardItem>
                 <CardItem cardBody>
-                  <Image source={{uri: getImageFromApi(this.props.attaque.insecteImage[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
+                  <Image source={{uri: getImageFromApi(this.state.attaque.images[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem cardBody>
                     <Text style={{ color: '#F00' }}>
@@ -43,7 +46,7 @@ class FicheTechnique extends Component {
                 </CardItem>
                 <CardItem cardBody>
                     <Text>
-                      {this.props.attaque.insecte.description}
+                      {this.state.attaque.insecte.description}
                     </Text>
                 </CardItem>
                      
@@ -54,7 +57,7 @@ class FicheTechnique extends Component {
                 </CardItem>
                 <CardItem cardBody>
                     <Text>
-                      {this.props.attaque.insecte.methode}
+                      {this.state.attaque.insecte.methode}
                     </Text>
                 </CardItem>
               </Card>
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    attaque: state.recherche.attaque
+    //attaque: state.recherche.attaque
   };
 };
 

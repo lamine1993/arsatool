@@ -13,13 +13,13 @@ class attaqueItem extends React.Component {
   }
   render() {
       const { attaque, displayFiche } = this.props
+      //console.log(attaque)
 
-    
-    return (
+      return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.image_insecte}>
-                    <Thumbnail large source={{uri: getImageFromApi(attaque.insecteImage['0'].imageUrl)}}/>
+                    <Thumbnail large source={{uri: getImageFromApi(attaque.images['0'].imageUrl)}}/>
                     <Text style={{justifyContent:'center', }}>{attaque.insecte.nomInsecte} </Text>
                 </View>
                   <View style={styles.type_style}>
@@ -37,7 +37,7 @@ class attaqueItem extends React.Component {
                         renderItem={({item}) => <Image source={{uri: getImageFromApi(item.imageUrl)}} style={styles.image_attaque}/>}
                         onEndReachedThreshold={0.5}
                         onEndReached={() => {
-                            console.log("onEndReached")
+                            //console.log("onEndReached")
                           }
                         }
                     />
@@ -67,22 +67,18 @@ const styles = StyleSheet.create({
 
      },
      image_insecte:{
-       alignItems:'center'
+       alignItems:'center',
+         flexDirection:'row'
      },
      type_style:{
-      alignItems:'flex-start'
+      alignItems:'flex-start',
+         justifyContent:'center'
      },
      header:{
         flex:1,
         flexDirection:'row',
         justifyContent:'space-between'
      },
-     image_insecte:{
-        flexDirection:'row'
-      },
-      type_style:{
-          justifyContent:'center'
-      },
      content:{
         flex:2,
      },

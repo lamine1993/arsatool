@@ -1,16 +1,13 @@
 import {ADD_AGRICULTEUR,ADD_CHERCHEUR, CONNEXION, DECONNEXION} from './actionTypes'
-//import {fetch} from "react-native";
 import  {SERVER} from '../../Components/Constants/servers'
-//const BASE_URL="http://10.42.0.1:8080/api/"
 
 export const addAgriculture=(user)=>{
 return dispatch=> {
 
-    //console.log(user)
     const userData = {
-        "email": user.email, //form
-        "firstName": user.firstname, //form
-        "lastName": user.lastName, //form
+        "email": user.email, 
+        "firstName": user.firstname, 
+        "lastName": user.lastName, 
         "login": user.login,
         "phone": user.telephone,
         "password": user.password,

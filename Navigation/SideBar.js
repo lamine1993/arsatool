@@ -9,7 +9,6 @@ const routes = ["Home", "Notifications"];
 class SideBar extends React.Component {
   constructor(props){
     super(props)
-    console.log("navigation prop "+props)
   }
 
   _displayLoginSection(){
@@ -26,7 +25,7 @@ class SideBar extends React.Component {
              <TouchableHighlight
                   onPress={() => this.props.navigation.navigate('Notifications')}>
                   <View style={styles.menu} >
-                      <Icon name='person-add' style={styles.icon}></Icon>
+                      <Icon name='person-add' style={styles.icon}/>
                       <Text style={styles.text_menu}>{this.props.user.firstName}</Text>
                       <Text style={styles.text_menu}>{this.props.user.lastName}</Text>
                   </View>
@@ -34,7 +33,7 @@ class SideBar extends React.Component {
               <TouchableHighlight
                   onPress={() => this.props.onLogout()}>
                   <View style={styles.menu} >
-                      <Icon name='key' style={styles.icon}></Icon>
+                      <Icon name='key' style={styles.icon}/>
                       <Text style={styles.text_menu}>DECONNEXION</Text>
                   </View>
               </TouchableHighlight>
@@ -47,14 +46,14 @@ class SideBar extends React.Component {
              <TouchableHighlight
                   onPress={() => this.props.navigation.navigate('Signin')}>
                   <View style={styles.menu} >
-                      <Icon name='person-add' style={styles.icon}></Icon>
+                      <Icon name='person-add' style={styles.icon}/>
                       <Text style={styles.text_menu}>INSCRIPTION</Text>
                   </View>
               </TouchableHighlight>
               <TouchableHighlight
                   onPress={() => this.props.navigation.navigate('Login')}>
                   <View style={styles.menu} >
-                      <Icon name='key' style={styles.icon}></Icon>
+                      <Icon name='key' style={styles.icon}/>
                       <Text style={styles.text_menu}>CONNEXION</Text>
                   </View>
               </TouchableHighlight>
@@ -75,19 +74,25 @@ class SideBar extends React.Component {
         </View>
         <View style={styles.content}> 
            {this._displayLoginSection()}
-          <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}></View>
+          <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}>
+
+          </View>
           <View style={styles.application}>
               <TouchableHighlight             
                   onPress={() => this.props.navigation.navigate('Home')}>
                   <View style={styles.menu} >
-                      <Icon name='home' style={styles.icon}></Icon>
+                      <Icon name='home' style={styles.icon}>
+
+                      </Icon>
                       <Text style={styles.text_menu}>HOME</Text>
                   </View>
               </TouchableHighlight>
               <TouchableHighlight             
                   onPress={() => this.props.navigation.navigate('Home')}>
                   <View style={styles.menu} >
-                      <Icon name='search' style={styles.icon}></Icon>
+                      <Icon name='search' style={styles.icon}>
+
+                      </Icon>
                       <Text style={styles.text_menu}>RECHERCHE INSECTE</Text>
                   </View>
               </TouchableHighlight>

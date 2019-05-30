@@ -14,7 +14,7 @@ import Dialog, {
   DialogFooter,
   DialogButton
 } from 'react-native-popup-dialog';
-
+import { Spinner } from 'native-base';
 
 export const _displayError=(error, isError, dissmissError)=> {
         return (
@@ -47,6 +47,28 @@ export const _displayError=(error, isError, dissmissError)=> {
          
       );
   }
+
+export const _displayLoading=(visible, dissmissError)=> {
+    return (
+
+
+        <Dialog
+            backgroundStyle={{backgroundColor: '#f00', width:'100'}}
+
+            visible={visible}
+        >
+            <DialogContent>
+                <View>
+                    <Text>CONNEXION...</Text>
+                    <Spinner color='green' />
+                </View>
+            </DialogContent>
+        </Dialog>
+
+    );
+}
+
+
 export const _displayMSG=(msg,isError, dississError)=> {
     return (
 

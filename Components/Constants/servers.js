@@ -1,3 +1,3 @@
 
 
-export const SERVER="http://10.42.0.1:8080/api/"
+export const SERVER="http://51.83.46.9:8080/api/"

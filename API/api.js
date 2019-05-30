@@ -7,4 +7,6 @@ export function getImageFromApi(imagePath){
 }
 
 
-
+export function getImageAttaque(){
+  return fetch()
+}

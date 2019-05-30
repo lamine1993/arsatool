@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware  } from 'redux';
+import { createStore,compose, combineReducers, applyMiddleware  } from 'redux';
 import thunk from 'redux-thunk';
 import rechercheReducer from './reducers/recherche';
 import connexionReducer from './reducers/connexion';
@@ -10,9 +10,12 @@ const rootReducer = combineReducers({
 });
 
 const configureStore = () => {
+    const middleware = [thunk];
+
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     return createStore(
         rootReducer,
-        applyMiddleware(thunk)
+        composeEnhancers(applyMiddleware(...middleware))
         );
 };
 

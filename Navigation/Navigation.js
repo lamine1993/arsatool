@@ -1,26 +1,21 @@
 import React from 'react'
 import {createDrawerNavigator, createAppContainer, createStackNavigator} from 'react-navigation'
 import HomeScreen from '../Components/HomeScreen'
-import NotificationsScreen from '../Components/NotificationsScreen'
 import {StyleSheet} from 'react-native'
 import { Icon } from 'native-base'
 import SideBar from "./SideBar.js";
-import InsecteCausale from '../Components/Recherche/InsecteCausale'
-import FicheTechnique from '../Components/Recherche/FicheTechnique' 
+import FicheTechnique from '../Components/Recherche/FicheTechnique'
 import LoginScreen from '../Components/Authentification/LoginScreen' 
 import FormRegister from '../Components/Authentification/FormRegister'
 import Attaques from '../Components/Recherche/Attaques';
 import CaptureAttaque from "../Components/Sending/CaptureAttaque";
 import CameraScreen from "../Components/Sending/CameraScreen";
-import {connect} from "react-redux";
+import NavRight from "../Components/UI/NavRight";
 
 
 const MyDrawerNavigator = createDrawerNavigator({
     Home: {
       screen: HomeScreen,
-    },
-    Notifications: {
-      screen: NotificationsScreen
     },
     Login:{
        screen: LoginScreen
@@ -34,9 +29,9 @@ const MyDrawerNavigator = createDrawerNavigator({
         initialRouteName: 'Home',
         contentComponent: props => <SideBar {...props} />,
         navigationOptions: ({ navigation }) => ({
-                
+
                 title: 'AR SA TOOL',  // Title to appear in status bar
-                headerLeft: 
+                headerLeft:
                         <Icon name='menu' style={{ paddingLeft: 10, color:'#fff' }} onPress={() => {
                           const parent = navigation.dangerouslyGetParent();
                           const isDrawerOpen = parent && parent.state && parent.state.isDrawerOpen;
@@ -49,13 +44,19 @@ const MyDrawerNavigator = createDrawerNavigator({
                         }}
                         />,
 
-                headerRight: (
-                    <Icon
-                        name='camera'
-                        onPress={() => {navigation.navigate('CameraScreen')}}
-                        style={{ paddingRight: 10, color:'#fff' }}
-                    />
-                ),
+               headerRight:  <NavRight navigation={navigation} />,
+
+                /*headerRight:()=>{
+                    if(navigation.getParam("user")!==null){
+                        return (
+                            <Icon
+                                name='camera'
+                                onPress={() => {navigation.navigate('CameraScreen')}}
+                                style={{ paddingRight: 10, color:'#fff' }}
+                            />
+                        )
+                    }
+                },*/
                 headerStyle: {
                     backgroundColor: '#2EA073',
                     //backgroundColor: '#FFF',
@@ -108,18 +109,6 @@ const MyDrawerNavigator = createDrawerNavigator({
       headerTintColor: '#fff',
       }),
     },
-    InsecteCausale: { screen: InsecteCausale,
-      navigationOptions: ({ navigation }) => ({
-        title: navigation.state.routeName,
-        headerStyle: {
-          backgroundColor: '#2EA073',
-          color:'#fff',
-          alignItems:'center'
-      },
-
-        
-      }),
-     },
     FicheTechnique: { screen: FicheTechnique,
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.routeName,
@@ -141,7 +130,7 @@ const MyDrawerNavigator = createDrawerNavigator({
               headerTintColor: '#fff',
           }),
       },
-          CameraScreen:{
+      CameraScreen:{
               screen: CameraScreen,
               navigationOptions: ({ navigation }) => ({
                   title: "CAPTURE ATTAQUE",
@@ -155,7 +144,6 @@ const MyDrawerNavigator = createDrawerNavigator({
     DrawerNavigator: MyDrawerNavigator  
   }, {
     initialRouteName: 'DrawerNavigator',
-    //cardStyle: { backgroundColor: '#fff' },
   },
   )
   const AppContainer = createAppContainer(Stack);

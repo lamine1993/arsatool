@@ -24,8 +24,9 @@ import {
     uiShowError,
     uiUnshowError
 } from '../../Store/actions/actionIndex';
-import {Platform} from "react-native";
+import { Platform } from "react-native";
 import { connect } from 'react-redux'
+import  {SERVER} from '../Constants/servers'
 //import RNFS from  'react-native-fs'
 const RNFS = require('react-native-fs');
 const flashModeOrder = {
@@ -34,6 +35,7 @@ const flashModeOrder = {
     auto: 'torch',
     torch: 'off',
 };
+
 const wbOrder = {
     auto: 'sunny',
     sunny: 'cloudy',
@@ -49,11 +51,11 @@ const landmarkSize = 2;
 
 class CameraScreen extends React.Component {
     state = {
-        showPop:false,
+        showPop: false,
         showImage: false,
         path: '',
-        photo:null,
-        base64Img:null,
+        photo: null,
+        base64Img: null,
         flash: 'off',
         zoom: 0,
         autoFocus: 'on',
@@ -78,15 +80,15 @@ class CameraScreen extends React.Component {
         faces: [],
     };
 
-    _displayMGS=(msg)=> {
+    _displayMGS = (msg) => {
         return (
             <Dialog
                 dialogTitle={
                     <DialogTitle
                         title="MESSAGE"
                         hasTitleBar={false}
-                        style={{alignItems:'center', justifyContent:'center', height:60}}
-                        textStyle={{ color: '#fff'}}
+                        style={{ alignItems: 'center', justifyContent: 'center', height: 60 }}
+                        textStyle={{ color: '#fff' }}
                     />
                 }
                 backgroundStyle={styles.customBackgroundDialog}
@@ -94,7 +96,7 @@ class CameraScreen extends React.Component {
                     <DialogFooter key="button-1">
                         <DialogButton
                             text="CANCEL"
-                            onPress={() => this.setState({showPop:false})}
+                            onPress={() => this.setState({ showPop: false })}
                         />
                     </DialogFooter>,
                 ]}
@@ -107,7 +109,8 @@ class CameraScreen extends React.Component {
 
         );
     }
-    componentDidUpdate(){
+    
+    componentDidUpdate() {
         //console.log('base64Img ', this.state.base64Img);
     }
 
@@ -157,74 +160,75 @@ class CameraScreen extends React.Component {
         });
     }
 
-    takePicture = async function() {
+    takePicture = async function () {
         if (this.camera) {
             const data = await this.camera.takePictureAsync();
 
             let base64Img = data.uri;
-            RNFS.readFile(Platform.OS === 'android'? base64Img.replace('file://', ''): base64Img, "base64")  //substring(7) -> to remove the file://
-                .then(res =>{
-                    this.setState({base64Img: res})
+            RNFS.readFile(Platform.OS === 'android' ? base64Img.replace('file://', '') : base64Img, "base64")  //substring(7) -> to remove the file://
+                .then(res => {
+                    this.setState({ base64Img: res })
                 })
                 .catch(err => console.error(err))
 
-            this.setState({ path: data.uri, photo: data, showImage:true })
+            this.setState({ path: data.uri, photo: data, showImage: true })
         }
     }
 
 
-    saveImage =  () => {
-       // if(this.props.session)
-            this.storePicture(this.props.user)
+    saveImage = () => {
+        // if(this.props.session)
+        this.storePicture(this.props.user)
     };
     toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
     facesDetected = ({ faces }) => this.setState({ faces });
 
-    storePicture(user){
-      const userData={
-                "id": null, //form
-                "agriculteurId": 1,
-                "urlImage": null,
-                "dateValidation": null,
-                "dateDAjout": null,
-                "flag": true
+    storePicture(user) {
+        const userData = {
+            "id": null, //form
+            "agriculteurId": 1,
+            "urlImage": null,
+            "dateValidation": null,
+            "dateDAjout": null,
+            "flag": true
         };
-        RNFetchBlob.fetch('POST', 'http://10.42.0.1:8080/api/imageEnvoye', {
+        RNFetchBlob.fetch('POST', SERVER+'imageEnvoye', {
             // this is required, otherwise it won't be process as a multipart/form-data request
-            'Content-Type' : 'multipart/form-data',
+            'Content-Type': 'multipart/form-data',
         }, [
-            // append field data from file path
-            {
-                name : 'file',
-                filename :'avatar.jpg',
-                // Change BASE64 encoded data to a file path with prefix `RNFetchBlob-file://`.
-                // Or simply wrap the file path with RNFetchBlob.wrap().
-                data: RNFetchBlob.wrap(this.state.path)
-            },
-            {name:'agriculteur', data : JSON.stringify({
-                    "id": null, //form
-                    "agriculteurId": 1,
-                    "urlImage": null,
-                    "dateValidation": null,
-                    "dateDAjout": null,
-                    "flag": true
-                })
-            }
-        ]).then((resp) => {
-            //console.log("response")
-            if(resp.respInfo.status===201){
-                this.setState({showPop:true})
+                // append field data from file path
+                {
+                    name: 'file',
+                    filename: 'avatar.jpg',
+                    // Change BASE64 encoded data to a file path with prefix `RNFetchBlob-file://`.
+                    // Or simply wrap the file path with RNFetchBlob.wrap().
+                    data: RNFetchBlob.wrap(this.state.path)
+                },
+                {
+                    name: 'agriculteur', data: JSON.stringify({
+                        "id": null, //form
+                        "agriculteurId": 1,
+                        "urlImage": null,
+                        "dateValidation": null,
+                        "dateDAjout": null,
+                        "flag": true
+                    })
+                }
+            ]).then((resp) => {
+                //console.log("response")
+                if (resp.respInfo.status === 201) {
+                    this.setState({ showPop: true })
 
-                console.log(this.state.showPop)
+                    console.log(this.state.showPop)
 
-                this._displayMGS("Photo envoyee")
-            }
+                    this._displayMGS("Photo envoyee")
+                }
 
-            //console.log(resp.respInfo.status)
-        }).catch((err) => {
-            console.log(err)
-        })
+                //console.log(resp.respInfo.status)
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
 
@@ -287,8 +291,8 @@ class CameraScreen extends React.Component {
         </View>
     );
 
-    viewImage(){
-        return(
+    viewImage() {
+        return (
             <Dialog
                 backgroundStyle={styles.customBackgroundDialog}
                 footer={[
@@ -298,10 +302,10 @@ class CameraScreen extends React.Component {
                             onPress={() => this.setState({ showImage: false })}
                         />
                         <DialogButton
-                            text="SAVE"
+                            text="ENVOYEZ"
                             onPress={() => {
                                 this.saveImage(this.state.path)
-                                this.setState({ showImage: false})
+                                this.setState({ showImage: false })
                             }}
                         />
                     </DialogFooter>,
@@ -309,15 +313,16 @@ class CameraScreen extends React.Component {
                 visible={this.state.showImage}
             >
                 <DialogContent>
-                        <Image
-                            source={{ uri: this.state.path }}
-                            style={styles.preview}
-                        />
+                    <Image
+                        source={{ uri: this.state.path }}
+                        style={styles.preview}
+                    />
 
                 </DialogContent>
             </Dialog>
         )
     }
+
     renderCamera() {
         const { canDetectFaces } = this.state;
 
@@ -445,14 +450,13 @@ class CameraScreen extends React.Component {
         );
     }
 
-
     render() {
         return (
-        <View style={styles.container}>
-            {this.renderCamera()}
+            <View style={styles.container}>
+                {this.renderCamera()}
 
-            {this.viewImage()}
-        </View>
+                {this.viewImage()}
+            </View>
         );
 
     }
@@ -551,24 +555,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 300,
-        width:300
+        width: 300
     },
 });
 
 const mapStateToProps = state => {
     //console.log(state);
     return {
-        user:state.connexion.user,
-        session:state.connexion.session,
+        user: state.connexion.user,
+        session: state.connexion.session,
         error: state.ui.error,
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        resetError: ()=>dispatch(uiUnshowError()),
-        setError: ()=>dispatch(uiShowError())
+        resetError: () => dispatch(uiUnshowError()),
+        setError: () => dispatch(uiShowError())
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(CameraScreen)

@@ -3,12 +3,14 @@ import { uiStartLoading, uiStopLoading, uiShowError, uiUnshowError } from './act
 import  {SERVER} from '../../Components/Constants/servers'
 //import {fetch} from "react-native";
 
+all_attaques=[]
+attaques=[]
 export const selectLocalisation=(localisation)=>{
     
     return dispatch =>{
-        dispatch(resetCultureAndAttaques())
+        //dispatch(resetCultureAndAttaques())
         dispatch(uiStartLoading());
-        console.log(SERVER)
+        //console.log(SERVER)
         fetch(SERVER+'culturesImage')
         .then((res) => res.json())
         .then(parsedRes=>{
@@ -39,12 +41,12 @@ export const setCultures = (cultures, localisation) => {
     };
 };
 
-export   const  selectCulture =(culture, localisation)=>{
+ export   const  selectCulture =(culture, localisation)=>{
     return dispatch =>{
-
-        var  all_attaques=[]
-        dispatch(resetCultureAndAttaques())
-       fetch(SERVER+'listattaquecomplet/'+culture.id+'/'+localisation)
+        all_attaques=[]
+        attaques=[]
+        //dispatch(resetCultureAndAttaques())
+        fetch(SERVER+'listattaquecomplet/'+culture.id+'/'+localisation)
         .catch((error) => {
             //alert("Something went wrong, sorry :/");
             dispatch(uiShowError("connexion echouer"))
@@ -57,37 +59,49 @@ export   const  selectCulture =(culture, localisation)=>{
             }
         })
         .then(parsedRes=>{
-            console.log(parsedRes)
-            if(!parsedRes) dispatch(uiShowError());
 
             for(let key in parsedRes){
                 all_attaques.push({
                     ...parsedRes[key],
                     key: key,
                     imagesAttaques:[],
-                    insecteImage:[]
+                    images:[]
                 })
             }
-            for(let key in parsedRes) fetch(SERVER+'imageAttaques/' + all_attaques[key].id)
-                .then((res) => res.json())
-                .then(res => {
-                    all_attaques[key].imagesAttaques = res
-                    fetch(SERVER+'imageInsectes/'+all_attaques[key].insecte.id)
-                        .then((res)=>res.json())
-                        .then(res=>{
-                            all_attaques[key].insecteImage=res
-                            dispatch(setImagesAttaque(all_attaques[key]))
-                        })   
-                })
-                dispatch(setAttaques())
+             attaques=all_attaques
+            Promise.all(
+                attaques.map(
+                    element => fetch(SERVER+'imageAttaques/' + element.id)
+                        .then(res => res.json())
+                )
+            ).then(datas=>{
+                    console.log(datas)
+                    Promise.all(
+                        attaques.map(
+                            element => fetch(SERVER+'imageInsectes/'+element.insecte.id)
+                                .then(res => res.json())
+                        )
+                    ).then(data=>{
+                            all_attaques.forEach((element, i)=>{
+                                all_attaques[element.key].imagesAttaques=datas[i]
+                                all_attaques[element.key].images=data[i]
+                            })
+
+                            dispatch(setAttaques(all_attaques))
+                            dispatch(uiStopLoading());
+                        }
+                    )}
+            )
         })
+
     }
 };
 
 
-export const setAttaques=()=>{
+export const setAttaques=(attaques)=>{
     return {
-        type: SET_ATTAQUES
+        type: SET_ATTAQUES,
+        attaques:attaques
     }
 }
 

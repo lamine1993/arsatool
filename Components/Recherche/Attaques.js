@@ -4,57 +4,121 @@ import {View, TextInput, Icon, Button, FlatList, StyleSheet, Dimensions, Text, A
 import AttaqueItem from './Items/AttaqueItem'
 import { selectAttaque, setImagesAttaque } from '../../Store/actions/actionIndex';
 import { connect } from 'react-redux'
-
+import { _displayError } from '../Authentification/AuthError';
+import { StackActions, NavigationActions } from 'react-navigation';
+import {
+    selectCulture,
+    uiUnshowError,
+    uiStartLoading,
+    resetCultureAndAttaques
+} from '../../Store/actions/actionIndex';
+import { Spinner } from 'native-base';
 
 class Attaques extends React.Component {
     constructor(props) {
-        super(props)
+         super(props)
+        this.state = {
+            culture: this.props.navigation.state.params.culture,
+            local: this.props.navigation.state.params.localisation
+        }
     }
-    componentDidMount(){
-       console.log(this.props.all_attaques)
+    componentWillMount(){
+        console.log("attaque willmount")
+        this.makeRemoteRequest();
+        //this.props.onSelectCulture(this.props.navigation.state.params.culture, this.props.navigation.state.params.localisation);
     }
+
+    componentWillUnmount(){
+        console.log("attaque willunmount")
+        this.props.reset()
+        this.props.navigation.dispatch(resetAction);
+        //this.props.reset();
+    }
+
+
+    componentWillUpdate(){
+        //this.props.onSelectCulture(this.props.navigation.state.params.culture, this.props.navigation.state.params.localisation);
+    }
+
+
+     componentDidMount(){
+        console.log("attaque mount")
+         //this.props.onSelectCulture(this.state.culture, this.state.local);
+     }
     
 
     componentDidUpdate() {
+        console.log("attaque update")
 
-  }
+    }
 
   onValueChangeType(value) {
  
     }
 
     _displayFiche = (attaque) => {
-         this.props.onSelectAttaque(attaque)
+         //this.props.onSelectAttaque(attaque)
         // this.props.navigation.navigate("FilmDetail",{ idFilm: idFilm })
-         this.props.navigation.push('FicheTechnique')
+         this.props.navigation.push('FicheTechnique', {attaque:attaque})
  
      }
+    _displayLoading = () => {
+        if (this.props.isLoading) {
+            return (
 
-
-    render(){
-        return (
-
-            <View style={styles.container}>
-                <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
-                
+                <View>
+                    <Spinner color='green' />
                 </View>
+            )
+        }
+    }
+
+    _viewAttaque(){
+        if (!this.props.isLoading && this.props.all_attaques.length > 0) {
+
+            return (
                 <FlatList
                     //style={styles.attaques}
                     data={this.props.all_attaques}
-                    keyExtractor={(item,index) => index+"attaques"+item.id.toString()}
+                    keyExtractor={(item, index) => index + "attaques" + item.id.toString()}
                     renderItem={({item}) => <AttaqueItem attaque={item} displayFiche={this._displayFiche}/>}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
                         //console.log("onEndReached")
-                      }
+                    }
                     }
                 />
+            )
+        }
+    }
+
+    async makeRemoteRequest() {
+
+             await  this.props.onSelectCulture(this.props.navigation.state.params.culture, this.props.navigation.state.params.localisation);
+
+    }
+
+    render(){
+        //this.props.onSelectCulture(this.props.navigation.state.params.culture, this.props.navigation.state.params.localisation);
+
+        return (
+
+            <View style={styles.container}>
+                {this._displayLoading()}
+                <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
+                
+                </View>
+                {this._viewAttaque()}
             </View>
 
         )
     }
 }
 
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'DrawerNavigator' })],
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -86,20 +150,24 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-      culture: state.recherche.culture,
-      attaques: state.recherche.attaques,
+      //attaques: state.recherche.attaques,
       all_attaques: state.recherche.all_attaques,
-      cultures:state.recherche.cultures,
-      imagesAttaques: state.recherche.imagesAttaques,
-      customBackgroundDialog: state.recherche.customBackgroundDialog,
+      //imagesAttaques: state.recherche.imagesAttaques,
 
+      isLoading: state.ui.isLoading,
+      error: state.ui.error,
+      msg_error: state.ui.message,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSelectAttaque : attaque =>dispatch(selectAttaque(attaque)),
-    onsetImagesAttaque: attaques=>dispatch(setImagesAttaque(attaques))
+    //onSelectAttaque : attaque =>dispatch(selectAttaque(attaque)),
+    //onsetImagesAttaque: attaques=>dispatch(setImagesAttaque(attaques))
+      onSelectCulture: (culture, localisation) => dispatch(selectCulture(culture, localisation)),
+      resetError: () => dispatch(uiUnshowError()),
+      reset: () => dispatch(resetCultureAndAttaques()),
+      loading: ()=>dispatch(uiStartLoading())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Attaques);
