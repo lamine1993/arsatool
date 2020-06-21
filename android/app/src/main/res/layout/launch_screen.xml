@@ -7,13 +7,13 @@
   android:background="#fff"
 >
   <TextView
-          android:id="@+id/image"
+          android:id="@+id/text"
           android:src="@drawable/logo1"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerHorizontal="true"
           android:text="ARSATOOL"
-          android:textSize="50px"
+          android:textSize="70px"
           android:textStyle="bold"
           android:textColor="#2EA073"
           android:gravity="center"
@@ -61,7 +61,7 @@
     >
     </ImageView>
     <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image4"
             android:src="@drawable/launch_screen"
             android:layout_width="80dp"
             android:layout_height="80dp"

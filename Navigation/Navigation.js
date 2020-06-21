@@ -8,7 +8,6 @@ import FicheTechnique from '../Components/Recherche/FicheTechnique'
 import LoginScreen from '../Components/Authentification/LoginScreen' 
 import FormRegister from '../Components/Authentification/FormRegister'
 import Attaques from '../Components/Recherche/Attaques';
-import CaptureAttaque from "../Components/Sending/CaptureAttaque";
 import CameraScreen from "../Components/Sending/CameraScreen";
 import NavRight from "../Components/UI/NavRight";
 
@@ -119,26 +118,11 @@ const MyDrawerNavigator = createDrawerNavigator({
       headerTintColor: '#fff',
       }),
      },
-      CaptureAttaque:{
-          screen: CaptureAttaque,
-          navigationOptions: ({ navigation }) => ({
-              title:"PRENDRE UNE ATTAQUE",
-              headerStyle: {
-                  backgroundColor: '#2EA073',
-                  color:'#fff',
-              },
-              headerTintColor: '#fff',
-          }),
-      },
       CameraScreen:{
               screen: CameraScreen,
-              navigationOptions: ({ navigation }) => ({
+             navigationOptions: ({ navigation }) => ({
                   title: "CAPTURE ATTAQUE",
-                  headerStyle: {
-                      backgroundColor: '#2EA073',
-                      color:'#fff',
-                  },
-                  headerTintColor: '#fff',
+                 header: null,
               }),
           },
     DrawerNavigator: MyDrawerNavigator  

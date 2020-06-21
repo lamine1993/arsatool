@@ -14,9 +14,16 @@ import {
     ImageBackground
 } from "react-native";
   import {
-    addAgriculture
+      addAgriculture,
+      uiShowError,
+      uiUnshowError,
+      uiStartLoading,
+      uiStopLoading,
+      uiResetSuccess,
+      uiSuccess
   } from '../../Store/actions/actionIndex';
 import User from '../../Modele/User';
+import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
 
 
   class FormRegister extends React.Component{
@@ -179,10 +186,12 @@ import User from '../../Modele/User';
     render(){
         return(
             <KeyboardAwareScrollView>
-            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
                <View style={styles.login}>
+                   {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
+                   {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
+                   {_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
                 <Card
-                 containerStyle={{borderRadius:10, borderWidth:2, borderColor:'#2EA073', backgroundColor:'transparent'}}
+                 containerStyle={{borderRadius:10, borderWidth:1, borderColor:'#2EA073', backgroundColor:'transparent'}}
                  title="S'INSCRIRE"
                  transparent>
                      <View style={styles.input}>
@@ -265,7 +274,6 @@ import User from '../../Modele/User';
                       <View style={styles.input}>
                             <InputDefault
                                 placeholder='PASSWORD'
-                                placeholderTextColor='#fff'
                                 value={this.state.controls.password.value}
                                 onChangeText={val => this.updateInputState("password", val)}
                                 valid={this.state.controls.password.valid}
@@ -286,7 +294,6 @@ import User from '../../Modele/User';
                     <View style={styles.input}>
                         <InputDefault
                             placeholder='CONFIRM PASSWORD'
-                            placeholderTextColor='#fff'
                             value={this.state.controls.confirmPassword.value}
                             onChangeText={val => this.updateInputState("confirmPassword", val)}
                             valid={this.state.controls.confirmPassword.valid}
@@ -318,7 +325,6 @@ import User from '../../Modele/User';
                 </Card>
                 
               </View>
-            </ImageBackground>
             </KeyboardAwareScrollView>
 
         )
@@ -351,6 +357,9 @@ const mapStateToProps = state => {
     return {
         user:state.connexion.user,
         session: state.connexion.session,
+        error: state.ui.error,
+        isLoading:state.ui.isLoading,
+        success:state.ui.success
 
     };
   };
@@ -358,6 +367,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onSignIn: user =>  dispatch(addAgriculture(user)),
+        startLoading:()=>dispatch(uiStartLoading()),
+        stopLoading:()=>dispatch(uiStopLoading()),
+        setError: () => dispatch(uiShowError()),
+        unsetError: () => dispatch(uiUnshowError()),
+        setSuccess: ()=>dispatch(uiSuccess()),
+        resetSuccess: ()=>dispatch(uiResetSuccess())
     }
   };
 

@@ -1,4 +1,4 @@
-import { UI_START_LOADING, UI_STOP_LOADING, UI_ERROR, UI_ERROR_DEL } from './actionTypes';
+import { UI_START_LOADING, UI_STOP_LOADING, UI_ERROR, UI_ERROR_DEL, UI_SUCCESS, UI_RESET_SUCCESS } from './actionTypes';
 
 export const uiStartLoading = () => {
     return {
@@ -24,3 +24,14 @@ export const uiUnshowError = () => {
             type: UI_ERROR_DEL
         };
 };
+
+export  const uiSuccess=()=>{
+    return {
+        type: UI_SUCCESS
+    }
+}
+export  const uiResetSuccess=()=>{
+    return {
+        type: UI_RESET_SUCCESS
+    }
+}

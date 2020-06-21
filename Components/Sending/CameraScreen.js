@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { RNCamera } from 'react-native-camera';
-import { dirPicutures } from './dirStorage';
 import Dialog, {
     DialogTitle,
     DialogContent,
@@ -22,11 +21,18 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import moment from "moment";
 import {
     uiShowError,
-    uiUnshowError
+    uiUnshowError,
+    uiStartLoading,
+    uiStopLoading,
+    uiResetSuccess,
+    uiSuccess,
+    envoieImage,
 } from '../../Store/actions/actionIndex';
 import { Platform } from "react-native";
 import { connect } from 'react-redux'
 import  {SERVER} from '../Constants/servers'
+import { _displayError, _displayLoading, _displaySuccess } from '../Authentification/AuthError';
+import { Spinner } from 'native-base';
 //import RNFS from  'react-native-fs'
 const RNFS = require('react-native-fs');
 const flashModeOrder = {
@@ -50,7 +56,11 @@ const landmarkSize = 2;
 //move the attachment to app folder
 
 class CameraScreen extends React.Component {
+    constructor(props) {
+        super(props)
+    }
     state = {
+        topEnvoie:false,
         showPop: false,
         showImage: false,
         path: '',
@@ -103,6 +113,7 @@ class CameraScreen extends React.Component {
                 visible={this.state.showPop}
             >
                 <DialogContent>
+
                     <Text>{msg}</Text>
                 </DialogContent>
             </Dialog>
@@ -112,6 +123,9 @@ class CameraScreen extends React.Component {
     
     componentDidUpdate() {
         //console.log('base64Img ', this.state.base64Img);
+        if(this.state.topEnvoie===true){
+            this.saveImage(this.state.path)
+        }
     }
 
     toggleFocus() {
@@ -176,16 +190,18 @@ class CameraScreen extends React.Component {
     }
 
 
-    saveImage = () => {
-        // if(this.props.session)
-        this.storePicture(this.props.user)
+    saveImage = (path) => {
+        //_displayLoading("Envoie",this.props.ui_load, null)
+        this.props.envoieImage(path)
+        //this.storePicture(this.props.user)
+        //_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess())
     };
     toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
     facesDetected = ({ faces }) => this.setState({ faces });
 
-    storePicture(user) {
-        const userData = {
+   storePicture(user) {
+       const userData = {
             "id": null, //form
             "agriculteurId": 1,
             "urlImage": null,
@@ -193,6 +209,7 @@ class CameraScreen extends React.Component {
             "dateDAjout": null,
             "flag": true
         };
+        this.props.startLoading()
         RNFetchBlob.fetch('POST', SERVER+'imageEnvoye', {
             // this is required, otherwise it won't be process as a multipart/form-data request
             'Content-Type': 'multipart/form-data',
@@ -217,18 +234,24 @@ class CameraScreen extends React.Component {
                 }
             ]).then((resp) => {
                 //console.log("response")
-                if (resp.respInfo.status === 201) {
+               /* if (resp.respInfo.status === 201) {
                     this.setState({ showPop: true })
 
                     console.log(this.state.showPop)
 
                     this._displayMGS("Photo envoyee")
-                }
+                }*/
+                this.props.stopLoading()
+                this.props.setSuccess()
+
 
                 //console.log(resp.respInfo.status)
             }).catch((err) => {
+                this.props.stopLoading()
+                this.props.setError()
                 console.log(err)
             })
+
     }
 
 
@@ -254,6 +277,27 @@ class CameraScreen extends React.Component {
             <Text style={styles.faceText}>yawAngle: {yawAngle.toFixed(0)}</Text>
         </View>
     );
+
+    _displayLoading=(msg,visible)=> {
+        return (
+
+
+            <Dialog
+                backgroundStyle={{backgroundColor: '#f00', width:'100'}}
+
+                visible={visible}
+            >
+                <DialogContent>
+                    <View>
+                        <Text>{msg} en cour...</Text>
+                        <Spinner color='green' />
+                    </View>
+                </DialogContent>
+            </Dialog>
+
+        );
+    }
+
 
     renderLandmarksOfFace(face) {
         const renderLandmark = position =>
@@ -298,14 +342,14 @@ class CameraScreen extends React.Component {
                 footer={[
                     <DialogFooter key="button-1">
                         <DialogButton
-                            text="CANCEL"
+                            text="SUPRIMER"
                             onPress={() => this.setState({ showImage: false })}
                         />
                         <DialogButton
-                            text="ENVOYEZ"
+                            text="ENVOYER"
                             onPress={() => {
-                                this.saveImage(this.state.path)
-                                this.setState({ showImage: false })
+                                this.setState({ showImage: false, topEnvoie:true })
+                               // this.saveImage(this.state.path)
                             }}
                         />
                     </DialogFooter>,
@@ -322,6 +366,70 @@ class CameraScreen extends React.Component {
             </Dialog>
         )
     }
+
+
+    _displayError=(error, isError, dissmissError)=> {
+        return (
+            <Dialog
+                dialogTitle={
+                    <DialogTitle
+                        title="Erreur Connexion"
+                        hasTitleBar={true}
+                        style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#f00'}}
+                        textStyle={{ color: '#fff'}}
+                    />
+                }
+                backgroundStyle={{backgroundColor: '#f00'}}
+                footer={[
+                    <DialogFooter key="button-1">
+                        <DialogButton
+                            text="CANCEL"
+                            onPress={() => dissmissError()}
+                        />
+                    </DialogFooter>,
+                ]}
+                visible={isError}
+            >
+                <DialogContent>
+                    <Text>{error}</Text>
+                </DialogContent>
+            </Dialog>
+
+        );
+    }
+
+
+
+    _displaySuccess=(msg, visible, reset)=> {
+        return (
+            <Dialog
+                dialogTitle={
+                    <DialogTitle
+                        title="CONNEXION REUSSI"
+                        hasTitleBar={true}
+                        style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#0f0'}}
+                        textStyle={{ color: '#fff'}}
+                    />
+                }
+                backgroundStyle={{backgroundColor: '#0f0'}}
+                footer={[
+                    <DialogFooter key="button-1">
+                        <DialogButton
+                            text="CANCEL"
+                            onPress={() => reset()}
+                        />
+                    </DialogFooter>,
+                ]}
+                visible={visible}
+            >
+                <DialogContent>
+                    <Text>{msg}</Text>
+                </DialogContent>
+            </Dialog>
+
+        );
+    }
+
 
     renderCamera() {
         const { canDetectFaces } = this.state;
@@ -432,12 +540,6 @@ class CameraScreen extends React.Component {
                             <Text style={styles.flipText}> - </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.flipButton, { flex: 0.25, alignSelf: 'flex-end' }]}
-                            onPress={this.toggleFocus.bind(this)}
-                        >
-                            <Text style={styles.flipText}> AF : {this.state.autoFocus} </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
                             style={[styles.flipButton, styles.picButton, { flex: 0.3, alignSelf: 'flex-end' }]}
                             onPress={this.takePicture.bind(this)}
                         >
@@ -453,9 +555,40 @@ class CameraScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.renderCamera()}
+                {/*this._displayLoading("Envoie",this.props.isLoading)*/}
+                {this._displayError("Envoie Non Reussi", this.props.error,this.props.unsetError)}
+                {this._displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
 
                 {this.viewImage()}
+
+                {this.renderCamera()}
+                <Dialog
+                    backgroundStyle={styles.customBackgroundDialog}
+                    footer={[
+                        <DialogFooter key="button-1">
+                            <DialogButton
+                                text="SUPRIMER"
+                                onPress={() => this.setState({ showImage: false })}
+                            />
+                            <DialogButton
+                                text="ENVOYER"
+                                onPress={() => {
+                                    this.setState({ showImage: false, topEnvoie:true })
+                                    // this.saveImage(this.state.path)
+                                }}
+                            />
+                        </DialogFooter>,
+                    ]}
+                    visible={this.state.showImage}
+                >
+                    <DialogContent>
+                        <Image
+                            source={{ uri: this.state.path }}
+                            style={styles.preview}
+                        />
+
+                    </DialogContent>
+                </Dialog>
             </View>
         );
 
@@ -565,12 +698,20 @@ const mapStateToProps = state => {
         user: state.connexion.user,
         session: state.connexion.session,
         error: state.ui.error,
+        isLoading:state.ui.isLoading,
+        success:state.ui.success
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
         resetError: () => dispatch(uiUnshowError()),
-        setError: () => dispatch(uiShowError())
+        startLoading:()=>dispatch(uiStartLoading()),
+        stopLoading:()=>dispatch(uiStopLoading()),
+        setError: () => dispatch(uiShowError()),
+        unsetError: () => dispatch(uiUnshowError()),
+        setSuccess: ()=>dispatch(uiSuccess()),
+        resetSuccess: ()=>dispatch(uiResetSuccess()),
+        envoieImage: (path)=>dispatch(envoieImage(path))
     }
 }
 

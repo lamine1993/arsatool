@@ -43,12 +43,15 @@ class Attaques extends React.Component {
 
      componentDidMount(){
         console.log("attaque mount")
-         //this.props.onSelectCulture(this.state.culture, this.state.local);
      }
     
 
     componentDidUpdate() {
         console.log("attaque update")
+        if(this.props.all_attaques.length===0){
+          this.props.navigation.popToTop()
+          //_displayError()
+        }
 
     }
 
@@ -104,10 +107,6 @@ class Attaques extends React.Component {
         return (
 
             <View style={styles.container}>
-                {this._displayLoading()}
-                <View style={{width:Dimensions.get('window').width, height:1, backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
-                
-                </View>
                 {this._viewAttaque()}
             </View>
 
@@ -131,7 +130,7 @@ const styles = StyleSheet.create({
     titre:{
         margin:10,
         justifyContent: 'center',
-        width: Dimensions.get('window').width-50,
+        width: Dimensions.get('window').width,
         alignItems:'center',
         borderRadius: 4,
         borderWidth: 1,

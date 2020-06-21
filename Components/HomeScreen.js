@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   Image,
+  Text,
   TouchableHighlight,
   Dimensions,
   FlatList, ImageBackground,
@@ -39,7 +40,7 @@ class HomeScreen extends React.Component {
 
     componentDidMount() {
         console.log(this.props.all_attaques)
-        console.log("homme update home")
+        console.log(" update home")
     }
 
     componentWillMount(){
@@ -51,7 +52,7 @@ class HomeScreen extends React.Component {
   }
 
    _cultureSelected(culture) {
-        this.props.onSelectCulture(culture, this.props.localisation);
+      this.props.onSelectCulture(culture, this.props.localisation);
        _displayError("Attaques innexistantes pour les parametre entrée", this.props.error, this.props.resetError)
 
        if (this.props.attaques_set===true) {
@@ -59,7 +60,7 @@ class HomeScreen extends React.Component {
            this.props.navigation.navigate('Attaques')
        }
        else _displayError("Attaques innexistantes pour les parametre entrée", true, this.props.resetError)
-  }
+   }
 
   _selectLocalisation = localisation => {
     this.props.onSelectLocalisation(localisation);
@@ -84,7 +85,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-          {_displayLoading(this.props.isLoading, this.props.unloading)}
+          {_displayLoading("CONNEXION",this.props.isLoading, this.props.unloading)}
           {_displayError(this.props.msg_error, this.props.error, this.props.resetError)}
           <View style={styles.bouton_partie}>
             <View style={styles.bouton_partie_ligne}>
@@ -93,6 +94,12 @@ class HomeScreen extends React.Component {
                   onPress={() => { this._selectLocalisation("FEUILLES") }}
                 >
                   <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer} />
+                  
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() => { this._selectLocalisation("FEUILLES") }}
+                >
+                	<Text style={styles.bouton_text}>FEUILLES</Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.bouton_partie_ligne_bouton}>
@@ -100,7 +107,11 @@ class HomeScreen extends React.Component {
                     onPress={() => this._selectLocalisation("FRUITS")}
                 >
                   <Image source={require('../assets/menu-image/fruit.png')} style={styles.imageContainer} />
-
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() => { this._selectLocalisation("FRUITS") }}
+                >
+               		 <Text style={styles.bouton_text}>FRUITS</Text>
                 </TouchableHighlight>
               </View>
             </View>
@@ -109,8 +120,13 @@ class HomeScreen extends React.Component {
                     <TouchableHighlight
                         onPress={() => this._selectLocalisation("FLEURS")}
                     >
-                      <Image source={require('../assets/menu-image/fleur.jpg')} style={styles.imageContainer} />
+                      <Image source={require('../assets/menu-image/lotus-fleur.jpg')} style={styles.imageContainer} />
                     </TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={() => this._selectLocalisation("FLEURS")}
+                    >
+                   		 <Text style={styles.bouton_text}>FLEURS</Text>
+                   	</TouchableHighlight>
                 </View>
                 <View style={styles.bouton_partie_ligne_bouton}>
                   <TouchableHighlight
@@ -118,6 +134,11 @@ class HomeScreen extends React.Component {
                   >
                     <Image source={require('../assets/menu-image/tige.jpg')} style={styles.imageContainer} />
 
+                  </TouchableHighlight>
+                  <TouchableHighlight
+                    onPress={() => this._selectLocalisation("TIGE")}
+                  >
+                  		 <Text style={styles.bouton_text}>TIGE</Text>
                   </TouchableHighlight>
                 </View>
             </View>
@@ -206,6 +227,8 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: 'column',
     justifyContent: 'space-around',
+    borderWidth: 1,
+    borderColor:'#2EA073'
 
   },
   priview_culture: {
@@ -216,10 +239,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 5
+    marginTop: 5,
+    borderBottomWidth:1,
+    borderBottomColor:'#2EA073'
   },
   bouton_partie_ligne_bouton: {
-
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  bouton_text:{
+    color: '#2EA073',
+    paddingTop: 5
   },
   bouton_partie_ligne_pub: {
     flex: 2,
@@ -259,7 +289,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     position: 'relative',
-    borderRadius: 50
+    //borderRadius: 50
   },
   dialogContentView: {
     flex: 1,

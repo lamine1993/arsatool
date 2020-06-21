@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import validate from './validation'
 import InputDefault from '../UI/InputDefault'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
 
 
 import {
@@ -14,7 +15,13 @@ import {
     Dimensions, ImageBackground
 } from "react-native";
 import {
-    loginAgriculture
+    loginAgriculture,
+    uiShowError,
+    uiUnshowError,
+    uiStartLoading,
+    uiStopLoading,
+    uiResetSuccess,
+    uiSuccess
 } from '../../Store/actions/actionIndex';
 
 
@@ -96,8 +103,13 @@ class LoginScreen extends React.Component{
             telephone: this.state.controls.username.value,
             password: this.state.controls.password.value,
         };
-
-        this.props.onLogin(user);
+        if(this.props.session){
+            this.props.setError()
+        }
+        else
+        {
+            this.props.onLogin(user);
+        }
     };
 
 
@@ -109,10 +121,12 @@ class LoginScreen extends React.Component{
     render(){
         return(
             <KeyboardAwareScrollView>
-            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
             <View style={styles.login}>
+                {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
+                {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
+                {_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
                 <Card
-                    containerStyle={{borderRadius:10, borderWidth:4, borderColor:'#2EA073', backgroundColor:'transparent'}}
+                    containerStyle={{borderRadius:10, borderWidth:1, borderColor:'#2EA073', backgroundColor:'transparent'}}
                     title="S'INSCRIRE"
                     transparent >
                     <View style={styles.input}>
@@ -167,7 +181,6 @@ class LoginScreen extends React.Component{
                 </Card>
 
             </View>
-            </ImageBackground>
             </KeyboardAwareScrollView>
         )
     }
@@ -195,6 +208,9 @@ const mapStateToProps = state => {
     return {
         user:state.connexion.user,
         session: state.connexion.session,
+        error: state.ui.error,
+        isLoading:state.ui.isLoading,
+        success:state.ui.success
 
     };
 };
@@ -202,6 +218,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLogin: user =>  dispatch(loginAgriculture(user)),
+        startLoading:()=>dispatch(uiStartLoading()),
+        stopLoading:()=>dispatch(uiStopLoading()),
+        setError: () => dispatch(uiShowError()),
+        unsetError: () => dispatch(uiUnshowError()),
+        setSuccess: ()=>dispatch(uiSuccess()),
+        resetSuccess: ()=>dispatch(uiResetSuccess())
     }
 };
 

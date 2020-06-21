@@ -18,7 +18,8 @@ export const UI_START_LOADING = "UI_START_LOADING";
 export const UI_STOP_LOADING = "UI_STOP_LOADING";
 export const UI_ERROR = "UI_ERROR";
 export const UI_ERROR_DEL = "UI_ERROR_DEL";
-export const UI_SUCCESS="UI_SUCCESS"
+export const UI_SUCCESS="UI_SUCCESS";
+export const UI_RESET_SUCCESS="UI_RESET_SUCCESS";
 
 
 
