@@ -59,7 +59,7 @@ export const setCultures = (cultures, localisation) => {
             }
         })
         .then(parsedRes=>{
-
+            console.log("loading attaques.......")
             for(let key in parsedRes){
                 all_attaques.push({
                     ...parsedRes[key],
@@ -88,7 +88,8 @@ export const setCultures = (cultures, localisation) => {
                             })
 
                             dispatch(setAttaques(all_attaques))
-                            dispatch(uiStopLoading());
+                            console.log("end loading");
+                            //dispatch(uiStopLoading());
                         }
                     )}
             )

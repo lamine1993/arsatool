@@ -16,12 +16,6 @@ import {connect} from "react-redux";
          return (
 
          <View style={{flexDirection:'row'}}>
-             <View>
-                 <Icon
-                     name='person'
-                     style={{ paddingRight: 10, color:'#fff' }}
-                 />
-             </View>
             <View>
                  <Icon
                      name='camera'

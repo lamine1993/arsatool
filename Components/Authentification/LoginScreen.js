@@ -6,6 +6,8 @@ import validate from './validation'
 import InputDefault from '../UI/InputDefault'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
+import HeadingText from '../UI/HeadingText'
+import {NavigationActions} from 'react-navigation'
 
 
 import {
@@ -54,9 +56,13 @@ class LoginScreen extends React.Component{
     };
 
     componentDidUpdate(){
+        console.log("component login did umpdate")
+        console.log("session "+ this.props.session )
         if(this.props.session){
-            this.props.navigation.navigate('Home');
+         this.props.resetSuccess();
+         this.props.navigation.navigate('App');
         }
+            
     }
 
     updateInputState = (key, value) => {
@@ -109,8 +115,13 @@ class LoginScreen extends React.Component{
         else
         {
             this.props.onLogin(user);
+            //this.props.navigation.navigate('App');
         }
     };
+
+    registerHandler=()=>{
+        this.props.navigation.navigate('Register')
+    }
 
 
     _onPressButton() {
@@ -121,21 +132,19 @@ class LoginScreen extends React.Component{
     render(){
         return(
             <KeyboardAwareScrollView>
+            <ImageBackground source={require('../../assets/ui_background/Connexion.png')} style={styles.containerImage}> 
             <View style={styles.login}>
                 {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
                 {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
-                {_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
-                <Card
-                    containerStyle={{borderRadius:10, borderWidth:1, borderColor:'#2EA073', backgroundColor:'transparent'}}
-                    title="S'INSCRIRE"
-                    transparent >
+                
+                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Se Connecter</HeadingText>
                     <View style={styles.input}>
                         <InputDefault
                             placeholder='TELEPHONE'
                             value={this.state.controls.username.value}
                             onChangeText={val => this.updateInputState("username", val)}
                             valid={this.state.controls.username.valid}
-
+                            
                             touched={this.state.controls.username.touched}
                             autoCapitalize="none"
                             autoCorrect={false}
@@ -143,7 +152,7 @@ class LoginScreen extends React.Component{
                                 <Icon
                                     name='phone'
                                     size={30}
-                                    color='#2EA073'
+                                    color='#98734C'
                                 />
                             }
                         />
@@ -163,7 +172,7 @@ class LoginScreen extends React.Component{
                                 <Icon
                                     name='lock'
                                     size={30}
-                                    color='#2EA073'
+                                    color='#98734C'
                                 />
                             }
                         />
@@ -171,16 +180,22 @@ class LoginScreen extends React.Component{
                     <Button
                         title='Sign in'
                         onPress={this.loginHandler}
-                        buttonStyle={{ backgroundColor:'#2EA073', borderRadius:50}}
+                        buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50}}
                         disabled={
                             !this.state.controls.username.valid ||
                             !this.state.controls.password.valid
                         }
                     />
 
-                </Card>
+                    <Button
+                        title='Inscription'
+                        onPress={this.registerHandler}
+                        buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50, marginTop: 10}}
+                        
+                    />
 
-            </View>
+                </View>
+            </ImageBackground>
             </KeyboardAwareScrollView>
         )
     }
@@ -190,17 +205,29 @@ const styles = StyleSheet.create({
     login:{
         borderColor:'rgb(0, 0, 0)',
         flex:1,
-        height:Dimensions.get('window').height
+        height:Dimensions.get('window').height,
+        justifyContent: 'center',
+        marginHorizontal: 20
     },
     input:{
-        borderWidth:1,
+        borderBottomWidth :1,
         borderRadius:50,
-        borderColor:'#2EA073',
-        margin:10
+        //borderColor:'#2EA073',
+        borderBottomColor:'#98734C',
+        color:'#98734C',
+        fontSize: 18,
+        fontStyle: 'italic',
+        margin:20
     },
     signin:{
         flex:2,
-    }
+    },
+    containerImage:{
+        flex: 1,
+        flexDirection:'column',
+        resizeMode: "cover",
+        justifyContent: "center"
+  }
 })
 
 const mapStateToProps = state => {

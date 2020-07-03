@@ -17,7 +17,7 @@ export const _displayError=(error, isError, dissmissError)=> {
             <Dialog
                     dialogTitle={
                       <DialogTitle
-                          title="Erreur Connexion"
+                          title={error}
                           hasTitleBar={true}
                           style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#f00'}}
                           textStyle={{ color: '#fff'}}
@@ -94,14 +94,14 @@ export const _displayLoading=(msg,visible, dissmissError)=> {
     );
 }
 
-export const _displayMSG=(msg,isError, dississError)=> {
+export const _displayMSG=(msg, isError, dississError)=> {
     return (
 
 
         <Dialog
             dialogTitle={
                 <DialogTitle
-                    title="Erreur Connexion"
+                    title="Erreur"
                     hasTitleBar={false}
                     style={{alignItems:'center', justifyContent:'center', height:50}}
                     textStyle={{ color: '#fff'}}

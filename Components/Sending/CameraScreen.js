@@ -124,6 +124,10 @@ class CameraScreen extends React.Component {
     componentDidUpdate() {
         //console.log('base64Img ', this.state.base64Img);
         if(this.state.topEnvoie===true){
+            this.setState({
+                topEnvoie: false
+            })
+
             this.saveImage(this.state.path)
         }
     }
@@ -191,14 +195,11 @@ class CameraScreen extends React.Component {
 
 
     saveImage = (path) => {
-        //_displayLoading("Envoie",this.props.ui_load, null)
         this.props.envoieImage(path)
-        //this.storePicture(this.props.user)
-        //_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess())
     };
-    toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
+  //  toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
-    facesDetected = ({ faces }) => this.setState({ faces });
+   // facesDetected = ({ faces }) => this.setState({ faces });
 
    storePicture(user) {
        const userData = {
@@ -400,7 +401,11 @@ class CameraScreen extends React.Component {
 
 
 
-    _displaySuccess=(msg, visible, reset)=> {
+    reset(){
+        this.props.resetSuccess();
+    }
+
+    _displaySuccess=(msg, visible)=> {
         return (
             <Dialog
                 dialogTitle={
@@ -416,7 +421,7 @@ class CameraScreen extends React.Component {
                     <DialogFooter key="button-1">
                         <DialogButton
                             text="CANCEL"
-                            onPress={() => reset()}
+                            onPress={() => this.reset()}
                         />
                     </DialogFooter>,
                 ]}
@@ -555,40 +560,12 @@ class CameraScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {/*this._displayLoading("Envoie",this.props.isLoading)*/}
                 {this._displayError("Envoie Non Reussi", this.props.error,this.props.unsetError)}
-                {this._displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
+                {this._displaySuccess("Envoie Reussi", this.props.success)}
 
                 {this.viewImage()}
 
                 {this.renderCamera()}
-                <Dialog
-                    backgroundStyle={styles.customBackgroundDialog}
-                    footer={[
-                        <DialogFooter key="button-1">
-                            <DialogButton
-                                text="SUPRIMER"
-                                onPress={() => this.setState({ showImage: false })}
-                            />
-                            <DialogButton
-                                text="ENVOYER"
-                                onPress={() => {
-                                    this.setState({ showImage: false, topEnvoie:true })
-                                    // this.saveImage(this.state.path)
-                                }}
-                            />
-                        </DialogFooter>,
-                    ]}
-                    visible={this.state.showImage}
-                >
-                    <DialogContent>
-                        <Image
-                            source={{ uri: this.state.path }}
-                            style={styles.preview}
-                        />
-
-                    </DialogContent>
-                </Dialog>
             </View>
         );
 

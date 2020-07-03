@@ -1,32 +1,16 @@
-// Components/FilmItem.js
-
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image, FlatList } from 'react-native'
 import {Thumbnail } from 'native-base'
-import {getImageFromApi} from '../../../API/api'
-import HeadingText from '../../UI/HeadingText'
-import MainText from '../../UI/MainText'
+import {getImageFromApi} from '../../API/api'
+import HeadingText from './HeadingText'
+import MainText from './MainText'
 
-class AttaqueItem extends React.Component {
-  
-
-  componentDidMount(){
-     const { attaque, displayFiche } = this.props
-  }
-  componentDidUpdate(){
-      const { attaque, displayFiche } = this.props
-      console.log(attaque)
-    }
-  render() {
-      
-     // console.log(attaque)
-
-      return (
-        <View style={styles.container}>
+const attaqueItem = props => (
+   <View {...props} style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.image_insecte}>
-                    <View><Thumbnail large source={{uri: getImageFromApi(this.props.attaque.images['0'].imageUrl)}}/></View>
-                   <HeadingText style={{justifyContent:'center', }}> {this.props.attaque.insecte.nomInsecte} </HeadingText>
+                    <View><Thumbnail large source={{uri: getImageFromApi(props.attaque.images['0'].imageUrl)}}/></View>
+                   <HeadingText style={{justifyContent:'center', }}> {props.attaque.insecte.nomInsecte} </HeadingText>
                 </View>
             </View> 
                 
@@ -34,7 +18,7 @@ class AttaqueItem extends React.Component {
                 <FlatList
                       style={styles.header_attaque}
                       horizontal={true}
-                      data={this.props.attaque.imagesAttaques}
+                      data={props.attaque.imagesAttaques}
                       keyExtractor={(item) => item.imageUrl.toString()}
                       renderItem={({item}) => <Image source={{uri: getImageFromApi(item.imageUrl)}} style={styles.image_attaque}/>}
                       onEndReachedThreshold={0.5}
@@ -46,16 +30,14 @@ class AttaqueItem extends React.Component {
             </View>
             <View style={styles.footer}>
                     <TouchableOpacity 
-                      onPress={() => this.props.displayFiche(this.props.attaque)}
+                      onPress={() => props.displayFiche(props.attaque)}
                       style={styles.fiche}>
                           <Text style={{ color: '#fff', fontSize: 15 }}>Comment Combattre ?</Text>
                     </TouchableOpacity>
             </View>
                 
-        </View>      
-    )
-  }
-}
+        </View>     
+);
 
 const styles = StyleSheet.create({
      container:{
@@ -117,5 +99,4 @@ const styles = StyleSheet.create({
 
   });
 
-
-export default AttaqueItem
+  export default attaqueItem

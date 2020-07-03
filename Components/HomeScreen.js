@@ -3,18 +3,10 @@ import {
   View,
   StyleSheet,
   Image,
-  Text,
   TouchableHighlight,
-  Dimensions,
-  FlatList, ImageBackground,
+  ImageBackground,
 } from "react-native";
 import { connect } from 'react-redux'
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-  DialogButton
-} from 'react-native-popup-dialog';
 import {
     selectCulture,
     selectLocalisation,
@@ -25,9 +17,8 @@ import {
 } from '../Store/actions/actionIndex';
 import { Spinner } from 'native-base';
 import { _displayError, _displayLoading } from './Authentification/AuthError';
-import { getImageFromApi } from '../API/api'
-import { Button } from "react-native-elements";
-
+import HeadingText from './UI/HeadingText'
+import MainText from './UI/MainText'
 
 
 class HomeScreen extends React.Component {
@@ -51,6 +42,11 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate('Attaques',{culture: culture, localisation:local})
   }
 
+
+   _goToCulture(local){
+      this.props.navigation.navigate('Attaques',{localisation:local})
+  }
+
    _cultureSelected(culture) {
       this.props.onSelectCulture(culture, this.props.localisation);
        _displayError("Attaques innexistantes pour les parametre entrée", this.props.error, this.props.resetError)
@@ -64,7 +60,12 @@ class HomeScreen extends React.Component {
 
   _selectLocalisation = localisation => {
     this.props.onSelectLocalisation(localisation);
+   if(this.props.cultures){
+      console.log(this.props.cultures)
+      this.props.navigation.navigate('ListeCulture', {localisation: localisation})
+    }
   }
+
 
   _unselectLocalisation = () => {
     this.props.onUnselectLocalisation();
@@ -84,134 +85,64 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
+      <View style={styles.containerTop}>
+       <ImageBackground source={require('../assets/ui_background/Accueil.png')} style={styles.containerImage}> 
         <View style={styles.container}>
+
           {_displayLoading("CONNEXION",this.props.isLoading, this.props.unloading)}
           {_displayError(this.props.msg_error, this.props.error, this.props.resetError)}
-          <View style={styles.bouton_partie}>
-            <View style={styles.bouton_partie_ligne}>
-              <View style={styles.bouton_partie_ligne_bouton}>
-                <TouchableHighlight
-                  onPress={() => { this._selectLocalisation("FEUILLES") }}
-                >
-                  <Image source={require('../assets/menu-image/feuille.png')} style={styles.imageContainer} />
-                  
-                </TouchableHighlight>
-                <TouchableHighlight
-                  onPress={() => { this._selectLocalisation("FEUILLES") }}
-                >
-                	<Text style={styles.bouton_text}>FEUILLES</Text>
-                </TouchableHighlight>
-              </View>
-              <View style={styles.bouton_partie_ligne_bouton}>
-                <TouchableHighlight
-                    onPress={() => this._selectLocalisation("FRUITS")}
-                >
-                  <Image source={require('../assets/menu-image/fruit.png')} style={styles.imageContainer} />
-                </TouchableHighlight>
-                <TouchableHighlight
-                  onPress={() => { this._selectLocalisation("FRUITS") }}
-                >
-               		 <Text style={styles.bouton_text}>FRUITS</Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-            <View style={styles.bouton_partie_ligne}>
-                <View style={styles.bouton_partie_ligne_bouton}>
-                    <TouchableHighlight
-                        onPress={() => this._selectLocalisation("FLEURS")}
-                    >
-                      <Image source={require('../assets/menu-image/lotus-fleur.jpg')} style={styles.imageContainer} />
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={() => this._selectLocalisation("FLEURS")}
-                    >
-                   		 <Text style={styles.bouton_text}>FLEURS</Text>
-                   	</TouchableHighlight>
-                </View>
-                <View style={styles.bouton_partie_ligne_bouton}>
-                  <TouchableHighlight
-                    onPress={() => this._selectLocalisation("TIGE")}
-                  >
-                    <Image source={require('../assets/menu-image/tige.jpg')} style={styles.imageContainer} />
-
-                  </TouchableHighlight>
-                  <TouchableHighlight
-                    onPress={() => this._selectLocalisation("TIGE")}
-                  >
-                  		 <Text style={styles.bouton_text}>TIGE</Text>
-                  </TouchableHighlight>
-                </View>
-            </View>
-            <View style={styles.bouton_partie_ligne_pub}>
-
-            </View>
-          </View>
-
-          <Dialog
-            onDismiss={() => { this._unselectLocalisation() }}
-            onTouchOutside={() => { this._unselectLocalisation() }}
-            //zIndex={1000}
-            width={Dimensions.get('window').width}
-            height={0.9}
-            backgroundStyle={styles.customBackgroundDialog}
-            dialogStyle={{
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            dialogTitle={
-              <DialogTitle
-                title="Culture"
-                hasTitleBar={false}
-                style={{ alignItems: 'center', justifyContent: 'center', height: 60 }}
-                textStyle={{ color: '#fff' }}
-              />
-            }
-            footer={[
-              <DialogFooter key="button-1">
-                <DialogButton
-                  text="CANCEL"
-                  bordered
-                  onPress={() => {
-                    this._unselectLocalisation()
-                  }}
-
-                />
-              </DialogFooter>,
-            ]
-            }
-            visible={this.props.customBackgroundDialog}
-          >
-            <DialogContent
-              style={styles.dialogContentView}
-            >
-              <FlatList
-                style={styles.header_attaque}
-                data={this.props.cultures}
-                numColumns={2}
-                keyExtractor={(item) => item.image}
-                renderItem={({ item }) =>
-                  <TouchableHighlight
-                    onPress={
-                      () => this._goToAttaques(item, this.props.localisation)
-                    }
-                  >
-                    <Image source={{ uri: getImageFromApi(item.image) }} style={styles.image_culture} />
-                  </TouchableHighlight>
-                }
-                onEndReachedThreshold={0.5}
-                onEndReached={() => {
-                  console.log("onEndReached")
-                }
-                }
-              />
-            </DialogContent>
-          </Dialog>
-
-
+          <View style={styles.header}>
+             <HeadingText style={{textAlignVertical:'center', color: '#fff'}}> Acceuil</HeadingText>
+             <MainText style={{textAlignVertical:'center', color: '#fff'}}> 
+                Choisir la partie de la culture attaquée
+             </MainText>                           
         </View>
-
-
+          <View style={styles.bouton_partie}>
+             <View style={styles.bouton_partie_ligne}>
+               <View style={styles.bouton_partie_colonne}>
+                  <TouchableHighlight
+                    style={styles.fittParent}
+                      onPress={() => { this._selectLocalisation("FEUILLES") }}
+                    >
+                    <Image source={require('../assets/menu-image/Groupe_9.png')} style={styles.fittParent}/>
+                      
+                  </TouchableHighlight>
+               </View>
+                 <View style={styles.bouton_partie_colonne}>
+                  <TouchableHighlight
+                    style={styles.fittParent}
+                      onPress={() => { this._selectLocalisation("FRUITS") }}
+                    >
+                    <Image source={require('../assets/menu-image/Groupe_10.png')} style={styles.fittParent}/>
+                      
+                  </TouchableHighlight>
+               </View>
+                </View>
+              
+              <View style={styles.bouton_partie_ligne}>
+                <View style={styles.bouton_partie_colonne}>
+                  <TouchableHighlight
+                    style={styles.fittParent}
+                      onPress={() => { this._selectLocalisation("FLEURS") }}
+                    >
+                    <Image source={require('../assets/menu-image/Groupe_11.png')} style={styles.fittParent}/>
+                      
+                  </TouchableHighlight>
+                </View>
+                <View style={styles.bouton_partie_colonne}>
+                  <TouchableHighlight
+                    style={styles.fittParent}
+                      onPress={() => { this._selectLocalisation("TIGE") }}
+                    >
+                    <Image source={require('../assets/menu-image/Groupe_12.png')} style={styles.fittParent}/>
+                      
+                  </TouchableHighlight>
+                </View>
+                </View>
+          </View>
+        </View>
+      </ImageBackground>
+      </View>
     );
   }
 }
@@ -220,47 +151,60 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
+    alignContent:'center',
+    alignItems:'center',
     //backgroundColor:'#fff'
+    //marginBottom:100,
   },
+  containerTop:{
+    flex: 1,
+    flexDirection: 'column',
+  },
+
+  containerImage:{
+        flex: 1,
+        flexDirection:'column',
+        resizeMode: "cover",
+        justifyContent: "center"
+  },
+   header:{
+     marginTop:35,
+     width:'80%', 
+      flex: 1,
+      flexDirection: 'column',
+      borderColor:'#2EA073',
+     },
+
   bouton_partie: {
-    flex: 2,
+    flex: 4,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    borderWidth: 1,
+    alignContent:'center',
     borderColor:'#2EA073'
+  },
 
+  bouton_partie_colonne:{
+      flex:1,
+      alignSelf:'center',
+      //width:200,
+      //height:150
   },
-  priview_culture: {
-    flex: 1,
-    flexDirection: 'row',
+
+  fittParent:{
+    alignSelf:'center',
+    width:'100%',
+    //height:'100%'
   },
+
   bouton_partie_ligne: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 5,
-    borderBottomWidth:1,
-    borderBottomColor:'#2EA073'
-  },
-  bouton_partie_ligne_bouton: {
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  bouton_text:{
-    color: '#2EA073',
-    paddingTop: 5
-  },
-  bouton_partie_ligne_pub: {
-    flex: 2,
-  },
-  bouton_partie_ligne_bouton_title: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center'
+    alignSelf:'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    borderBottomColor:'#2EA073',
+    alignContent:'center',
   },
   icon: {
     width: 24,
@@ -271,29 +215,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginTop: 7
   },
-  image_culture: {
-    //borderColor: '#2EA073',
-    borderRadius: 10,
-    borderWidth: 1,
-    width: 125,
-    height: 125,
-    margin: 4
-  },
-  text: {
-    fontSize: 15,
-    color: 'red',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   imageContainer: {
-    width: 100,
-    height: 100,
-    position: 'relative',
-    //borderRadius: 50
+    //position: 'relative',
+   // flex:1,
+    //width: undefined,
+    //height: undefined
   },
   dialogContentView: {
     flex: 1,
-
     // backgroundColor: '#000',
     // opacity: 0.4,
     alignItems: 'center',
@@ -329,11 +258,12 @@ const mapStateToProps = state => {
   //console.log(state);
   return {
     customBackgroundDialog: state.recherche.customBackgroundDialog,
-
+    localisationChoisi: state.recherche.localisationChoisi,
     isLoading: state.ui.isLoading,
 
     error: state.ui.error,
     msg_error: state.ui.message,
+    success:state.ui.success,
 
     localisation: state.recherche.localisation,
     all_attaques: state.recherche.all_attaques,
@@ -350,7 +280,9 @@ const mapDispatchToProps = dispatch => {
     onSelectCulture: (culture, localisation) => dispatch(selectCulture(culture, localisation)),
     reset: () => dispatch(resetCultureAndAttaques()),
     resetError: () => dispatch(uiUnshowError()),
-    unloading:()=>dispatch(uiStopLoading())
+    unloading:()=>dispatch(uiStopLoading()),
+    setSuccess: ()=>dispatch(uiSuccess()),
+    resetSuccess: ()=>dispatch(uiResetSuccess())
   }
 }
 

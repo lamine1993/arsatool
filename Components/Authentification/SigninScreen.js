@@ -5,7 +5,8 @@ import {
     View,
     StyleSheet,
     Text,
-    Dimensions
+    Dimensions,
+    ImageBackground
   } from "react-native";
 import { connect } from 'react-redux'
 import FormRegister from './FormRegister'
@@ -20,13 +21,15 @@ class SigninScreen extends React.Component{
         this.email=""
         this.password=""
         this.type="AGRICULTEUR"
+
+        
     }
     
 
     render(){
         return(
             <View style={styles.container}>
-              <FormRegister />
+              <FormRegister navigation={this.props.navigation} />
             </View>
         )
     }
@@ -34,24 +37,14 @@ class SigninScreen extends React.Component{
 }
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'#fff',
+        //backgroundColor:'transparent',
         flex: 1,
         flexDirection: 'column',
         justifyContent:'center'
     },
-    login:{      
-        borderColor:'rgb(0, 0, 0)',
-        flex:1,
-    },
-    input:{
-        borderWidth:1, 
-        borderRadius:50,
-        borderColor:'#2EA073',
-        margin:10
-    },
     signin:{
         flex:2,
-    }
+    },
 })
 
 const mapStateToProps = state => {

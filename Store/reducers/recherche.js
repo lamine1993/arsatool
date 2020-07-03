@@ -18,7 +18,8 @@ const initialState = {
   localisation: "",
   customBackgroundDialog: false,
   attaques_set:false,
-  imagesAttaques: []
+  imagesAttaques: [],
+  localisationChoisi:false
 };
 
 const rechercheReducer = (state = initialState, action) => {
@@ -28,7 +29,8 @@ const rechercheReducer = (state = initialState, action) => {
         ...state,
         localisation: action.localisation,
         cultures: action.cultures,
-        customBackgroundDialog: true,
+        //customBackgroundDialog: true,
+        localisationChoisi: true
       };
       case SET_ATTAQUES:
       return {
@@ -57,7 +59,7 @@ const rechercheReducer = (state = initialState, action) => {
       return {
         ...state,
         //all_attaques:state.all_attaques.push(action.attaque),
-        attaques: state.attaques.concat(action.attaque)
+        attaques: action.attaque
       };
     case RESET_CULTURE_ATTAQUES:
       return {

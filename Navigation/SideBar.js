@@ -20,18 +20,22 @@ class SideBar extends React.Component {
     }
   }
 
+  _setUserInfo(){
+    if(this.props.session){
+      return <View>
+                <View style={styles.menu} >
+                        <Icon name='person-add' style={styles.icon}/>
+                        <Text style={styles.text_menu}>{this.props.user.firstName}</Text>
+                        <Text style={styles.text_menu}>{this.props.user.lastName}</Text>
+                    </View>
+            </View>
+    }
+  }
+
   _setLoginUserComponent(){
     return <View style={styles.user}>
-             <TouchableHighlight
-                  onPress={() => this.props.navigation.navigate('Notifications')}>
-                  <View style={styles.menu} >
-                      <Icon name='person-add' style={styles.icon}/>
-                      <Text style={styles.text_menu}>{this.props.user.firstName}</Text>
-                      <Text style={styles.text_menu}>{this.props.user.lastName}</Text>
-                  </View>
-              </TouchableHighlight>
               <TouchableHighlight
-                  onPress={() => this.props.onLogout()}>
+                  onPress={() => this._logout()}>
                   <View style={styles.menu} >
                       <Icon name='key' style={styles.icon}/>
                       <Text style={styles.text_menu}>DECONNEXION</Text>
@@ -40,21 +44,27 @@ class SideBar extends React.Component {
         </View>
   }
 
+   _logout = () => {
+     
+      this.props.onLogout()
+      this.props.navigation.navigate('App');
+  }
+
 
   _setLoginComponent(){
     return <View style={styles.user}>
-             <TouchableHighlight
-                  onPress={() => this.props.navigation.navigate('Signin')}>
-                  <View style={styles.menu} >
-                      <Icon name='person-add' style={styles.icon}/>
-                      <Text style={styles.text_menu}>INSCRIPTION</Text>
-                  </View>
-              </TouchableHighlight>
               <TouchableHighlight
-                  onPress={() => this.props.navigation.navigate('Login')}>
+                  onPress={() => this.props.navigation.navigate('Auth')}>
                   <View style={styles.menu} >
                       <Icon name='key' style={styles.icon}/>
                       <Text style={styles.text_menu}>CONNEXION</Text>
+                  </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                  onPress={() => this.props.navigation.navigate('Register')}>
+                  <View style={styles.menu} >
+                      <Icon name='key' style={styles.icon}/>
+                      <Text style={styles.text_menu}>INSCRIPTION</Text>
                   </View>
               </TouchableHighlight>
         </View>
@@ -64,19 +74,13 @@ class SideBar extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image source={require('../assets/eclosio.png')}
-              style={{ 
-                height:180,
-                width:300,
-                justifyContent:'center',
-                alignItems:'center'
-              }}/>
+          <Image source={require('../assets/ui_background/menu.jpg')} style={styles.fittParent}/>
+          <View style={{ position: 'absolute',left: 10, bottom: 10, alignItems: 'center', justifyContent: 'center' }}>
+            {this._setUserInfo()}
+        </View>
         </View>
         <View style={styles.content}> 
-           {this._displayLoginSection()}
-          <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}>
-
-          </View>
+          
           <View style={styles.application}>
               <TouchableHighlight             
                   onPress={() => this.props.navigation.navigate('Home')}>
@@ -87,16 +91,11 @@ class SideBar extends React.Component {
                       <Text style={styles.text_menu}>HOME</Text>
                   </View>
               </TouchableHighlight>
-              <TouchableHighlight             
-                  onPress={() => this.props.navigation.navigate('Home')}>
-                  <View style={styles.menu} >
-                      <Icon name='search' style={styles.icon}>
+          </View> 
+          <View style={{height:1, backgroundColor:'rgb(0, 0, 0)'}}>
 
-                      </Icon>
-                      <Text style={styles.text_menu}>RECHERCHE INSECTE</Text>
-                  </View>
-              </TouchableHighlight>
-          </View>        
+          </View>  
+          {this._displayLoginSection()}     
         </View> 
                 
       </View>
@@ -106,16 +105,26 @@ class SideBar extends React.Component {
 const styles = StyleSheet.create({
     container:{
       flex:1,
-      flexDirection:'column'
+      flexDirection:'column',
+      //width:300,
     },
     header:{
-       flex: 1,
-       borderBottomWidth: 1,
-       borderBottomColor:'#2EA073'
+        // flex: 1,
+         //borderBottomWidth: 1,
+         height:180,
+         width:'100%',
+        justifyContent:'center',
+        alignItems:'center'
     },
-    content:{
+    fittParent:{
+    alignSelf:'center',
+    height:'100%',
+    width:'100%',
+  },
+  content:{
        flex:2,
-       flexDirection:'column'
+       flexDirection:'column',
+       backgroundColor:'#98734C'
     },
     menu:{
        flexDirection:'row',
@@ -125,11 +134,11 @@ const styles = StyleSheet.create({
     },
     icon:{
       fontSize: 30, 
-      color:'#2EA073',
+      color:'#fff',
       
     },
     text_menu:{
-      color:'#2EA073',
+      color:'#fff',
       marginStart:10,
       
     },

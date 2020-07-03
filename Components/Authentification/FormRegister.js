@@ -13,6 +13,7 @@ import {
     Dimensions,
     ImageBackground
 } from "react-native";
+import HeadingText from '../UI/HeadingText'
   import {
       addAgriculture,
       uiShowError,
@@ -29,6 +30,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
   class FormRegister extends React.Component{
     constructor(props) {
         super(props);
+        //console.log("navigation "+ this.props.navigation.navigate('App'))
        // Dimensions.addEventListener("change", this.updateStyles);
 
       }
@@ -87,28 +89,10 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
           }
       };
 
-     /* componentWillUnmount() {
-          Dimensions.removeEventListener("change", this.updateStyles);
-      }
-
-      switchAuthModeHandler = () => {
-          this.setState(prevState => {
-              return {
-                  authMode: prevState.authMode === "login" ? "signup" : "login"
-              };
-          });
-      };
-
-      updateStyles = dims => {
-          this.setState({
-              viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-          });
-      };
-      */
-
       componentDidUpdate(){
           if(this.props.session){
-              this.props.navigation.navigate('Home');
+              this.props.resetSuccess();
+              this.props.navigation.navigate('App');
           }
       }
 
@@ -173,27 +157,30 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
               password: this.state.controls.password.value,
               type: "Agriculteur",
           };
+          
+          if(this.props.session){
+            this.props.setError()
+        }
+        else
+        {
+            this.props.onSignIn(user);
+            //this.props.navigation.navigate('App');
+        }
+          
+      }
 
-          this.props.onSignIn(user);
-      };
 
-
-      _onPressButton() {
-          this.loginHandler()
-
-    }
 
     render(){
         return(
             <KeyboardAwareScrollView>
+            <ImageBackground source={require('../../assets/ui_background/Registration.png')} style={styles.containerImage}>
                <View style={styles.login}>
                    {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
                    {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
-                   {_displaySuccess("Envoie Reussi", this.props.success, this.props.resetSuccess)}
-                <Card
-                 containerStyle={{borderRadius:10, borderWidth:1, borderColor:'#2EA073', backgroundColor:'transparent'}}
-                 title="S'INSCRIRE"
-                 transparent>
+                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Se Connecter</HeadingText>
+
+                     
                      <View style={styles.input}>
                         <InputDefault
                             placeholder='PRENOM'
@@ -208,7 +195,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                 <Icon
                                 name='user'
                                 size={30}
-                                color='#2EA073'
+                                color='#98734C'
                                 />
                             }
                         />
@@ -227,7 +214,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                 <Icon
                                 name='user'
                                 size={30}
-                                color='#2EA073'
+                                color='#98734C'
                                 />
                             }
                         />
@@ -246,7 +233,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                 <Icon
                                 name='phone'
                                 size={30}
-                                color='#2EA073'
+                                color='#98734C'
                                 />
                             }
                         />
@@ -266,7 +253,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                 <Icon
                                 name='envelope'
                                 size={30}
-                                color='#2EA073'
+                                color='#98734C'
                                 />
                             }
                         />
@@ -286,7 +273,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                     <Icon
                                     name='lock'
                                     size={30}
-                                    color='#2EA073'
+                                    color='#98734C'
                                     />
                                 }
                             />
@@ -306,7 +293,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                                 <Icon
                                     name='lock'
                                     size={30}
-                                    color='#2EA073'
+                                    color='#98734C'
                                 />
                             }
                         />
@@ -314,17 +301,15 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                             <Button
                               title='Sign in'
                               onPress={this.loginHandler}
-                              buttonStyle={{ backgroundColor:'#2EA073', borderRadius:50}}
+                              buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50}}
                               disabled={
-                                  !this.state.controls.confirmPassword.valid && this.state.authMode === "signin" ||
-                                  !this.state.controls.email.valid ||
-                                  !this.state.controls.password.valid
-                              }
+                                    !this.state.controls.username.valid ||
+                                    !this.state.controls.password.valid
+                                }
                             />
-                        
-                </Card>
                 
               </View>
+            </ImageBackground>
             </KeyboardAwareScrollView>
 
         )
@@ -337,15 +322,28 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
          //backgroundColor:'transparent',
          width:"100%"
      },
+         containerImage:{
+        flex: 1,
+        flexDirection:'column',
+        resizeMode: "cover",
+        justifyContent: "center"
+  },
     login:{
-        borderColor:'rgb(0, 0, 0)',
-        //flex:1,
+        flex:1,
+        height:Dimensions.get('window').height,
+        justifyContent: 'center',
+        marginHorizontal: 20,
+        backgroundColor:'transparent'
     },
     input:{
-        borderWidth:1, 
+        borderBottomWidth :1,
         borderRadius:50,
-        borderColor:'#2EA073',
-        margin:10
+        //borderColor:'#2EA073',
+        borderBottomColor:'#98734C',
+        color:'#98734C',
+        fontSize: 18,
+        fontStyle: 'italic',
+        margin:20
     },
     signin:{
         flex:2,

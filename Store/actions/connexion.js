@@ -177,6 +177,7 @@ export const login= (user)=>{
 }
  
  export const logout=()=>{
+    
    return {
        type: DECONNEXION,
    }

@@ -5,81 +5,95 @@ import {
   StyleSheet,
   Image,
   Dimensions,
-    ImageBackground
+    ImageBackground,
+    SafeAreaView, ScrollView
 } from "react-native";
 
 import {Container,  Header, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right } from 'native-base'
 import { connect } from 'react-redux'
 import {getImageFromApi} from '../../API/api'
+import HeadingText from '../UI/HeadingText'
+import MainText from '../UI/MainText'
 
 class FicheTechnique extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-          attaque: this.props.navigation.state.params.attaque
-         }
+        
+         //console.log("Attaque Choisie " +attaque)
         //this.attaque=this.props.attaque
     }
+
+    componentDidUpdate(){
+        //console.log("Attaque Choisie " +this.props.attaque)
+    }
     componentDidMount(){
-        //console.log(this.props.attaque)
+      console.log("Attaque Choisie " +this.props.attaque.images['0'].imageUrl)
+        console.log("fiche technique didmount")
     }
-
-    render() {
-        return (
-            <ImageBackground source={require('../../assets/logo.jpg')} style={{width: '100%', height: '100%'}}>
-
-            <Container>
-                <Content contentContainerStyle={{ flex: 1, padding: 10 }}>
-                <Card>
-                <CardItem cardBody>
-                   <Text style={{ color: '#00F', alignItems: 'center' }}>
-                   {this.state.attaque.insecte.nomInsecte}
-                   </Text>
-                </CardItem>
-                <CardItem cardBody>
-                  <Image source={{uri: getImageFromApi(this.state.attaque.images[0].imageUrl)}} style={{height:200, width: null, flex: 1}}/>
-                </CardItem>
-                <CardItem cardBody>
-                    <Text style={{ color: '#F00' }}>
-                    Description
-                    </Text>
-                </CardItem>
-                <CardItem cardBody>
-                    <Text>
-                      {this.state.attaque.insecte.description}
-                    </Text>
-                </CardItem>
-                     
-                <CardItem cardBody>
-                   <Text style={{ color: '#00F' }}>
-                      Methode de Lutte
-                   </Text>
-                </CardItem>
-                <CardItem cardBody>
-                    <Text>
-                      {this.state.attaque.insecte.methode}
-                    </Text>
-                </CardItem>
-              </Card>
-                </Content>
-            </Container>
-            </ImageBackground>
-        )
-    }
-
+   render(){
+     return(
+      <View  style={styles.container}>
+      
+        <View style={styles.imageBg}>
+          <Image source={{uri: getImageFromApi(this.props.attaque.images[0].imageUrl)}} style={{height:'100%', width: '100%', position:'absolute'}}/>
+        </View>
+        <ScrollView style={styles.scrollView}>
+        <View style={styles.containerView}>
+          <View style={styles.methodeLutte} >
+            <HeadingText style={{flex:2, textAlignVertical:'center',}}> Methode </HeadingText>
+            <MainText style={{flex:1, textAlignVertical:'center', color: '#000'}}> 
+              {this.props.attaque.insecte.methode}
+            </MainText>
+          </View>
+          <View style={styles.description}>
+            <HeadingText style={{flex:2, textAlignVertical:'center',}}> Description </HeadingText>
+            <MainText style={{flex:1, textAlignVertical:'center', color: '#000'}}> 
+              {this.props.attaque.insecte.description}
+            </MainText>
+          </View>
+        </View>
+      </ScrollView>
+      </View>
+     )
+   }
 }
 
 
 const styles = StyleSheet.create({
-    icon: {
-        height: 24,
-        width: 24
-    }
+      container: {
+        flex: 1,
+        //marginTop: Constants.statusBarHeight,
+      },
+      imageBg:{
+        height:300,
+        width:'100%'
+      },
+      methodeLutte:{
+        flex:1
+      },
+      description:{
+        flex:1,
+        
+
+      },
+      scrollView: {
+        flex:1,
+        flexDirection: 'column', 
+      },
+
+      containerView:{
+         marginHorizontal: 20,
+         backgroundColor: '#fff',
+         opacity: 1,
+      },
+      text: {
+        fontSize: 42,
+      },
 })
 
 const mapStateToProps = state => {
   return {
-    //attaque: state.recherche.attaque
+    attaque: state.recherche.attaque
   };
 };
 
