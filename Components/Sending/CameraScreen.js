@@ -133,6 +133,7 @@ class CameraScreen extends React.Component {
     }
 
     toggleFocus() {
+
         this.setState({
             autoFocus: this.state.autoFocus === 'on' ? 'off' : 'on',
         });

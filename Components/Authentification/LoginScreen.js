@@ -14,6 +14,8 @@ import {
     View,
     StyleSheet,
     Text,
+    BackHandler,
+    Alert ,
     Dimensions, ImageBackground
 } from "react-native";
 import {
@@ -54,6 +56,17 @@ class LoginScreen extends React.Component{
             },
         }
     };
+
+    backAction = () => {
+       this.props.navigation.navigate('Home')
+    };
+
+    componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+    }
+    componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.backAction);
+    }
 
     componentDidUpdate(){
         console.log("component login did umpdate")
@@ -100,9 +113,6 @@ class LoginScreen extends React.Component{
         });
     };
 
-
-    componentDidMount(){
-    }
 
     loginHandler = () => {
         const user = {
