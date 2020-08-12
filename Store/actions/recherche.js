@@ -10,7 +10,7 @@ export const selectLocalisation=(localisation)=>{
     return dispatch =>{
         //dispatch(resetCultureAndAttaques())
         dispatch(uiStartLoading());
-        //console.log(SERVER)
+        console.log(SERVER)
         fetch(SERVER+'culturesImage')
         .then((res) => res.json())
         .then(parsedRes=>{
@@ -28,7 +28,7 @@ export const selectLocalisation=(localisation)=>{
         }).catch((error) => {
                 console.log(error)
                 dispatch(uiStopLoading());
-                dispatch(uiShowError("Lecture Des cultures echouer. Veiller verifier votre cconnection"));
+                dispatch(uiShowError("Echec du chargement des cultures. Veillez verifier votre connexion "));
             })
     }
 }

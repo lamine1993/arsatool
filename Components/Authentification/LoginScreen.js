@@ -188,7 +188,7 @@ class LoginScreen extends React.Component{
                         />
                     </View>
                     <Button
-                        title='Sign in'
+                        title='Connexion'
                         onPress={this.loginHandler}
                         buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50}}
                         disabled={

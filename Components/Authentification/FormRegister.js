@@ -178,7 +178,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                <View style={styles.login}>
                    {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
                    {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
-                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Se Connecter</HeadingText>
+                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Inscription</HeadingText>
 
                      
                      <View style={styles.input}>
@@ -260,7 +260,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                       </View>
                       <View style={styles.input}>
                             <InputDefault
-                                placeholder='PASSWORD'
+                                placeholder='MOT DE PASSE'
                                 value={this.state.controls.password.value}
                                 onChangeText={val => this.updateInputState("password", val)}
                                 valid={this.state.controls.password.valid}
@@ -280,7 +280,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                         </View>
                     <View style={styles.input}>
                         <InputDefault
-                            placeholder='CONFIRM PASSWORD'
+                            placeholder='CONFIRMER MOT DE PASSE'
                             value={this.state.controls.confirmPassword.value}
                             onChangeText={val => this.updateInputState("confirmPassword", val)}
                             valid={this.state.controls.confirmPassword.valid}
@@ -299,7 +299,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                         />
                     </View>
                             <Button
-                              title='Sign in'
+                              title="S'inscrire"
                               onPress={this.loginHandler}
                               buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50}}
                               disabled={

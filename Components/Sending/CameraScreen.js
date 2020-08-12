@@ -105,7 +105,7 @@ class CameraScreen extends React.Component {
                 footer={[
                     <DialogFooter key="button-1">
                         <DialogButton
-                            text="CANCEL"
+                            text="SUPPRIMER"
                             onPress={() => this.setState({ showPop: false })}
                         />
                     </DialogFooter>,
@@ -375,7 +375,7 @@ class CameraScreen extends React.Component {
             <Dialog
                 dialogTitle={
                     <DialogTitle
-                        title="Erreur Connexion"
+                        title="ERREUR DE CONNEXION"
                         hasTitleBar={true}
                         style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#f00'}}
                         textStyle={{ color: '#fff'}}
@@ -411,7 +411,7 @@ class CameraScreen extends React.Component {
             <Dialog
                 dialogTitle={
                     <DialogTitle
-                        title="CONNEXION REUSSI"
+                        title="CONNEXION REUSSIE"
                         hasTitleBar={true}
                         style={{alignItems:'center', justifyContent:'center', height:50, backgroundColor:'#0f0'}}
                         textStyle={{ color: '#fff'}}
@@ -561,7 +561,7 @@ class CameraScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {this._displayError("Envoie Non Reussi", this.props.error,this.props.unsetError)}
+                {this._displayError("Echec d'envoie", this.props.error,this.props.unsetError)}
                 {this._displaySuccess("Envoie Reussi", this.props.success)}
 
                 {this.viewImage()}
