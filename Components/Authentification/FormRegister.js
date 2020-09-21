@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
     View,
     StyleSheet,
+    TouchableHighlight,
     Text,
     Dimensions,
     ImageBackground
@@ -42,7 +43,8 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                   value: "",
                   valid: false,
                   validationRules: {
-                      minLength: 2
+                      minLength: 2,
+                      //isEmail: false
                   },
                   touched: false
               },
@@ -50,7 +52,8 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                   value: "",
                   valid: false,
                   validationRules: {
-                      minLength: 2
+                      minLength: 2,
+                      //isEmail: false
                   },
                   touched: false
               },
@@ -58,14 +61,15 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                   value: "",
                   valid: false,
                   validationRules: {
-                      minLength: 4
+                      isPhone: true
                   },
                   touched: false
               },
-              email: {
+              mail: {
                   value: "",
                   valid: false,
                   validationRules: {
+                      notEmpty:true,
                       isEmail: true
                   },
                   touched: false
@@ -152,7 +156,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
               firstname:this.state.controls.prenom.value,
               lastName:this.state.controls.nom.value,
               telephone: this.state.controls.username.value,
-              email: this.state.controls.email.value,
+              email: this.state.controls.mail.value,
               login: this.state.controls.username.value,
               password: this.state.controls.password.value,
               type: "Agriculteur",
@@ -169,18 +173,36 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
           
       }
 
+      isFormActive = () =>{
+         return ((!this.state.controls.nom.valid|| !this.state.controls.prenom.valid)|| (!this.state.controls.confirmPassword.valid || !this.state.controls.username.valid))
+      }
+
+      goHome=()=>{
+        this.props.navigation.navigate('App')
+      }
+
+
 
 
     render(){
         return(
             <KeyboardAwareScrollView>
             <ImageBackground source={require('../../assets/ui_background/Registration.png')} style={styles.containerImage}>
+               <TouchableHighlight onPress={this.goHome}>
+                <View style={styles.retour}>
+                    <Icon
+                        name='angle-left'
+                        size={40}
+                        color='#7DB240'
+                    />
+                    <Text style={{color:'#7DB240'}}>Retour</Text>
+                </View>
+                  
+             </TouchableHighlight>
                <View style={styles.login}>
                    {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
                    {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
-                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Inscription</HeadingText>
-
-                     
+                    <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Inscription</HeadingText>   
                      <View style={styles.input}>
                         <InputDefault
                             placeholder='PRENOM'
@@ -222,12 +244,13 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                       <View style={styles.input}>
                         <InputDefault
                             placeholder='TELEPHONE'
-                            value={this.state.controls.username.value}
+                           // value={this.state.controls.username.value}
                             onChangeText={val => this.updateInputState("username", val)}
                             valid={this.state.controls.username.valid}
 
                             touched={this.state.controls.username.touched}
                             autoCapitalize="none"
+                            keyboardType="numeric"
                             autoCorrect={false}
                             leftIcon={
                                 <Icon
@@ -240,11 +263,11 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                       </View>
                      <View style={styles.input}>
                         <InputDefault
-                            value={this.state.controls.email.value}
-                            onChangeText={val => this.updateInputState("email", val)}
-                            valid={this.state.controls.email.valid}
+                            value={this.state.controls.mail.value}
+                            onChangeText={val => this.updateInputState("mail", val)}
+                            valid={this.state.controls.mail.valid}
 
-                            touched={this.state.controls.email.touched}
+                            touched={this.state.controls.mail.touched}
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="email-address"
@@ -302,10 +325,7 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
                               title="S'inscrire"
                               onPress={this.loginHandler}
                               buttonStyle={{ backgroundColor:'#7DB240', borderRadius:50}}
-                              disabled={
-                                    !this.state.controls.username.valid ||
-                                    !this.state.controls.password.valid
-                                }
+                              disabled={ ((!this.state.controls.confirmPassword.valid || !this.state.controls.mail.valid)|| (!this.state.controls.username.valid))}
                             />
                 
               </View>
@@ -318,6 +338,15 @@ import { _displayError, _displayLoading, _displaySuccess } from './AuthError';
  }
 
  const styles = StyleSheet.create({
+
+     retour: {
+    backgroundColor: "transparent",
+    marginLeft: 10, 
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    
+  },
      container:{
          //backgroundColor:'transparent',
          width:"100%"
@@ -375,3 +404,4 @@ const mapDispatchToProps = dispatch => {
   };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormRegister);
+

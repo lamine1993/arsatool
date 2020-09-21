@@ -14,6 +14,8 @@ const validate = (val, rules, connectedValue) => {
             case "notEmpty":
                 isValid = isValid && notEmptyValidator(val);
                 break;
+            case "isPhone":
+                isValid = isValid && telValidator(val);
             default:
                 isValid = true;
         }
@@ -23,10 +25,14 @@ const validate = (val, rules, connectedValue) => {
 };
 
 const emailValidator = val => {
-    return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
         val
     );
 };
+
+const telValidator = val =>{
+    return /\d{9}$/.test(val);
+}
 
 const minLengthValidator = (val, minLength) => {
     return val.length >= minLength;

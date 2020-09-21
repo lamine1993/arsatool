@@ -114,7 +114,7 @@ class Attaques extends React.Component {
             return(
                 <View>
                     <Text style={{fontSize:20}}>
-                        Les attaques conccernat votre choix sont vides pour l'instant
+                        Les attaques concernant votre choix sont vides pour l'instant
                     </Text>
                 </View>
             )
@@ -139,7 +139,7 @@ class Attaques extends React.Component {
                             Liste des Attaques
                             </HeadingText>
                             <MainText style={{textAlignVertical:'center',color: '#fff' }}> 
-                                Cliquer sur l'image d'un insecte pour voir les detail de sa fiche technique
+                                Cliquer sur l'image d'un insecte pour voir les details de sa fiche technique
                             </MainText>                           
                         </View>
                         <View style={styles.attaqueListe}>

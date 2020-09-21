@@ -15,6 +15,7 @@ import {
     StyleSheet,
     Text,
     BackHandler,
+    TouchableHighlight,
     Alert ,
     Dimensions, ImageBackground
 } from "react-native";
@@ -42,7 +43,8 @@ class LoginScreen extends React.Component{
                 value: "",
                 valid: false,
                 validationRules: {
-                    minLength: 4
+                    minLength: 4,
+                    notEmpty:true
                 },
                 touched: false
             },
@@ -50,7 +52,8 @@ class LoginScreen extends React.Component{
                 value: "",
                 valid: false,
                 validationRules: {
-                    minLength: 4
+                    minLength: 4,
+                    notEmpty:true
                 },
                 touched: false
             },
@@ -133,6 +136,10 @@ class LoginScreen extends React.Component{
         this.props.navigation.navigate('Register')
     }
 
+    goHome=()=>{
+        this.props.navigation.navigate('App')
+    }
+
 
     _onPressButton() {
         this.loginHandler()
@@ -143,10 +150,23 @@ class LoginScreen extends React.Component{
         return(
             <KeyboardAwareScrollView>
             <ImageBackground source={require('../../assets/ui_background/Connexion.png')} style={styles.containerImage}> 
+           
+            <TouchableHighlight onPress={this.goHome}>
+                <View style={styles.retour}>
+                    <Icon
+                        name='angle-left'
+                        size={40}
+                        color='#fff'
+                    />
+                    <Text style={{color:'white'}}>Retour</Text>
+                </View>
+                  
+            </TouchableHighlight>
+
             <View style={styles.login}>
                 {_displayLoading("CONNEXION",this.props.isLoading, this.props.stopLoading)}
                 {_displayError("Eureur de connexion", this.props.error, this.props.unsetError)}
-                
+                    
                     <HeadingText style={{textAlignVertical:'center', color: '#7DB240', fontSize: 44, fontStyle: 'italic' }}> Se Connecter</HeadingText>
                     <View style={styles.input}>
                         <InputDefault
@@ -154,9 +174,9 @@ class LoginScreen extends React.Component{
                             value={this.state.controls.username.value}
                             onChangeText={val => this.updateInputState("username", val)}
                             valid={this.state.controls.username.valid}
-                            
                             touched={this.state.controls.username.touched}
                             autoCapitalize="none"
+                            keyboardType="numeric"
                             autoCorrect={false}
                             leftIcon={
                                 <Icon
@@ -212,6 +232,14 @@ class LoginScreen extends React.Component{
 }
 
 const styles = StyleSheet.create({
+    retour: {
+    backgroundColor: "transparent",
+    marginLeft: 10, 
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    
+  },
     login:{
         borderColor:'rgb(0, 0, 0)',
         flex:1,

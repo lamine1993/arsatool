@@ -92,7 +92,7 @@ class HomeScreen extends React.Component {
           {_displayLoading("CONNEXION",this.props.isLoading, this.props.unloading)}
           {_displayError(this.props.msg_error, this.props.error, this.props.resetError)}
           <View style={styles.header}>
-             <HeadingText style={{textAlignVertical:'center', color: '#fff'}}> Acceuil</HeadingText>
+             <HeadingText style={{textAlignVertical:'center', color: '#fff'}}> Accueil</HeadingText>
              <MainText style={{textAlignVertical:'center', color: '#fff'}}> 
                 Choisir la partie de la culture attaquée
              </MainText>                           
@@ -123,7 +123,7 @@ class HomeScreen extends React.Component {
                 <View style={styles.bouton_partie_colonne}>
                   <TouchableHighlight
                     style={styles.fittParent}
-                      onPress={() => { this._selectLocalisation("FLEURS") }}
+                      onPress={() => { this._selectLocalisation("TIGES") }}
                     >
                     <Image source={require('../assets/menu-image/Groupe_11.png')} style={styles.fittParent}/>
                       
@@ -132,7 +132,7 @@ class HomeScreen extends React.Component {
                 <View style={styles.bouton_partie_colonne}>
                   <TouchableHighlight
                     style={styles.fittParent}
-                      onPress={() => { this._selectLocalisation("TIGE") }}
+                      onPress={() => { this._selectLocalisation("FLEURS") }}
                     >
                     <Image source={require('../assets/menu-image/Groupe_12.png')} style={styles.fittParent}/>
                       

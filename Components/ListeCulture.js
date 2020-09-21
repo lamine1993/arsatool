@@ -65,7 +65,7 @@ class ListeCulture extends React.Component {
           <View style={styles.container}>
           <View style={styles.header}>
              <HeadingText style={{textAlignVertical:'center', color: '#fff'}}> 
-              Choisir la culture touchée au {this.props.localisation}
+              Choisir la culture touchée aux {this.props.localisation}
             </HeadingText>
              <MainText style={{textAlignVertical:'center',color: '#fff' }}> 
                 Cliquer sur la culture
